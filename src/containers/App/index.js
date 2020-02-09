@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ChatbotRoute from '../../components/ChatbotRoute';
-import { DASHBROAD_ROUTES } from '../../constants';
+import { DASHBOARD_ROUTES } from '../../constants';
 import configStore from '../../redux/configStore';
 import {outerTheme} from '../../commons/Theme/themes';
 import HomePage from '../HomePage';
@@ -15,13 +15,12 @@ class App extends Component {
     /**
      * List danh sách route
      */
-    renderDashbroadRoute = () => {
+    renderDashboardRoute = () => {
         let xhtml = null;
-        xhtml = DASHBROAD_ROUTES.map((route, index) => {
+        xhtml = DASHBOARD_ROUTES.map((route, index) => {
             let {path, exact, component, name} = route;
             return <ChatbotRoute key={index}  path={path} exact={exact} component={component} name={name} />;
         });
-        console.log(xhtml);
         return xhtml;
     };
     render() {
@@ -31,7 +30,7 @@ class App extends Component {
                     <ThemeProvider theme={outerTheme}>
                         {/* modal thông báo */}
                         <Switch>
-                            {this.renderDashbroadRoute()}
+                            {this.renderDashboardRoute()}
                         </Switch>
                     </ThemeProvider>
                 </BrowserRouter>

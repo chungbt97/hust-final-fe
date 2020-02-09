@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class DashBroadBot extends Component {
+class DashBoardBot extends Component {
     constructor(props) {
         super(props);
     }
@@ -25,6 +25,6 @@ class DashBroadBot extends Component {
     }
 }
 
-DashBroadBot.propTypes = {};
+DashBoardBot.propTypes = {};
 
-export default DashBroadBot;
+export default DashBoardBot;

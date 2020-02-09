@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import DashBroad from '../Dashbroad';
+import Dashboard from '../Dashboard';
 import PropTypes from 'prop-types';
 
 class ChatbotRoute extends Component {
@@ -8,14 +8,13 @@ class ChatbotRoute extends Component {
 
     render() {
         const {name, component: ComponentRender, ...remainProps} = this.props;
-        console.log(remainProps);
         return (
             <Route {...remainProps} 
                 render = {routeProps => {
                     return (
-                        <DashBroad>
+                        <Dashboard>
                             <ComponentRender {...remainProps} />
-                        </DashBroad>
+                        </Dashboard>
                     );
                 }
                 }/> 

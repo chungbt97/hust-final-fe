@@ -1,4 +1,4 @@
-import { Avatar, Box, Button } from '@material-ui/core';
+import { Avatar, Box, Button, Icon } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
@@ -127,6 +127,13 @@ class Topbar extends Component {
         );
         return xhtml;
     };
+    /**
+     * Đóng mở sidebar
+     */
+    handleToogleSideBar = () => {
+        const { handleToggleSidebar } = this.props;
+        handleToggleSidebar();
+    };
     render() {
         const { classes } = this.props;
         return (
@@ -138,10 +145,11 @@ class Topbar extends Component {
                             className={classes.menuButton}
                             color="inherit"
                             aria-label="open drawer"
+                            onClick={this.handleToogleSideBar}
                         >
                             <MenuIcon />
                         </IconButton>
-                        
+
                         <div>
                             <Avatar
                                 alt="Cindy Baker"

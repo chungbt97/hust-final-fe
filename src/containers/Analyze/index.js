@@ -38,7 +38,7 @@ class Analyze extends Component {
     render() {
         return (
             <div>
-
+                Anivia
             </div>
         )
     }
