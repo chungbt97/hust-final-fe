@@ -1,30 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { withStyles } from '@material-ui/styles';
+import styles from './styles';
 class DashBoardBot extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    componentWillMount() {}
-
-    componentDidMount() {}
-
-    componentWillReceiveProps(nextProps) {}
-
-    shouldComponentUpdate(nextProps, nextState) {}
-
-    componentWillUpdate(nextProps, nextState) {}
-
-    componentDidUpdate(prevProps, prevState) {}
-
-    componentWillUnmount() {}
-
     render() {
-        return <div>Nội dung của mỗi 1 anh bot</div>;
+        const { classes } = this.props;
+        return <div className={classes.root}>Nội dung của mỗi 1 anh bot</div>;
     }
 }
 
-DashBoardBot.propTypes = {};
+DashBoardBot.propTypes = {
+    classes: PropTypes.object,
+};
 
-export default DashBoardBot;
+export default withStyles(styles)(DashBoardBot);

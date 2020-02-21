@@ -1,51 +1,17 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/styles';
+import styles from './styles';
 
 class Analyze extends Component {
-    constructor(props) {
-        super(props)
-
-    }
-
-    componentWillMount() {
-
-    }
-
-    componentDidMount() {
-
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
-    }
-
-    componentWillUnmount() {
-
-    }
-
     render() {
-        return (
-            <div>
-                Anivia
-            </div>
-        )
+        const {classes} = this.props;
+        return <div className={classes.root}>Anivia</div>;
     }
 }
 
 Analyze.propTypes = {
+    classes: PropTypes.object,
+};
 
-}
-
-export default Analyze
+export default withStyles(styles)(Analyze);

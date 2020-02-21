@@ -1,4 +1,3 @@
-import { fade } from '@material-ui/core';
 
 const useStyles = theme => ({
     grow: {
@@ -32,9 +31,13 @@ const useStyles = theme => ({
         padding: '6px 12px',
         lineHeight: 1.5,
     },
-    menuItem:{
+    menuItem: {
         marginLeft: theme.spacing(2),
     },
-    
+    bgWhite: {
+        background: '#ffffff',
+        color: 'black',
+        boxShadow: '0 1px 0 0 rgba(0, 0, 0, 0.04)',
+    },
 });
 export default useStyles;

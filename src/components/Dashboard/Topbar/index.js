@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Icon } from '@material-ui/core';
+import { Avatar, Box, Button } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
@@ -6,16 +6,15 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import logo from '../../../assets/images/logo.png';
 import styles from './styles';
-import SettingsIcon from '@material-ui/icons/Settings';
-import LogoutIcon from '@material-ui/icons/ExitToApp';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const menuId = 'primary-search-account-menu';
 const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -130,24 +129,20 @@ class Topbar extends Component {
     /**
      * Đóng mở sidebar
      */
-    handleToogleSideBar = () => {
-        const { handleToggleSidebar } = this.props;
-        handleToggleSidebar();
-    };
     render() {
         const { classes } = this.props;
         return (
             <div className={classes.grow}>
-                <AppBar position="static">
+                <AppBar position="static" className={classes.bgWhite}>
                     <Toolbar>
                         <IconButton
                             edge="start"
                             className={classes.menuButton}
                             color="inherit"
                             aria-label="open drawer"
-                            onClick={this.handleToogleSideBar}
+                            href="/"  
                         >
-                            <MenuIcon />
+                            <Avatar alt="logo" src={logo} />
                         </IconButton>
 
                         <div>

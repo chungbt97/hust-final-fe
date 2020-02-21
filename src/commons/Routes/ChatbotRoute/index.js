@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import Dashboard from '../Dashboard';
+import Dashboard from '../../../components/Dashboard';
 import PropTypes from 'prop-types';
 
 class ChatbotRoute extends Component {

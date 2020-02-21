@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { withStyles } from '@material-ui/styles';
+import styles from './styles';
 class HomePage extends Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
-        return <div>HomePage</div>;
+        const { classes } = this.props;
+        return <div className={classes.root}>HomePage</div>;
     }
 }
 
-HomePage.propTypes = {};
+HomePage.propTypes = {
+    classes: PropTypes.object,
+};
 
-export default HomePage;
+export default withStyles(styles)(HomePage);
