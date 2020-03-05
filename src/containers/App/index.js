@@ -24,7 +24,7 @@ class App extends Component {
             return (
                 <ChatbotRoute
                     key={index}
-                    path={path}
+                    path={`${path}/:id`}
                     exact={exact}
                     component={component}
                     name={name}

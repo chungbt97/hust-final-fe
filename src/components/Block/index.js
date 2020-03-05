@@ -1,51 +1,24 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { withStyles, Paper } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import * as actionCommon from '../../commons/Method';
+import { MAX_LENGTH_BLOCK_NAME } from '../../constants';
+import styles from './styles';
 
-class ExampleBlock extends Component {
-    constructor(props) {
-        super(props)
-
-    }
-
-    componentWillMount() {
-
-    }
-
-    componentDidMount() {
-
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
-    }
-
-    componentWillUnmount() {
-
-    }
-
+class Block extends Component {
     render() {
-        return (
-            <div>
-                Hihi
-            </div>
-        )
+        const { classes, title } = this.props;
+        let titleSplit =
+            title.length > MAX_LENGTH_BLOCK_NAME
+                ? actionCommon.splitName(title, MAX_LENGTH_BLOCK_NAME)
+                : title;
+        return <Paper className={classes.paper}>{titleSplit}</Paper>;
     }
 }
 
-ExampleBlock.propTypes = {
+Block.propTypes = {
+    classes: PropTypes.object,
+    title: PropTypes.string,
+};
 
-}
-
-export default ExampleBlock
+export default withStyles(styles)(Block);

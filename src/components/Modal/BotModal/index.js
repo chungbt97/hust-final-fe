@@ -52,6 +52,8 @@ class BotModal extends Component {
                             helperText="Description have less than 100 character"
                             fullWidth
                             name="description"
+                            multiline
+                            rows="4"
                             component={renderTextField}
                         />
                         <Grid item xs={12}>

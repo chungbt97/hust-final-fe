@@ -4,20 +4,18 @@ import Dashboard from '../../../components/Dashboard';
 import PropTypes from 'prop-types';
 
 class ChatbotRoute extends Component {
-    static propTypes = {};
-
     render() {
-        const {name, component: ComponentRender, ...remainProps} = this.props;
+        const {name, match, component: ComponentRender, ...remainProps} = this.props;
         return (
-            <Route {...remainProps} 
-                render = {routeProps => {
+            <Route {...remainProps}
+                component = {props => {
                     return (
-                        <Dashboard>
-                            <ComponentRender {...remainProps} />
+                        <Dashboard {...props} {...remainProps}>
+                            <ComponentRender {...props} />
                         </Dashboard>
                     );
                 }
-                }/> 
+                }/>
         );
     }
 }

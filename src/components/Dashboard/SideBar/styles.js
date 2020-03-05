@@ -11,10 +11,20 @@ const useStyles = () => ({
         // '&:hover':{
         //     color: 'red',
         // }
+        backgroundColor: '#f3f2f2',
+        overflow: 'visible',
     },
     activedMenuLink: {
-        '&>div': {
-            backgroundColor: '#ffffff',
+        '&> div': {
+            backgroundColor: '#208ef0',
+            color: '#ffffff',
+        },
+        '&> div:hover': {
+            backgroundColor: '#208ef0',
+            color: '#ffffff',
+        },
+        '& .material-icons': {
+            color: '#ffffff',
         },
     },
     menuText: {

@@ -1,9 +1,9 @@
-import HomePage from '../containers/HomePage';
-import DashboardBot from '../containers/DashboardBot';
-import Rules from '../containers/Rules';
+import React from 'react';
 import Analyze from '../containers/Analyze';
+import DashboardBot from '../containers/DashboardBot';
+import HomePage from '../containers/HomePage';
 import LobbyPage from '../containers/LobbyPage';
-
+import Rules from '../containers/Rules';
 export const API_ENDPOINT = 'http://localhost:3000';
 
 export const STATUS_RESPONSE = {
@@ -18,28 +18,28 @@ export const DASHBOARD_ROUTES = [
         path: '/admin',
         name: 'Home page',
         exact: true,
-        component: HomePage,
+        component: ({ match }) => <HomePage match={match}/>,
         icon: 'home_icon',
     },
     {
         path: '/admin/dashboard',
         name: 'Chat bot dashboard',
         exact: false,
-        component: DashboardBot,
+        component: ({ match }) => <DashboardBot match={match}/>,
         icon: 'dashboard_icon',
     },
     {
         path: '/admin/rules',
         name: 'Set up Rules',
         exact: false,
-        component: Rules,
+        component: ({ match }) => <Rules match={match}/>,
         icon: 'build_icon',
     },
     {
         path: '/admin/analyze',
         name: 'Statistics and analysis',
         exact: false,
-        component: Analyze,
+        component: ({ match }) => <Analyze match={match}/>,
         icon: 'assessment_icon',
     },
     /**
@@ -178,3 +178,8 @@ export const MONTHS_STRING = [
     'November',
     'December',
 ];
+export const THREE_DOTS = '...';
+export const SPACE_CHARACTER = ' ';
+export const EM_DASH_CHARACTER = '-';
+export const MAX_LENGTH_BLOCK_NAME = 20;
+export const MAX_LENGTH_BOT_NAME = 20;

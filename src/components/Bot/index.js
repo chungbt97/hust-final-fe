@@ -14,6 +14,8 @@ import React, { Component } from 'react';
 import * as actionsCommon from '../../commons/Method';
 import styles from './styles';
 import avatarDefault from '../../assets/images/avatar_bot_default.jpg';
+import { MAX_LENGTH_BOT_NAME } from '../../constants';
+import { NavLink } from 'react-router-dom';
 
 const menuId = 'primary-search-account-menu';
 class Bot extends Component {
@@ -75,10 +77,14 @@ class Bot extends Component {
     };
     render() {
         const { classes, data } = this.props;
-        const { title, description, avatar, timestampCreate} = data;
+        const { id, title, description, avatar, timestampCreate } = data;
         let charAvatar = title.charAt(0);
         let bgColor = actionsCommon.getColorWithAlphaber(charAvatar);
-        let timeCreated = actionsCommon.convertTimestampToDate(timestampCreate)
+        let timeCreated = actionsCommon.convertTimestampToDate(timestampCreate);
+        let miniTitle =
+            title.length > MAX_LENGTH_BOT_NAME
+                ? actionsCommon.splitName(title, MAX_LENGTH_BOT_NAME)
+                : title;
         return (
             <div>
                 <Card className={classes.root}>
@@ -100,7 +106,7 @@ class Bot extends Component {
                                 <MoreVertIcon />
                             </IconButton>
                         }
-                        title={title}
+                        title={miniTitle}
                         subheader={timeCreated}
                     />
                     <CardMedia
@@ -125,8 +131,15 @@ class Bot extends Component {
                             justify="center"
                             alignItems="center"
                         >
+                            {/* <NavLink
+                                to={`/admin/${id}`}
+                                className={classes.linkDashboard}
+                                activeClassName={classes.activedBlockLink}
+                            >
+                                Connect
+                            </NavLink> */}
                             <Link
-                                href="/admin"
+                                href={`/admin/${id}`}
                                 className={classes.linkDashboard}
                             >
                                 Connect

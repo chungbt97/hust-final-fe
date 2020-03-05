@@ -15,6 +15,7 @@ import { TYPE_MODAL } from '../../constants/modal';
 import BotForm from './BotForm';
 import styles from './styles';
 import * as messageConstans from '../../constants/Messages';
+import { Router } from 'react-router-dom';
 class LobbyPage extends Component {
     renderAllChatBot = () => {
         const { listBot } = this.props;
@@ -86,7 +87,7 @@ class LobbyPage extends Component {
         const { botActionCreators, botEdit } = this.props;
         const { addNewBot, updateBot } = botActionCreators;
         let { id, title, description } = data;
-        let timestampNow = new Date;
+        let timestampNow = new Date();
         if (botEdit === null) {
             addNewBot({
                 title,
@@ -141,28 +142,30 @@ class LobbyPage extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root} spacing={2}>
-                <div>
-                    <Button
-                        className={classes.btnAdd}
-                        onClick={this.handleOpenBotModal}
+
+                <div className={classes.root} spacing={2}>
+                    <div>
+                        <Button
+                            className={classes.btnAdd}
+                            onClick={this.handleOpenBotModal}
+                        >
+                            <AddIcon />
+                            Add new ChatBot
+                        </Button>
+                    </div>
+
+                    <Grid
+                        container
+                        direction="row"
+                        justify="flex-start"
+                        alignItems="flex-start"
+                        spacing={2}
                     >
-                        <AddIcon />
-                        Add new ChatBot
-                    </Button>
+                        {this.renderAllChatBot()}
+                    </Grid>
+                    {this.renderBotForm()}
                 </div>
 
-                <Grid
-                    container
-                    direction="row"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                    spacing={2}
-                >
-                    {this.renderAllChatBot()}
-                </Grid>
-                {this.renderBotForm()}
-            </div>
         );
     }
 }

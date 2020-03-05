@@ -27,13 +27,14 @@ class SideBar extends Component {
 
     renderMenuList = () => {
         let xhtml = null;
-        const { classes } = this.props;
+        const { classes, match } = this.props;
+        let { id } = match.params;
         xhtml = (
             <List>
                 {DASHBOARD_ROUTES.map((route, index) => (
                     <NavLink
                         key={index}
-                        to={route.path}
+                        to={`${route.path}/${id}`}
                         exact={route.exact}
                         className={classes.menuLink}
                         activeClassName={classes.activedMenuLink}
@@ -56,8 +57,6 @@ class SideBar extends Component {
     };
     render() {
         const { classes, displaySidebar } = this.props;
-        console.log(this.props);
-        console.log(displaySidebar);
         return (
             <Drawer
                 className={classes.drawer}
@@ -68,7 +67,7 @@ class SideBar extends Component {
                     paper: classes.drawerPaper,
                 }}
             >
-               {this.renderMenuList()}
+                {this.renderMenuList()}
             </Drawer>
         );
     }

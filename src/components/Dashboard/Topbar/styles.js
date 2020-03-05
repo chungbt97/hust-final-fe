@@ -35,7 +35,7 @@ const useStyles = theme => ({
         marginLeft: theme.spacing(2),
     },
     bgWhite: {
-        background: '#ffffff',
+        background: '#f9f8f8',
         color: 'black',
         boxShadow: '0 1px 0 0 rgba(0, 0, 0, 0.04)',
     },
