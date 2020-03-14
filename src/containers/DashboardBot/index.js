@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ListBlock from '../../components/ListBlock';
 import styles from './styles';
-import { bindActionCreators, compose } from 'redux';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-import ImageExam from '../../components/Block/Image';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import ImageExam from '../../components/Block/ImageBlock/Image';
+import { Route } from 'react-router-dom';
 
 // example listBlock
 const listBlock = [
     {
+        id: 0,
         groupName: 'Default message',
         listBlock: [
             {
@@ -23,6 +24,7 @@ const listBlock = [
         ],
     },
     {
+        id: 1,
         groupName: 'Smart phone',
         listBlock: [
             {
@@ -37,6 +39,7 @@ const listBlock = [
         ],
     },
     {
+        id: 2,
         groupName: 'Blackberry',
         listBlock: [
             {
@@ -57,7 +60,9 @@ const listBlock = [
 
 class DashBoardBot extends Component {
     renderBlockRoutes = () => {
-
+        // TO DO
+        // Render all Block
+        // return router from listblock
         return (
             <div>
                 <Route

@@ -15,7 +15,6 @@ import { TYPE_MODAL } from '../../constants/modal';
 import BotForm from './BotForm';
 import styles from './styles';
 import * as messageConstans from '../../constants/Messages';
-import { Router } from 'react-router-dom';
 class LobbyPage extends Component {
     renderAllChatBot = () => {
         const { listBot } = this.props;

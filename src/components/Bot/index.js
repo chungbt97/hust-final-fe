@@ -11,11 +11,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import * as actionsCommon from '../../commons/Method';
-import styles from './styles';
 import avatarDefault from '../../assets/images/avatar_bot_default.jpg';
+import * as actionsCommon from '../../commons/Method';
 import { MAX_LENGTH_BOT_NAME } from '../../constants';
-import { NavLink } from 'react-router-dom';
+import styles from './styles';
 
 const menuId = 'primary-search-account-menu';
 class Bot extends Component {

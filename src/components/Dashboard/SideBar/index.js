@@ -76,6 +76,7 @@ class SideBar extends Component {
 SideBar.propTypes = {
     classes: PropTypes.object,
     displaySidebar: PropTypes.bool,
+    match: PropTypes.object,
 };
 
 export default withStyles(styles)(SideBar);

@@ -1,15 +1,10 @@
 const useStyles = theme => ({
     paper: {
+        fontsize: '12px',
         fontFamily: 'Montserrat',
+        padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-    },
-    stringTitle: {
-        padding: theme.spacing(1),
-    },
-    iconAddButton: {
-        fontSize: '24px',
-        marginTop: '6px',
     },
 });
 export default useStyles;

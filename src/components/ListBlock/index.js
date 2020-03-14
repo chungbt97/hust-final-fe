@@ -14,7 +14,7 @@ class ListBlock extends Component {
     handleDelete = () => {
         console.log('Delete');
     };
-    renderAllBlock = list => {
+    renderAllBlock = (id, list) => {
         const { classes, match } = this.props;
         let { url } = match;
         let xhtml = null;
@@ -23,7 +23,7 @@ class ListBlock extends Component {
                 .replace(SPACE_CHARACTER, EM_DASH_CHARACTER)
                 .toLowerCase();
             return (
-                <Grid item xs={4} className={classes.Block} key={index}>
+                <Grid item xs={id === 0 ? 12 : 4} className={classes.Block} key={index}>
                     <NavLink
                         to={`${url}/${titleUrl}`}
                         className={classes.blockLink}
@@ -34,6 +34,25 @@ class ListBlock extends Component {
                 </Grid>
             );
         });
+        return xhtml;
+    };
+    renderButtonAddBlock = id => {
+        // TO DO
+        // Gắn link group cho block
+        let { classes, match } = this.props;
+        let { url } = match;
+        let xhtml = null;
+        xhtml = id === 0 ? null : (
+            <Grid item xs={4} className={classes.Block} >
+                <NavLink
+                    to={`${url}/${id}/newBlock`}
+                    className={classes.blockLink}
+                    activeClassName={classes.activedBlockLink}
+                >
+                    <Block title={null} />
+                </NavLink>
+            </Grid>
+        );
         return xhtml;
     };
     render() {
@@ -55,7 +74,8 @@ class ListBlock extends Component {
                     </Typography>
 
                     <Grid container spacing={1} className={classes.group}>
-                        {this.renderAllBlock(group.listBlock)}
+                        {this.renderAllBlock(group.id, group.listBlock)}
+                        {this.renderButtonAddBlock(group.id)}
                     </Grid>
                 </div>
             );
@@ -67,6 +87,7 @@ class ListBlock extends Component {
 ListBlock.propTypes = {
     list: PropTypes.array,
     classes: PropTypes.object,
+    match: PropTypes.object,
 };
 
 export default withStyles(styles)(ListBlock);
