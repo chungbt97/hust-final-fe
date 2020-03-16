@@ -10,9 +10,9 @@ class ChatbotRoute extends Component {
             <Route {...remainProps}
                 component = {props => {
                     return (
-                        <Dashboard {...props} {...remainProps}>
+                        // <Dashboard {...props} {...remainProps}>
                             <ComponentRender {...props} />
-                        </Dashboard>
+                        // </Dashboard>
                     );
                 }
                 }/>

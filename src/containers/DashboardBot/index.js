@@ -2,23 +2,26 @@ import { Box, Grid, TextField, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ListBlock from '../../components/ListBlock';
-import styles from './styles';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import ImageExam from '../../components/Block/ImageBlock/Image';
 import { Route } from 'react-router-dom';
+import { compose } from 'redux';
+import ListBlock from '../../components/ListBlock';
+import { URL_BLOCK, URL_BOT } from '../../constants';
+import ContentBlock from './ContentBlock';
+import styles from './styles';
 
 // example listBlock
 const listBlock = [
     {
-        id: 0,
+        id: 131325,
         groupName: 'Default message',
         listBlock: [
             {
+                id: 99,
                 title: 'Welcome message',
             },
             {
+                id: 100,
                 title: 'Default message',
             },
         ],
@@ -28,12 +31,15 @@ const listBlock = [
         groupName: 'Smart phone',
         listBlock: [
             {
+                id: 25,
                 title: 'Samsung',
             },
             {
+                id: 52,
                 title: 'Iphone',
             },
             {
+                id: 1313,
                 title: 'Xiaomi',
             },
         ],
@@ -43,15 +49,19 @@ const listBlock = [
         groupName: 'Blackberry',
         listBlock: [
             {
+                id: 9900,
                 title: 'BB 9900',
             },
             {
+                id: 9930,
                 title: 'BB 9930',
             },
             {
+                id: 10,
                 title: 'BB Q10',
             },
             {
+                id: 20,
                 title: 'BB Classic',
             },
         ],
@@ -62,31 +72,13 @@ class DashBoardBot extends Component {
     renderBlockRoutes = () => {
         // TO DO
         // Render all Block
-        // return router from listblock
+        // return router from listblock "/admin/dashboard/:id/BB-9900"
         return (
             <div>
                 <Route
-                    path="/admin/dashboard/:id/BB-9900"
+                    path={`/admin/dashboard/${URL_BOT}/:idBot/${URL_BLOCK}/:idBlock`}
                     component={props => (
-                        <ImageExam {...props} isAuthed={true} />
-                    )}
-                />
-                <Route
-                    path="/admin/dashboard/:id/BB-9930"
-                    component={props => (
-                        <ImageExam {...props} isAuthed={true} />
-                    )}
-                />
-                <Route
-                    path="/admin/dashboard/BB-Q10"
-                    component={props => (
-                        <ImageExam {...props} isAuthed={true} />
-                    )}
-                />
-                <Route
-                    path="/admin/dashboard/BB-Classic"
-                    component={props => (
-                        <ImageExam {...props} isAuthed={true} />
+                        <ContentBlock {...props} isAuthed={true} />
                     )}
                 />
             </div>
@@ -95,8 +87,21 @@ class DashBoardBot extends Component {
     handleChange = () => {
         console.log('Changing');
     };
-    render() {
+
+    handleRenderListBlock = () => {
         const { classes, ...props } = this.props;
+        let xhtml = null;
+        xhtml = listBlock.map((group, index) => {
+            return (
+                <ListBlock key={index} group={group} {...props}/>
+            );
+        });
+        console.log(new Date());
+        return xhtml;
+    }
+
+    render() {
+        const { classes } = this.props;
         return (
             <div className={classes.root}>
                 <Grid container className={classes.container}>
@@ -128,7 +133,7 @@ class DashBoardBot extends Component {
                                 are like individual pages on a website.
                             </Box>
                         </Typography>
-                        <ListBlock list={listBlock} {...props}/>
+                        {this.handleRenderListBlock()}
                     </Grid>
                     <Grid item xs={8} className={classes.blockContent}>
                         {this.renderBlockRoutes()}

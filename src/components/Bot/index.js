@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import avatarDefault from '../../assets/images/avatar_bot_default.jpg';
 import * as actionsCommon from '../../commons/Method';
-import { MAX_LENGTH_BOT_NAME } from '../../constants';
+import { MAX_LENGTH_BOT_NAME, URL_BOT } from '../../constants';
 import styles from './styles';
 
 const menuId = 'primary-search-account-menu';
@@ -75,6 +75,7 @@ class Bot extends Component {
         return xhtml;
     };
     render() {
+        console.log("bot");
         const { classes, data } = this.props;
         const { id, title, description, avatar, timestampCreate } = data;
         let charAvatar = title.charAt(0);
@@ -138,7 +139,7 @@ class Bot extends Component {
                                 Connect
                             </NavLink> */}
                             <Link
-                                href={`/admin/${id}`}
+                                href={`/admin/${URL_BOT}/${id}`}
                                 className={classes.linkDashboard}
                             >
                                 Connect

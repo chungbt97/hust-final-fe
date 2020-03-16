@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core';
 
 class ImageExam extends Component {
     render() {
+        console.log("chungadasdasd");
         const { classes } = this.props;
         return <div className={classes.root}>Image</div>;
     }

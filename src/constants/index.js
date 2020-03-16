@@ -3,6 +3,7 @@ import Analyze from '../containers/Analyze';
 import DashboardBot from '../containers/DashboardBot';
 import HomePage from '../containers/HomePage';
 import LobbyPage from '../containers/LobbyPage';
+import NotFound from '../components/NotFound';
 import Rules from '../containers/Rules';
 export const API_ENDPOINT = 'http://localhost:3000';
 
@@ -51,9 +52,14 @@ export const LOBBY_ROUTES = [
     {
         path: '/',
         name: 'All chatbot',
-        exact: false,
+        exact: true,
         component: LobbyPage,
         icon: '',
+    },
+    {
+        name: 'All chatbot',
+        component: NotFound,
+        exact: false,
     },
 ];
 export const ALPHABER_COLOR = [
@@ -183,3 +189,8 @@ export const SPACE_CHARACTER = ' ';
 export const EM_DASH_CHARACTER = '-';
 export const MAX_LENGTH_BLOCK_NAME = 20;
 export const MAX_LENGTH_BOT_NAME = 20;
+export const BLOCK_DEFAUT_ID = 131325;
+
+// url constant
+export const URL_BOT = 'chatbot';
+export const URL_BLOCK = 'block';

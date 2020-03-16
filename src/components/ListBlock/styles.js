@@ -1,11 +1,6 @@
 const useStyles = theme => ({
     root: {
-        paddingTop: '20px',
-        flexGrow: 1,
         fontFamily: 'Montserrat',
-        '& > *': {
-            margin: theme.spacing(0.5),
-        },
     },
     blockLink: {
         textDecoration: 'none',
@@ -20,5 +15,35 @@ const useStyles = theme => ({
             backgroundColor: '#208ef0',
         },
     },
+    expand: {
+        padding: 0,
+        float: 'right',
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
+    expandOpen: {
+        padding: 0,
+        float: 'right',
+        transform: 'rotate(180deg)',
+    },
+    collapse: {
+        paddingTop: '10px',
+        paddingBottom: '10px',
+    },
+    group: {
+        paddingBottom: theme.spacing(1.5),
+    },
+    iconMore: {
+        marginTop: '-12px',
+    },
+    menuDrop: {
+        transform: 'translateY(44px)',
+    },
+    menuItem:{
+        fontFamily: 'Montserrat',
+    }
 });
 export default useStyles;

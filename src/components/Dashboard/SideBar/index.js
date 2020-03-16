@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import styles from './styles';
-import { DASHBOARD_ROUTES } from '../../../constants';
+import { DASHBOARD_ROUTES, URL_BOT } from '../../../constants';
 import {
     List,
     Icon,
@@ -28,13 +28,14 @@ class SideBar extends Component {
     renderMenuList = () => {
         let xhtml = null;
         const { classes, match } = this.props;
-        let { id } = match.params;
+        console.log("sidebar");
+        let { id } = 5;
         xhtml = (
             <List>
                 {DASHBOARD_ROUTES.map((route, index) => (
                     <NavLink
                         key={index}
-                        to={`${route.path}/${id}`}
+                        to={`${route.path}/${URL_BOT}/${id}`}
                         exact={route.exact}
                         className={classes.menuLink}
                         activeClassName={classes.activedMenuLink}
@@ -57,6 +58,7 @@ class SideBar extends Component {
     };
     render() {
         const { classes, displaySidebar } = this.props;
+        console.log("sidebar");
         return (
             <Drawer
                 className={classes.drawer}
