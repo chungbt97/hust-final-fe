@@ -1,19 +1,18 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class NotFound extends Component {
-
     render() {
         return (
             <div>
-                <h3>404 -  không tìm thấy trang</h3>
+                <h3>404 - không tìm thấy trang</h3>
             </div>
-        )
+        );
     }
 }
 
 NotFound.propTypes = {
+    classes: PropTypes.object,
+};
 
-}
-
-export default NotFound
+export default NotFound;

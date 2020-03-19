@@ -5,9 +5,13 @@ import { withStyles } from '@material-ui/core';
 
 class ImageExam extends Component {
     render() {
-        console.log("chungadasdasd");
-        const { classes } = this.props;
-        return <div className={classes.root}>Image</div>;
+        return(
+            <Grid item sm={8}>
+                <Paper elevation={3}>
+                    in
+                </Paper>
+            </Grid>
+        );
     }
 }
 

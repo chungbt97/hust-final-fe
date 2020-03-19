@@ -66,6 +66,28 @@ const listBlock = [
             },
         ],
     },
+    {
+        id: 3,
+        groupName: 'Iphone',
+        listBlock: [
+            {
+                id: 5,
+                title: 'Iphone 5 & 5S',
+            },
+            {
+                id: 6,
+                title: 'Iphone 6 & 6S',
+            },
+            {
+                id: 7,
+                title: 'Iphone 7',
+            },
+            {
+                id: 10,
+                title: 'Iphone X & XS',
+            },
+        ],
+    },
 ];
 
 class DashBoardBot extends Component {
@@ -74,14 +96,10 @@ class DashBoardBot extends Component {
         // Render all Block
         // return router from listblock "/admin/dashboard/:id/BB-9900"
         return (
-            <div>
-                <Route
-                    path={`/admin/dashboard/${URL_BOT}/:idBot/${URL_BLOCK}/:idBlock`}
-                    component={props => (
-                        <ContentBlock {...props} isAuthed={true} />
-                    )}
-                />
-            </div>
+            <Route
+                path={`/admin/dashboard/${URL_BOT}/:idBot/${URL_BLOCK}/:idBlock`}
+                component={props => <ContentBlock {...props} />}
+            />
         );
     };
     handleChange = () => {
@@ -92,13 +110,10 @@ class DashBoardBot extends Component {
         const { classes, ...props } = this.props;
         let xhtml = null;
         xhtml = listBlock.map((group, index) => {
-            return (
-                <ListBlock key={index} group={group} {...props}/>
-            );
+            return <ListBlock key={index} group={group} {...props} />;
         });
-        console.log(new Date());
         return xhtml;
-    }
+    };
 
     render() {
         const { classes } = this.props;
@@ -155,5 +170,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {};
 };
+
 const connectRedux = connect(mapStateToProps, mapDispatchToProps);
 export default compose(withStyles(styles), connectRedux)(DashBoardBot);

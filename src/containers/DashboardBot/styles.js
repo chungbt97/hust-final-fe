@@ -23,7 +23,10 @@ const useStyles = () => ({
         position: 'absolute',
         backgroundColor: '#f9f8f8',
         width: '100%',
-        padding: '10px 0px 0px 10px',
+        padding: '10px 0px 0px 32px',
+        overflowY: 'scroll',
+        top: 0,
+        bottom: 0,
     },
 });
 export default useStyles;

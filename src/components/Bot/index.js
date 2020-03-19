@@ -75,7 +75,6 @@ class Bot extends Component {
         return xhtml;
     };
     render() {
-        console.log("bot");
         const { classes, data } = this.props;
         const { id, title, description, avatar, timestampCreate } = data;
         let charAvatar = title.charAt(0);

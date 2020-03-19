@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+
 import '../../assets/css/typing.css';
 class BlockLoading extends Component {
     render() {
-        return <div class="loader">Loading...</div>;
+        return (
+            <div id="wave">
+                <span className="dot"></span>
+                <span className="dot"></span>
+                <span className="dot"></span>
+            </div>
+        );
     }
 }
-
-BlockLoading.propTypes = {};
 
 export default BlockLoading;

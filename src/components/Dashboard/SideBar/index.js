@@ -28,8 +28,7 @@ class SideBar extends Component {
     renderMenuList = () => {
         let xhtml = null;
         const { classes, match } = this.props;
-        console.log("sidebar");
-        let { id } = 5;
+        let { id } = match.params;
         xhtml = (
             <List>
                 {DASHBOARD_ROUTES.map((route, index) => (
@@ -58,7 +57,6 @@ class SideBar extends Component {
     };
     render() {
         const { classes, displaySidebar } = this.props;
-        console.log("sidebar");
         return (
             <Drawer
                 className={classes.drawer}
