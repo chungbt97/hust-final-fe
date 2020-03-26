@@ -1,4 +1,11 @@
-import { Grid, IconButton, Paper, Popover, TextField, withStyles } from '@material-ui/core';
+import {
+    Grid,
+    IconButton,
+    Paper,
+    Popover,
+    TextField,
+    withStyles,
+} from '@material-ui/core';
 import MoodIcon from '@material-ui/icons/Mood';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
@@ -28,7 +35,7 @@ class Text extends Component {
 
     setMessage = emoji => {
         let { message, cursorPos, emojiIcon } = this.state;
-        if(!emojiIcon) {
+        if (!emojiIcon) {
             cursorPos = document.getElementById('text-block').selectionStart;
         } else {
             cursorPos += 2;
@@ -43,16 +50,19 @@ class Text extends Component {
     };
 
     handleChange = event => {
+        const { onChange } = this.props;
+        let { value } = event.target;
         this.setState({
-            message: event.target.value,
+            message: value,
         });
+        onChange(value);
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, fullWidth } = this.props;
         const { emojiPickerState, anchorEl } = this.state;
         return (
-            <Grid item sm={8}>
+            <Grid item sm={fullWidth ? 12 : 8}>
                 <Paper elevation={3}>
                     <Grid container>
                         <Grid item sm={12} className={classes.message}>
@@ -87,7 +97,10 @@ class Text extends Component {
                             horizontal: 'right',
                         }}
                         onClose={() =>
-                            this.setState({ emojiPickerState: false })
+                            this.setState({
+                                emojiPickerState: false,
+                                emojiIcon: false,
+                            })
                         }
                     >
                         <Picker

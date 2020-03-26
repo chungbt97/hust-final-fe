@@ -35,7 +35,7 @@ class Video extends Component {
                                 </div>
                             </IconContext.Provider>
                         }
-                        title="Audio"
+                        title="Video"
                         className={classes.cardHeader}
                     />
                     <CardContent>

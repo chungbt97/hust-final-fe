@@ -136,6 +136,7 @@ class LobbyPage extends Component {
         const { botActionCreators } = this.props;
         const { fetchAllBots } = botActionCreators;
         fetchAllBots();
+
     }
 
     render() {

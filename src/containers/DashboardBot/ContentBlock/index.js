@@ -1,15 +1,18 @@
-import { Grid, TextField, withStyles, Button } from '@material-ui/core';
+import { Button, Grid, Paper, TextField, withStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { FaCompactDisc, FaDatabase, FaFileVideo, FaFont, FaRegCommentDots, FaRegImage, FaRoute } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import styles from './styles';
-import TextBlock from '../../../components/Block/Text';
 import AudioBlock from '../../../components/Block/Audio';
-import VideoBlock from '../../../components/Block/Video';
+import ImageBlock from '../../../components/Block/Image';
+import RedirectBlock from '../../../components/Block/Redirect';
+import TextBlock from '../../../components/Block/Text';
 import TypingBlock from '../../../components/Block/Typing';
+import VideoBlock from '../../../components/Block/Video';
+import styles from './styles';
 
 class ContentBlock extends Component {
     constructor(props) {
@@ -18,8 +21,6 @@ class ContentBlock extends Component {
             listElement: [],
         };
     }
-
-    componentDidMount() {}
 
     handleDeleteBlock = () => {
         //TO DO
@@ -34,7 +35,8 @@ class ContentBlock extends Component {
     };
 
     renderAllElement = () => {
-        const {classes} = this.props;
+        // TO DO lúc này phải lấy từ list this prop
+        const { classes } = this.props;
         let xhtml = null;
         xhtml = this.state.listElement.map((element, index) => {
             return (
@@ -61,6 +63,11 @@ class ContentBlock extends Component {
         });
         return xhtml;
     };
+
+    componentDidMount() {
+        //TO DO
+        // gọi đến saga để lấy toàn bộ Element trong block đó
+    }
 
     render() {
         const { classes, match } = this.props;
@@ -98,43 +105,100 @@ class ContentBlock extends Component {
                     </Grid>
                     {this.renderAllElement()}
                     <Grid container className={classes.spaceLine}>
-                        <Grid item sm={12}>
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                onClick={() =>
-                                    this.hanldeClickAddElement(<TextBlock />)
-                                }
+                        <Grid item sm={9}>
+                            <Paper
+                                elevation={3}
+                                className={classes.controlPanel}
                             >
-                                Text
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                onClick={() =>
-                                    this.hanldeClickAddElement(<AudioBlock />)
-                                }
-                            >
-                                Audio
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                onClick={() =>
-                                    this.hanldeClickAddElement(<VideoBlock />)
-                                }
-                            >
-                                Video
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                onClick={() =>
-                                    this.hanldeClickAddElement(<TypingBlock />)
-                                }
-                            >
-                                Typing
-                            </Button>
+                                <Button
+                                    className={classes.btnControlPanel}
+                                    onClick={() =>
+                                        this.hanldeClickAddElement(
+                                            <TextBlock />,
+                                        )
+                                    }
+                                >
+                                    <FaFont />
+                                    Text
+                                </Button>
+                                <span className={classes.borderRight}></span>
+                                <Button
+                                    className={classes.btnControlPanel}
+                                    onClick={() =>
+                                        this.hanldeClickAddElement(
+                                            <ImageBlock />,
+                                        )
+                                    }
+                                >
+                                    <FaRegImage />
+                                    Image
+                                </Button>
+                                <span className={classes.borderRight}></span>
+                                <Button
+                                    className={classes.btnControlPanel}
+                                    onClick={() =>
+                                        this.hanldeClickAddElement(
+                                            <AudioBlock />,
+                                        )
+                                    }
+                                >
+                                    <FaCompactDisc />
+                                    Audio
+                                </Button>
+                                <span className={classes.borderRight}></span>
+                                <Button
+                                    className={classes.btnControlPanel}
+                                    onClick={() =>
+                                        this.hanldeClickAddElement(
+                                            <VideoBlock />,
+                                        )
+                                    }
+                                >
+                                    <FaFileVideo />
+                                    Video
+                                </Button>
+                                <span className={classes.borderRight}></span>
+                                <Button
+                                    className={classes.btnControlPanel}
+                                    onClick={() =>
+                                        this.hanldeClickAddElement(
+                                            <TypingBlock />,
+                                        )
+                                    }
+                                >
+                                    <FaRegCommentDots />
+                                    Typing
+                                </Button>
+                                <span className={classes.borderRight}></span>
+                                <Button
+                                    className={classes.btnControlPanel}
+                                    onClick={() =>
+                                        this.hanldeClickAddElement(
+                                            <RedirectBlock
+                                                block={{
+                                                    title: 'Test thử cái',
+                                                }}
+                                            />,
+                                        )
+                                    }
+                                >
+                                    <FaRoute />
+                                    Redirect
+                                </Button>
+                                <span className={classes.borderRight}></span>
+                                {/* TO DO câu hỏi */}
+                                <Button
+                                    className={classes.btnControlPanel}
+                                    onClick={() =>
+                                        this.hanldeClickAddElement(
+                                            <TextBlock />,
+                                        )
+                                    }
+                                >
+                                    <FaDatabase />
+                                    Attribute
+                                </Button>
+                            </Paper>
                         </Grid>
                         {/* Đây là tranh control pannel */}
                     </Grid>

@@ -5,7 +5,7 @@ import HomePage from '../containers/HomePage';
 import LobbyPage from '../containers/LobbyPage';
 import NotFound from '../components/NotFound';
 import Rules from '../containers/Rules';
-export const API_ENDPOINT = 'http://localhost:3000';
+export const API_ENDPOINT = 'http://localhost:8080';
 
 export const STATUS_RESPONSE = {
     OK: 200,

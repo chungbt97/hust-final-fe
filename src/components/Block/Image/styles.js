@@ -1,5 +1,5 @@
 const useStyles = theme => ({
-    paper: {
+    inputFile: {
         fontsize: '12px',
         fontFamily: 'Montserrat',
         padding: theme.spacing(1),
