@@ -5,7 +5,7 @@ import styles from './styles';
 class HomePage extends Component {
     render() {
         const { classes } = this.props;
-        return <div className={classes.root}>HomePage</div>;
+        return (<div className={classes.root}>HomePage</div>);
     }
 }
 

@@ -28,13 +28,13 @@ class SideBar extends Component {
     renderMenuList = () => {
         let xhtml = null;
         const { classes, match } = this.props;
-        let { id } = match.params;
+        let { botId } = match.params;
         xhtml = (
             <List>
                 {DASHBOARD_ROUTES.map((route, index) => (
                     <NavLink
                         key={index}
-                        to={`${route.path}/${URL_BOT}/${id}`}
+                        to={`${route.path}/${URL_BOT}/${botId}`}
                         exact={route.exact}
                         className={classes.menuLink}
                         activeClassName={classes.activedMenuLink}

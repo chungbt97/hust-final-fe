@@ -3,7 +3,6 @@ import Analyze from '../containers/Analyze';
 import DashboardBot from '../containers/DashboardBot';
 import HomePage from '../containers/HomePage';
 import LobbyPage from '../containers/LobbyPage';
-import NotFound from '../components/NotFound';
 import Rules from '../containers/Rules';
 export const API_ENDPOINT = 'http://localhost:8080';
 
@@ -12,6 +11,7 @@ export const STATUS_RESPONSE = {
     CREATED: 201,
     ACCEPTED: 202,
     NOT_FOUND: 404,
+    UNAUTHORIZED: 401,
 };
 
 export const DASHBOARD_ROUTES = [
@@ -19,28 +19,28 @@ export const DASHBOARD_ROUTES = [
         path: '/admin',
         name: 'Home page',
         exact: true,
-        component: ({ match }) => <HomePage match={match}/>,
+        component: ({ match }) => <HomePage match={match} />,
         icon: 'home_icon',
     },
     {
         path: '/admin/dashboard',
         name: 'Chat bot dashboard',
         exact: false,
-        component: ({ match }) => <DashboardBot match={match}/>,
+        component: ({ match }) => <DashboardBot match={match} />,
         icon: 'dashboard_icon',
     },
     {
         path: '/admin/rules',
         name: 'Set up Rules',
         exact: false,
-        component: ({ match }) => <Rules match={match}/>,
+        component: ({ match }) => <Rules match={match} />,
         icon: 'build_icon',
     },
     {
         path: '/admin/analyze',
         name: 'Statistics and analysis',
         exact: false,
-        component: ({ match }) => <Analyze match={match}/>,
+        component: ({ match }) => <Analyze match={match} />,
         icon: 'assessment_icon',
     },
     /**
@@ -55,11 +55,6 @@ export const LOBBY_ROUTES = [
         exact: true,
         component: LobbyPage,
         icon: '',
-    },
-    {
-        name: 'All chatbot',
-        component: NotFound,
-        exact: false,
     },
 ];
 export const ALPHABER_COLOR = [
@@ -193,4 +188,5 @@ export const BLOCK_DEFAUT_ID = 131325;
 
 // url constant
 export const URL_BOT = 'chatbot';
+export const URL_GROUP = 'group';
 export const URL_BLOCK = 'block';

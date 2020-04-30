@@ -3,9 +3,9 @@ import * as types from '../constants/modal';
 export const showModal = type => {
     return {
         type: types.SHOW_MODAL,
-        payload:{
-            type
-        }
+        payload: {
+            type,
+        },
     };
 };
 
@@ -33,3 +33,11 @@ export const changeContent = content => {
     };
 };
 
+export const changeBotEdit = bot => {
+    return {
+        type: types.CHANGE_BOT_EDIT,
+        payload: {
+            bot,
+        },
+    };
+};

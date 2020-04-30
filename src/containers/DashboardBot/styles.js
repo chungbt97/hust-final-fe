@@ -28,5 +28,14 @@ const useStyles = () => ({
         top: 0,
         bottom: 0,
     },
+    btnAdd: {
+        width: '100%',
+        border: '1px solid #f3f2f2',
+        '&:hover': {
+            borderColor: '#208ef0',
+            backgroundColor: '#ffffff',
+            color: '#208ef0',
+        },
+    },
 });
 export default useStyles;

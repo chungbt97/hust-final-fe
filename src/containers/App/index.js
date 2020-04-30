@@ -2,7 +2,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ChatbotRoute from '../../commons/Routes/ChatbotRoute';
@@ -10,6 +10,10 @@ import DefaultRoute from '../../commons/Routes/DefaultRoute';
 import { outerTheme } from '../../commons/Theme/themes';
 import { DASHBOARD_ROUTES, LOBBY_ROUTES, URL_BOT } from '../../constants';
 import configStore from '../../redux/configStore';
+import NotFound from '../NotFound';
+import SignIn from '../SignIn';
+import SignUp from '../SignUp';
+import history from './history';
 
 const store = configStore();
 
@@ -24,7 +28,7 @@ class App extends Component {
             return (
                 <ChatbotRoute
                     key={index}
-                    path={`${path}/${URL_BOT}/:id`}
+                    path={`${path}/${URL_BOT}/:botId`}
                     exact={exact}
                     component={component}
                     name={name}
@@ -37,7 +41,7 @@ class App extends Component {
     renderLobbyRoutes = () => {
         let xhtml = null;
         xhtml = LOBBY_ROUTES.map((route, index) => {
-            let { path, exact, component, name } = route;
+            let { path, exact, component, name, auth } = route;
             return (
                 <DefaultRoute
                     key={index}
@@ -45,6 +49,7 @@ class App extends Component {
                     exact={exact}
                     component={component}
                     name={name}
+                    auth={auth}
                 />
             );
         });
@@ -54,7 +59,7 @@ class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                <BrowserRouter>
+                <Router history={history}>
                     <ThemeProvider theme={outerTheme}>
                         <CssBaseline />
                         <ToastContainer />
@@ -63,9 +68,12 @@ class App extends Component {
                         <Switch>
                             {this.renderDashboardRoutes()}
                             {this.renderLobbyRoutes()}
+                            <Route path='/sign-up' component={SignUp}/>
+                            <Route path='/sign-in' component={SignIn}/>
+                            <Route component={NotFound}/>
                         </Switch>
                     </ThemeProvider>
-                </BrowserRouter>
+                </Router>
             </Provider>
         );
     }

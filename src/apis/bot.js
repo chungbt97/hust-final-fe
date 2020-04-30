@@ -1,21 +1,57 @@
-import axiosService from '../commons/Service/axiosService';
+import axios from 'axios';
 import { API_ENDPOINT } from '../constants/index';
 
 //  http://localhost:3000/bots
 const url = 'bots';
 
 export const getListBot = () => {
-    return axiosService.get(`${API_ENDPOINT}/${url}`);
+    let token = localStorage.getItem('token');
+    const options = {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        url: `${API_ENDPOINT}/${url}`,
+    };
+    return axios(options);
 };
 
 export const addNewBot = data => {
-    return axiosService.post(`${API_ENDPOINT}/${url}`, data);
+    let token = localStorage.getItem('token');
+    console.log(data);
+    const options = {
+        method: 'POST',
+        url:  `${API_ENDPOINT}/${url}`,
+        data,
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    return axios(options);
 };
 
 export const updateBot = (id, data) => {
-    return axiosService.put(`${API_ENDPOINT}/${url}/${id}`, data);
+    let token = localStorage.getItem('token');
+    const options = {
+        method: 'PUT',
+        url:  `${API_ENDPOINT}/${url}/${id}`,
+        data,
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    return axios(options);
 };
 
 export const deleteBot = id => {
-    return axiosService.delete(`${API_ENDPOINT}/${url}/${id}`);
+    let token = localStorage.getItem('token');
+    const options = {
+        method: 'DELETE',
+        url:  `${API_ENDPOINT}/${url}/${id}`,
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    return axios(options);
 };

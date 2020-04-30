@@ -2,21 +2,33 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Lobby from '../../../components/Lobby';
+import LoginPage from '../../../containers/SignIn';
 
 class DefaultRoute extends Component {
     static propTypes = {};
 
     render() {
-        const { name, component: ComponentRender, ...remainProps } = this.props;
+        const {
+            name,
+            auth,
+            component: ComponentRender,
+            ...remainProps
+        } = this.props;
+        let token = localStorage.getItem('token');
+
         return (
             <Route
                 {...remainProps}
                 render={routeProps => {
-                    return (
-                        <Lobby>
-                            <ComponentRender {...remainProps} />
-                        </Lobby>
-                    );;
+                    if (token !== null) {
+                        return (
+                            <Lobby auth={auth}>
+                                <ComponentRender {...remainProps} />
+                            </Lobby>
+                        );
+                    } else {
+                        return <LoginPage {...remainProps} />
+                    }
                 }}
             />
         );

@@ -42,8 +42,12 @@ const useStyles = theme => ({
     menuDrop: {
         transform: 'translateY(44px)',
     },
-    menuItem:{
+    menuItem: {
         fontFamily: 'Montserrat',
-    }
+    },
+    btnAddBlock: {
+        width: '100%',
+        fontSize: '14px',
+    },
 });
 export default useStyles;

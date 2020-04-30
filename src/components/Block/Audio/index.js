@@ -14,11 +14,31 @@ import styles from './styles';
 class Audio extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            url: '',
+            message: '',
+        };
     }
 
+    componentDidMount() {
+        const { src } = this.props;
+        this.setState({
+            url: src,
+        });
+    }
+
+    handleChange = event => {
+        const { id, onChange } = this.props;
+        let { value } = event.target;
+        onChange({id, title: value});
+        this.setState({
+            message: value,
+        });
+        onChange(value);
+    };
+
     render() {
-        const { classes } = this.props;
+        const { classes, id } = this.props;
         return (
             <Grid item sm={8}>
                 <Card className={classes.card}>
@@ -53,11 +73,13 @@ class Audio extends Component {
                     </CardContent>
                     <CardActions disableSpacing>
                         <TextField
-                            id="outlined-full-width"
+                            id={`audio-${id}`}
                             label="URL"
                             helperText="Example: https://dl.dropbox.com/s/sample.mp3"
                             fullWidth
+                            value={this.state.url}
                             variant="outlined"
+                            onChange={this.handleChange}
                         />
                     </CardActions>
                 </Card>

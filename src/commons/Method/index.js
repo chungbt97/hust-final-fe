@@ -1,4 +1,5 @@
 import { ALPHABER_COLOR, SPACE_CHARACTER, THREE_DOTS } from '../../constants';
+import { OPTION_LINK, OPTION_SMS, OPTION_PHONE } from '../../constants/element';
 
 export const getColorWithAlphaber = key => {
     let bgColor = null;
@@ -40,4 +41,46 @@ export const splitName = (name, maxLength) => {
     }
     nameMini = nameMini.concat(THREE_DOTS);
     return nameMini;
+};
+
+export const removeLastSlashUrl = url => {
+    let lastChar = url.charAt(url.length - 1);
+    if (lastChar === '/') {
+        return url.substring(0, url.length - 1);
+    }
+    return url;
+};
+
+export const covertOptionToElement = option => {
+    if (option.type === OPTION_LINK) {
+        return {
+            title: option.nameOption,
+            default_action: {
+                type: option.type,
+                url: option.urlOrPhone,
+            },
+        };
+    } else if (option.type === OPTION_SMS){
+        return {
+            title: option.nameOption,
+            default_action: {
+                type: option.type,
+                payload: {
+                    content: 'alo',
+                    phone_code: option.urlOrPhone,
+                },
+            },
+        };
+    } else if (option.type === OPTION_PHONE){
+        return {
+            title: option.nameOption,
+            default_action: {
+                type: option.type,
+                payload: {
+                    phone_code: option.urlOrPhone,
+                },
+            },
+        };
+    }
+    return null;
 };

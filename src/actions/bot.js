@@ -110,14 +110,6 @@ export const deleteBotSuccess = (id, name) => {
     };
 };
 
-export const chooseBotToEdit = bot => {
-    return {
-        type: types.CHANGE_BOT_EDIT,
-        payload: {
-            bot,
-        },
-    };
-};
 
 /**
  * Something wrong on server

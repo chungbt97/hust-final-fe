@@ -50,7 +50,7 @@ const useStyles = () => ({
         background: '#f3f2f2',
     },
     controlPanel: {
-        display: 'flex',
+        display: 'inline-flex',
     }
 });
 export default useStyles;

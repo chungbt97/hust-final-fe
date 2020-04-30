@@ -4,6 +4,7 @@ import blockReducer from './block';
 import uiReducer from './ui';
 import modalReducer from './modal';
 import botReducer from './bot';
+import accountReducer from './account';
 
 const rootReducer = combineReducers({
     form: formReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     ui: uiReducer,
     modal: modalReducer,
     bot: botReducer,
+    account: accountReducer
 });
 
 export default rootReducer;

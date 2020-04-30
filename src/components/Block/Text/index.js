@@ -50,16 +50,24 @@ class Text extends Component {
     };
 
     handleChange = event => {
-        const { onChange } = this.props;
+        const { id, onChange } = this.props;
         let { value } = event.target;
+        onChange({id, title: value});
         this.setState({
             message: value,
         });
         onChange(value);
     };
 
+    componentDidMount() {
+        const { text } = this.props;
+        this.setState({
+            message: text,
+        });
+    }
+
     render() {
-        const { classes, fullWidth } = this.props;
+        const { classes, fullWidth, id } = this.props;
         const { emojiPickerState, anchorEl } = this.state;
         return (
             <Grid item sm={fullWidth ? 12 : 8}>
@@ -67,7 +75,7 @@ class Text extends Component {
                     <Grid container>
                         <Grid item sm={12} className={classes.message}>
                             <TextField
-                                id="text-block"
+                                id={`text-block-${id}`}
                                 label="Text message"
                                 name="text"
                                 variant="outlined"

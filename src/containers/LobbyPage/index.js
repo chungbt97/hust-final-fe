@@ -11,10 +11,10 @@ import { toastMsgError } from '../../commons/Toastify';
 import Bot from '../../components/Bot';
 import BotModal from '../../components/Modal/BotModal';
 import ConfirmModal from '../../components/Modal/ConfirmModal';
+import * as messageConstans from '../../constants/Messages';
 import { TYPE_MODAL } from '../../constants/modal';
 import BotForm from './BotForm';
 import styles from './styles';
-import * as messageConstans from '../../constants/Messages';
 class LobbyPage extends Component {
     renderAllChatBot = () => {
         const { listBot } = this.props;
@@ -74,33 +74,33 @@ class LobbyPage extends Component {
     };
 
     handleUpdateBot = bot => {
-        const { modalActionCreators, botActionCreators } = this.props;
-        const { showModal, changeTitle } = modalActionCreators;
-        const { chooseBotToEdit } = botActionCreators;
-        chooseBotToEdit(bot);
+        const { modalActionCreators } = this.props;
+        const { showModal, changeTitle, changeBotEdit } = modalActionCreators;
+        changeBotEdit(bot);
         showModal(TYPE_MODAL.BOT);
-        changeTitle(bot.title);
+        changeTitle(bot.name);
     };
 
     handleSubmitForm = data => {
         const { botActionCreators, botEdit } = this.props;
         const { addNewBot, updateBot } = botActionCreators;
-        let { id, title, description } = data;
+        let { _id, name, description, tokenApp, app_id } = data;
         let timestampNow = new Date();
         if (botEdit === null) {
             addNewBot({
-                title,
+                name,
                 description,
-                timestampCreate: timestampNow,
+                tokenApp,
+                appId: app_id,
+                createdAt: timestampNow,
             });
         } else {
-            let { timestampCreate } = botEdit;
             updateBot({
-                id,
-                title,
+                _id,
+                name,
                 description,
-                lastTimeEdit: timestampNow,
-                timestampCreate,
+                tokenApp,
+                appId: app_id,
             });
         }
     };
@@ -109,9 +109,9 @@ class LobbyPage extends Component {
         const { botActionCreators, botDelete } = this.props;
         const { deleteBot } = botActionCreators;
         let { confirmName } = data;
-        let { title } = botDelete;
-        if (confirmName === title) {
-            deleteBot(botDelete.id, botDelete.title);
+        let { name } = botDelete;
+        if (confirmName === name) {
+            deleteBot(botDelete._id, botDelete.name);
         } else {
             toastMsgError(messageConstans.ERROR_MESSAGE);
         }
@@ -136,36 +136,33 @@ class LobbyPage extends Component {
         const { botActionCreators } = this.props;
         const { fetchAllBots } = botActionCreators;
         fetchAllBots();
-
     }
 
     render() {
         const { classes } = this.props;
         return (
-
-                <div className={classes.root} spacing={2}>
-                    <div>
-                        <Button
-                            className={classes.btnAdd}
-                            onClick={this.handleOpenBotModal}
-                        >
-                            <AddIcon />
-                            Add new ChatBot
-                        </Button>
-                    </div>
-
-                    <Grid
-                        container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="flex-start"
-                        spacing={2}
+            <div className={classes.root} spacing={2}>
+                <div>
+                    <Button
+                        className={classes.btnAdd}
+                        onClick={this.handleOpenBotModal}
                     >
-                        {this.renderAllChatBot()}
-                    </Grid>
-                    {this.renderBotForm()}
+                        <AddIcon />
+                        Add new ChatBot
+                    </Button>
                 </div>
 
+                <Grid
+                    container
+                    direction="row"
+                    justify="flex-start"
+                    alignItems="flex-start"
+                    spacing={2}
+                >
+                    {this.renderAllChatBot()}
+                </Grid>
+                {this.renderBotForm()}
+            </div>
         );
     }
 }
@@ -177,6 +174,7 @@ LobbyPage.propTypes = {
         showModal: PropTypes.func,
         changeTitle: PropTypes.func,
         hideModal: PropTypes.func,
+        changeBotEdit: PropTypes.func,
     }),
     botActionCreators: PropTypes.shape({
         fetchAllBots: PropTypes.func,
@@ -189,7 +187,7 @@ LobbyPage.propTypes = {
 const mapStateToProps = state => {
     return {
         listBot: state.bot.listBot,
-        botEdit: state.bot.botEdit,
+        botEdit: state.modal.botEdit,
         botDelete: state.bot.botDelete,
         open: state.modal.open,
         title: state.modal.title,

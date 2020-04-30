@@ -1,10 +1,10 @@
-import { toastError } from '../commons/Toastify';
+import { toastError, toastSuccess } from '../commons/Toastify';
 import * as types from '../constants/bot';
 
 const initialState = {
     listBot: [],
-    botEdit: null,
     botDelete: null,
+    botEdit: 'null',
 };
 
 const reducer = (state = initialState, action) => {
@@ -44,12 +44,12 @@ const reducer = (state = initialState, action) => {
             const { id } = action.payload;
             const { listBot } = state;
             const newList = listBot.filter(bot => {
-                return bot.id !== id;
+                return bot._id !== id;
             });
             return {
                 ...state,
                 listBot: [...newList],
-                botDelete: null
+                botDelete: null,
             };
         }
         case types.DELETE_BOT_FAILD: {
@@ -57,7 +57,7 @@ const reducer = (state = initialState, action) => {
             toastError(error);
             return {
                 ...state,
-                botDelete: null
+                botDelete: null,
             };
         }
         case types.ADD_BOT: {
@@ -84,17 +84,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
             };
         }
-        case types.CHANGE_BOT_EDIT: {
-            const { bot } = action.payload;
-            return {
-                ...state,
-                botEdit: bot,
-            };
-        }
         case types.UPDATE_BOT_SUCCESS: {
             const { bot } = action.payload;
+            toastSuccess('Update bot: ' + bot.name + ' done');
             let newList = state.listBot.filter(b => {
-                return b.id !== bot.id;
+                return b._id !== bot._id;
             });
             return {
                 ...state,

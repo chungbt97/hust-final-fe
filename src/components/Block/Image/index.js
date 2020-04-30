@@ -1,17 +1,6 @@
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Grid,
-    Paper,
-    withStyles,
-} from '@material-ui/core';
+import { Box, Grid, Paper, TextField, Typography, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import styles from './styles';
 
@@ -20,157 +9,49 @@ class ImageBlock extends Component {
         super(props);
         this.state = {
             src: null,
-            crop: {
-                unit: '%',
-                width: 30,
-                aspect: 16 / 9,
-            },
             open: false,
-            croppedImageUrl: null,
+            imageUrl: null,
             idImage: '',
+            title: '',
+            url: '',
+            file: null,
         };
     }
     onSelectFile = e => {
+        const { id, upload } = this.props;
+        const { title } = this.state;
         if (e.target.files && e.target.files.length > 0) {
-            const reader = new FileReader();
-            reader.addEventListener('load', () =>
-                this.setState({ src: reader.result, open: true }),
-            );
-            reader.readAsDataURL(e.target.files[0]);
+            let url = URL.createObjectURL(e.target.files[0]);
+            let file = e.target.files[0];
+            this.setState({
+                file: file,
+                imageUrl: url,
+            });
+            upload({ file, id, title });
         }
     };
 
-    // If you setState the crop in here you should return false.
-    onImageLoaded = image => {
-        this.imageRef = image;
-    };
-
-    onCropComplete = crop => {
-        this.makeClientCrop(crop);
-    };
-
-    onCropChange = (crop, percentCrop) => {
-        // You could also use percentCrop:
-        // this.setState({ crop: percentCrop });
-        this.setState({ crop });
-    };
-
-    async makeClientCrop(crop) {
-        if (this.imageRef && crop.width && crop.height) {
-            const croppedImageUrl = await this.getCroppedImg(
-                this.imageRef,
-                crop,
-                'newFile.jpeg',
-            );
-            this.setState({ croppedImageUrl });
-        }
-    }
-
-    getCroppedImg(image, crop, fileName) {
-        const canvas = document.createElement('canvas');
-        const scaleX = image.naturalWidth / image.width;
-        const scaleY = image.naturalHeight / image.height;
-        canvas.width = crop.width;
-        canvas.height = crop.height;
-        const ctx = canvas.getContext('2d');
-
-        ctx.drawImage(
-            image,
-            crop.x * scaleX,
-            crop.y * scaleY,
-            crop.width * scaleX,
-            crop.height * scaleY,
-            0,
-            0,
-            crop.width,
-            crop.height,
-        );
-
-        return new Promise((resolve, reject) => {
-            canvas.toBlob(blob => {
-                if (!blob) {
-                    //reject(new Error('Canvas is empty'));
-                    console.error('Canvas is empty');
-                    return;
-                }
-                blob.name = fileName;
-                window.URL.revokeObjectURL(this.fileUrl);
-                this.fileUrl = window.URL.createObjectURL(blob);
-                resolve(this.fileUrl);
-            }, 'image/jpeg');
-        });
-    }
-
-    handleClickOpen = () => {
+    handleChangeTitle = event => {
+        const {id, onChange} = this.props;
+        let { value } = event.target;
+        onChange({id, title: value});
         this.setState({
-            open: true,
+            title: value,
         });
     };
 
-    handleClose = isDone => {
-        const {idImage} = this.state;
-        if (isDone) {
-            this.setState({
-                open: false,
-            });
-        } else {
-            this.setState({
-                open: false,
-                croppedImageUrl: null,
-            });
-            document.getElementById(idImage).value = '';
-        }
-    };
-
-    renderModalCrop = () => {
-        const { crop, src, open } = this.state;
-        return (
-            <Dialog
-                open={open}
-                onClose={this.handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">Crop Image</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        {src && (
-                            <ReactCrop
-                                src={src}
-                                crop={crop}
-                                ruleOfThirds
-                                onImageLoaded={this.onImageLoaded}
-                                onComplete={this.onCropComplete}
-                                onChange={this.onCropChange}
-                            />
-                        )}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => this.handleClose(false)} color="primary">
-                        Cancel
-                    </Button>
-                    <Button
-                        onClick={() => this.handleClose(true)}
-                        color="primary"
-                        autoFocus
-                    >
-                        Save
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
-    };
-
-    componentWillMount() {
+    componentDidMount() {
+        const { url, id, title } = this.props;
         this.setState({
-            idImage: 'file-input',
+            idImage: `file-input-${id}`,
+            imageUrl: url,
+            title: title,
         });
     }
 
     render() {
-        const { croppedImageUrl, open, idImage } = this.state;
-        const { classes } = this.props;
+        const { imageUrl, open, idImage, title } = this.state;
+        const { classes, id } = this.props;
         return (
             <Grid item sm={8}>
                 <Paper elevation={3}>
@@ -185,16 +66,43 @@ class ImageBlock extends Component {
                             />
                         </div>
 
-                        {croppedImageUrl && !open && (
-                            <img
-                                alt="Crop"
-                                style={{ maxWidth: '100%' }}
-                                src={croppedImageUrl}
-                            />
+                        {imageUrl && !open && (
+                            <div>
+                                <Typography component="div">
+                                    <Box
+                                        fontWeight="fontWeightLight"
+                                        fontFamily="Montserrat"
+                                        fontSize={12}
+                                        ml={1}
+                                        mr={1}
+                                        mb={1}
+                                    >
+                                        <TextField
+                                            id={this.state.idImage}
+                                            name={`titleImage-${id}`}
+                                            variant="outlined"
+                                            className={classes.blockTitle}
+                                            defaultValue={title}
+                                            placeholder="Tiêu đề"
+                                            fullWidth
+                                            onChange={this.handleChangeTitle}
+                                        />
+                                    </Box>
+                                </Typography>
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        height: '300px',
+                                        background: `url(${imageUrl})`,
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundPosition: 'center center',
+                                        backgroundSize: 'contain',
+                                    }}
+                                ></div>
+                            </div>
                         )}
                     </div>
                 </Paper>
-                {this.renderModalCrop()}
             </Grid>
         );
     }

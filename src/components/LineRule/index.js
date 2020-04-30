@@ -6,9 +6,9 @@ class LineRule extends Component {
     render() {
         const {
             classes,
-            idBlock,
+            //idBlock,
             listWord,
-            valueText,
+            //valueText,
             renderOptionReply,
             renderBtnActions,
             handleEnterWord,

@@ -76,14 +76,14 @@ class Bot extends Component {
     };
     render() {
         const { classes, data } = this.props;
-        const { id, title, description, avatar, timestampCreate } = data;
-        let charAvatar = title.charAt(0);
+        const { _id, name, description, avatar, createdAt } = data;
+        let charAvatar = name.charAt(0);
         let bgColor = actionsCommon.getColorWithAlphaber(charAvatar);
-        let timeCreated = actionsCommon.convertTimestampToDate(timestampCreate);
+        let timeCreated = actionsCommon.convertTimestampToDate(createdAt);
         let miniTitle =
-            title.length > MAX_LENGTH_BOT_NAME
-                ? actionsCommon.splitName(title, MAX_LENGTH_BOT_NAME)
-                : title;
+            name.length > MAX_LENGTH_BOT_NAME
+                ? actionsCommon.splitName(name, MAX_LENGTH_BOT_NAME)
+                : name;
         return (
             <div>
                 <Card className={classes.root}>
@@ -138,7 +138,7 @@ class Bot extends Component {
                                 Connect
                             </NavLink> */}
                             <Link
-                                href={`/admin/${URL_BOT}/${id}`}
+                                href={`/admin/${URL_BOT}/${_id}`}
                                 className={classes.linkDashboard}
                             >
                                 Connect

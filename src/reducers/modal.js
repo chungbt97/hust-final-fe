@@ -5,6 +5,7 @@ const initialState = {
     content: null,
     title: '',
     typeModal: null,
+    botEdit: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +24,7 @@ const reducer = (state = initialState, action) => {
                 open: false,
                 title: '',
                 typeModal: null,
+                botEdit: null,
             };
         case types.CHANGE_TITLE: {
             const { title } = action.payload;
@@ -36,6 +38,13 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 content: content,
+            };
+        }
+        case types.CHANGE_BOT_EDIT: {
+            const { bot } = action.payload;
+            return {
+                ...state,
+                botEdit: bot,
             };
         }
         default:

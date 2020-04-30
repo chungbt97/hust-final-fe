@@ -19,7 +19,7 @@ BotForm.propTypes = {
 };
 const mapStateToProps = state => {
     return {
-        initialValues: state.bot.botEdit,
+        initialValues: state.modal.botEdit,
     };
 };
 const mapDispatchToProps = dispatch => {

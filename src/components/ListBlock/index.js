@@ -1,11 +1,29 @@
-import { Box, Divider, Grid, IconButton, Menu, MenuItem, Typography, withStyles } from '@material-ui/core';
+import {
+    Box,
+    Button,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Divider,
+    Grid,
+    IconButton,
+    Menu,
+    MenuItem,
+    TextField,
+    Typography,
+    withStyles,
+    Paper,
+} from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { BLOCK_DEFAUT_ID, URL_BLOCK } from '../../constants';
+import { URL_BLOCK, URL_GROUP } from '../../constants';
 import Block from '../Block';
 import styles from './styles';
+import { removeLastSlashUrl } from '../../commons/Method';
 
 const menuId = 'button-more-group';
 class ListBlock extends Component {
@@ -14,59 +32,60 @@ class ListBlock extends Component {
         this.state = {
             open: false,
             anchorEl: null,
+            openModal: false,
+            actionType: '',
+            nameGroup: '',
+            newNameGroup: '',
         };
     }
-
-    handleClick = () => {
-        console.log('CLick');
-    };
-
-    handleDelete = () => {
-        console.log('Delete');
-    };
-    renderAllBlock = (idBot, list) => {
+    renderAllBlock = group => {
         const { classes, match } = this.props;
         let { url } = match;
+        let newUrl = removeLastSlashUrl(url);
         let xhtml = null;
-        xhtml = list.map((block, index) => {
+        const { defaultGroup, blocks, _id } = group;
+        xhtml = blocks.map((block, index) => {
             return (
                 <Grid
                     item
-                    xs={idBot === BLOCK_DEFAUT_ID ? 12 : 4}
+                    xs={defaultGroup ? 12 : 4}
                     className={classes.Block}
                     key={index}
                 >
                     <NavLink
-                        to={`${url}/${URL_BLOCK}/${block.id}`}
+                        to={`${newUrl}/${URL_GROUP}/${_id}/${URL_BLOCK}/${block._id}`}
                         className={classes.blockLink}
                         activeClassName={classes.activedBlockLink}
                     >
-                        <Block title={block.title} />
+                        <Block title={block.name} defaultBlock={defaultGroup} />
                     </NavLink>
                 </Grid>
             );
         });
         return xhtml;
     };
-    renderButtonAddBlock = id => {
+    renderButtonAddBlock = (id, defaultGroup) => {
         // TO DO
         // Gắn link group cho block
-        let { classes, match } = this.props;
-        let { url } = match;
+        let { classes } = this.props;
         let xhtml = null;
-        xhtml =
-            id === BLOCK_DEFAUT_ID ? null : (
-                <Grid item xs={4} className={classes.Block}>
-                    <NavLink
-                        to={`${url}/${URL_BLOCK}/${id}/newBlock`}
-                        className={classes.blockLink}
-                        activeClassName={classes.activedBlockLink}
+        xhtml = defaultGroup ? null : (
+            <Grid item xs={4} className={classes.Block}>
+                <Paper elevation={3}>
+                    <Button
+                        className={classes.btnAddBlock}
+                        onClick={this.addNewBlock}
                     >
-                        <Block title={null} />
-                    </NavLink>
-                </Grid>
-            );
+                        +
+                    </Button>
+                </Paper>
+            </Grid>
+        );
         return xhtml;
+    };
+
+    addNewBlock = () => {
+        this.setState({ openModal: true, actionType: 'block' });
     };
 
     handleMenuOpen = e => {
@@ -99,53 +118,183 @@ class ListBlock extends Component {
                 className={classes.menuDrop}
             >
                 <MenuItem
-                    onClick={this.handleUpdateBot}
                     className={classes.menuItem}
+                    onClick={this.handleRenameGroup}
                 >
                     Rename
                 </MenuItem>
-                <MenuItem onClick={this.handleDeleteBot}>Delete</MenuItem>
+                <MenuItem
+                    className={classes.menuItem}
+                    onClick={this.handleDeleteGroup}
+                >
+                    Delete
+                </MenuItem>
             </Menu>
         );
         return xhtml;
     };
 
+    handleChange = event => {
+        let { value } = event.target;
+        this.setState({
+            nameGroup: value,
+        });
+    };
+
+    handleDeleteGroup = () => {
+        this.setState({ openModal: true, actionType: 'delete' });
+    };
+
+    handleRenameGroup = () => {
+        this.setState({ openModal: true, actionType: 'rename' });
+    };
+
+    handleCloseModal = () => {
+        this.setState({
+            openModal: false,
+            open: false,
+            actionType: '',
+            name: '',
+            anchorEl: null,
+        });
+    };
+    handleOpenModal = () => {
+        this.setState({ openModal: true });
+    };
+    handleSubmitModal = event => {
+        event.preventDefault();
+        const { actionType, nameGroup } = this.state;
+        const {
+            group,
+            handleRenameGroup,
+            handleDeleteGroup,
+            addBlock,
+        } = this.props;
+        let { _id } = group;
+        if (actionType === 'rename') {
+            this.setState({ newNameGroup: nameGroup });
+            handleRenameGroup({ _id, name: nameGroup });
+        } else if (actionType === 'delete') {
+            if (nameGroup === 'DELETE') handleDeleteGroup(_id);
+        } else {
+            addBlock({ name: nameGroup, groupId: group._id });
+        }
+        this.handleCloseModal();
+    };
+
+    renderModalGroup = () => {
+        let xhtml = null;
+        const { openModal, actionType } = this.state;
+        const { classes } = this.props;
+        let title = '';
+        let intro = '';
+        if (actionType === 'rename') {
+            title = 'Rename';
+            intro =
+                ' Enter the new NAME of the block below to confirm that you want to change.';
+        } else if (actionType === 'delete') {
+            title = 'Delete';
+            intro =
+                'This action cannot be undone. Enter the DELETE below to confirm that you want to permanently delete it for all user.';
+        } else {
+            title = 'Add new Block';
+            intro =
+                'Your bot’s content structure consists of ‘blocks’. Blocks are like individual pages on a website. They contain cards: text, pictures, as well as plugins for creating complex logic. Blocks are not visible to the users, but help you organize the structure.';
+        }
+        xhtml = (
+            <Dialog
+                open={openModal}
+                onClose={this.handleCloseModal}
+                aria-labelledby="form-dialog-title"
+            >
+                <form
+                    className={classes.form}
+                    onSubmit={this.handleSubmitModal}
+                >
+                    <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>{intro}</DialogContentText>
+                        <TextField
+                            id="group-name"
+                            style={{ margin: 8 }}
+                            placeholder="Lorem"
+                            helperText="Enter name of group"
+                            fullWidth
+                            name="groupName"
+                            variant="outlined"
+                            required={true}
+                            autoFocus
+                            onChange={this.handleChange}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button color="secondary" type="submit">
+                            Submit
+                        </Button>
+                        <Button onClick={this.handleCloseModal}>Cancel</Button>
+                    </DialogActions>
+                </form>
+            </Dialog>
+        );
+        return xhtml;
+    };
+
+    componentDidMount() {
+        const { group } = this.props;
+        this.setState({ newNameGroup: group.name });
+    }
+
     render() {
         const { group, classes } = this.props;
+        const { newNameGroup } = this.state;
         return (
             <div>
-                <Typography component="div">
-                    <Box
-                        fontWeight="fontWeightMedium"
-                        fontFamily="Montserrat"
-                        fontSize={14}
-                        mt={1}
-                        mb={1}
-                        display="flex"
-                    >
-                        <Box width="100%">{group.groupName}</Box>
-                        <Box flexShrink={0} className={classes.buttonMore}>
-                            <IconButton
-                                aria-label="display more actions"
-                                color="inherit"
-                                className={classes.iconMore}
-                                onClick={this.handleMenuOpen}
-                            >
-                                <MoreIcon
-                                    fontSize="small"
-                                />
-                            </IconButton>
+                {!group.defaultGroup ? (
+                    <Typography component="div">
+                        <Box
+                            fontWeight="fontWeightMedium"
+                            fontFamily="Montserrat"
+                            fontSize={14}
+                            mt={1}
+                            mb={1}
+                            display="flex"
+                        >
+                            <Box width="100%">{newNameGroup}</Box>
+                            <Box flexShrink={0} className={classes.buttonMore}>
+                                <IconButton
+                                    aria-label="display more actions"
+                                    color="inherit"
+                                    className={classes.iconMore}
+                                    onClick={this.handleMenuOpen}
+                                >
+                                    <MoreIcon fontSize="small" />
+                                </IconButton>
+                            </Box>
                         </Box>
-                    </Box>
-                </Typography>
+                    </Typography>
+                ) : (
+                    <Typography component="div">
+                        <Box
+                            fontWeight="fontWeightMedium"
+                            fontFamily="Montserrat"
+                            fontSize={14}
+                            mt={1}
+                            mb={1}
+                            display="flex"
+                        >
+                            {' '}
+                        </Box>
+                    </Typography>
+                )}
 
                 <Grid container spacing={1} className={classes.group}>
-                    {this.renderAllBlock(group.id, group.listBlock)}
-                    {this.renderButtonAddBlock(group.id)}
+                    {this.renderAllBlock(group)}
+                    {this.renderButtonAddBlock(group._id, group.defaultGroup)}
                 </Grid>
 
                 <Divider />
                 {this.renderMenuCard()}
+                {this.renderModalGroup()}
             </div>
         );
     }
@@ -155,6 +304,7 @@ ListBlock.propTypes = {
     list: PropTypes.array,
     classes: PropTypes.object,
     match: PropTypes.object,
+    addBlock: PropTypes.func,
 };
 
 export default withStyles(styles)(ListBlock);

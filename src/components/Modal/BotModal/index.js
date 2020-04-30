@@ -7,8 +7,6 @@ import { Field } from 'redux-form';
 import renderTextField from '../../InputField/TextField';
 import styles from './style';
 
-
-
 class BotModal extends Component {
     render() {
         const {
@@ -37,10 +35,34 @@ class BotModal extends Component {
                             placeholder="Lorem"
                             helperText="you should give your bot a name"
                             fullWidth
-                            name="title"
+                            name="name"
                             variant="outlined"
                             required
                             autoFocus
+                            component={renderTextField}
+                        />
+                        <Field
+                            id="form-name"
+                            label="Token"
+                            style={{ margin: 8 }}
+                            placeholder="Lorem"
+                            helperText="Access token"
+                            fullWidth
+                            name="tokenApp"
+                            variant="outlined"
+                            required
+                            component={renderTextField}
+                        />
+                        <Field
+                            id="form-name"
+                            label="Access Token of your Shop"
+                            style={{ margin: 8 }}
+                            placeholder="Lorem"
+                            helperText="OA id "
+                            fullWidth
+                            name="app_id"
+                            variant="outlined"
+                            required
                             component={renderTextField}
                         />
                         <Field
@@ -56,6 +78,7 @@ class BotModal extends Component {
                             rows="4"
                             component={renderTextField}
                         />
+
                         <Grid item xs={12}>
                             <Grid container justify="flex-end" spacing={2}>
                                 <Grid item>
