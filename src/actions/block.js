@@ -160,3 +160,29 @@ export const changeOptions = data => {
         payload: data,
     };
 };
+
+export const callApiDeleteElement = data => {
+    return {
+        type: types.API_DELETE_ELEMENT,
+        payload: data,
+    };
+};
+
+export const deleteElement = data => {
+    return {
+        type: types.DELETE_ELEMENT,
+        payload: data,
+    };
+};
+
+export const callApiUpdateElement = data => {
+    return {
+        type: types.API_UPDATE_ELEMENT,
+        payload: data,
+    };
+}
+export const updateContentSuccess = () => {
+    return {
+        type: types.UPDATE_ELEMENT,
+    };
+}

@@ -32,7 +32,7 @@ class Audio extends Component {
         let { value } = event.target;
         onChange({id, title: value});
         this.setState({
-            message: value,
+            url: value,
         });
         onChange(value);
     };
@@ -77,9 +77,10 @@ class Audio extends Component {
                             label="URL"
                             helperText="Example: https://dl.dropbox.com/s/sample.mp3"
                             fullWidth
-                            value={this.state.url}
+                            defaultValue={this.state.url}
                             variant="outlined"
                             onChange={this.handleChange}
+                            className={classes.urlInput}
                         />
                     </CardActions>
                 </Card>

@@ -34,9 +34,11 @@ class Text extends Component {
     };
 
     setMessage = emoji => {
+        const { id, onChange } = this.props;
         let { message, cursorPos, emojiIcon } = this.state;
         if (!emojiIcon) {
-            cursorPos = document.getElementById('text-block').selectionStart;
+            cursorPos = document.getElementById(`text-block-${id}`)
+                .selectionStart;
         } else {
             cursorPos += 2;
         }
@@ -47,16 +49,16 @@ class Text extends Component {
             cursorPos: cursorPos,
             emojiIcon: true,
         });
+        onChange({ id, title: startMsg + emoji.native + endMSg });
     };
 
     handleChange = event => {
         const { id, onChange } = this.props;
         let { value } = event.target;
-        onChange({id, title: value});
+        onChange({ id, title: value });
         this.setState({
             message: value,
         });
-        onChange(value);
     };
 
     componentDidMount() {

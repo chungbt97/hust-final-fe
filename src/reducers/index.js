@@ -5,6 +5,7 @@ import uiReducer from './ui';
 import modalReducer from './modal';
 import botReducer from './bot';
 import accountReducer from './account';
+import ruleReducer from './rule';
 
 const rootReducer = combineReducers({
     form: formReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     ui: uiReducer,
     modal: modalReducer,
     bot: botReducer,
-    account: accountReducer
+    account: accountReducer,
+    rule: ruleReducer,
 });
 
 export default rootReducer;

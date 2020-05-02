@@ -1,10 +1,12 @@
 import { takeEvery, takeLatest } from '@redux-saga/core/effects';
 import * as accountActionTypes from '../constants/account';
 import * as botActionTypes from '../constants/bot';
+import * as ruleActionTypes from '../constants/rule';
 import * as blockActionTypes from '../constants/block';
 import * as accountSaga from './account';
 import * as botSaga from './bot';
 import * as blockSaga from './block';
+import * as ruleSaga from './rules';
 
 function* rootSaga() {
     yield takeLatest(botActionTypes.FETCH_BOT, botSaga.fetchBot);
@@ -36,7 +38,7 @@ function* rootSaga() {
         blockSaga.fetchElement,
     );
 
-    yield takeLatest(blockActionTypes.API_DELETE_BLOCK, blockSaga.deleteBlock);
+    yield takeEvery(blockActionTypes.API_DELETE_BLOCK, blockSaga.deleteBlock);
 
     yield takeEvery(blockActionTypes.API_ADD_ELEMENT, blockSaga.addElemnet);
 
@@ -48,6 +50,38 @@ function* rootSaga() {
         blockActionTypes.API_UPLOAD_CARD,
         blockSaga.uploadImageCover,
     );
+    yield takeEvery(
+        blockActionTypes.API_DELETE_ELEMENT,
+        blockSaga.deleteElement,
+    );
+    yield takeEvery(
+        blockActionTypes.API_UPDATE_ELEMENT,
+        blockSaga.updateContentBlock,
+    );
+
+
+// Rule
+
+    yield takeLatest(
+        ruleActionTypes.API_FETCH_RULE,
+        ruleSaga.fetchRule
+    );
+
+    yield takeEvery(
+        ruleActionTypes.API_ADD_RULE,
+        ruleSaga.addRule
+    );
+
+    yield takeEvery(
+        ruleActionTypes.API_UPDATE_RULE,
+        ruleSaga.updateRule
+    );
+
+    yield takeEvery(
+        ruleActionTypes.API_DELETE_RULE,
+        ruleSaga.deleteRule
+    );
+
 }
 
 export default rootSaga;

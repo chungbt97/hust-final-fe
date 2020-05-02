@@ -1,10 +1,9 @@
+import { call, put } from '@redux-saga/core/effects';
 import * as blockAction from '../actions/block';
 import * as blockApis from '../apis/block';
-import { call, put } from '@redux-saga/core/effects';
+import { toastMsgError, toastSuccess } from '../commons/Toastify';
 import { STATUS_RESPONSE } from '../constants/index';
 import history from '../containers/App/history';
-import { toastMsgError, toastSuccess } from '../commons/Toastify';
-import { removeLastSlashUrl } from '../commons/Method';
 
 export function* fetchGroup({ payload }) {
     const { botId } = payload;
@@ -70,7 +69,7 @@ export function* addGroup({ payload }) {
 }
 
 export function* addBlock({ payload }) {
-    const { botId, groupId, url, name } = payload;
+    const { botId, groupId, name } = payload;
     const resp = yield call(blockApis.addBlockDefault, {
         botId,
         groupId,
@@ -81,9 +80,6 @@ export function* addBlock({ payload }) {
         toastSuccess('Create new block done');
         let { newBlock } = data;
         yield put(blockAction.addBlock({ groupId, block: newBlock }));
-
-        let newUrl = removeLastSlashUrl(url);
-        history.push(`${newUrl}/group/${groupId}/block/${newBlock._id}`);
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
@@ -133,14 +129,16 @@ export function* fetchElement({ payload }) {
 }
 
 export function* addElemnet({ payload }) {
-    const { blockId, element_type } = payload;
+    const { blockId, element_type, preId } = payload;
     const resp = yield call(blockApis.addElemnet, {
         blockId,
         element_type,
+        preId,
     });
     const { status, message, data } = resp.data;
     if (status === STATUS_RESPONSE.CREATED) {
-        yield put(blockAction.addEmptyElemnet(data));
+        const { block, newElement } = data;
+        yield put(blockAction.addEmptyElemnet({ block, newElement, preId }));
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
@@ -182,6 +180,49 @@ export function* uploadImageCover({ payload }) {
         yield put(
             blockAction.uploadCardSuccess({ filePath, id, title, subtitle }),
         );
+    } else {
+        toastMsgError('Error - ' + status + ' - ' + message);
+        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
+            window.localStorage.removeItem('token');
+            history.push('/sign-in');
+        }
+    }
+}
+
+export function* deleteElement({ payload }) {
+    const { botId, groupId, blockId, elementId } = payload;
+    const resp = yield call(blockApis.deleteElement, {
+        botId,
+        groupId,
+        blockId,
+        elementId,
+    });
+
+    const { status, message } = resp.data;
+
+    if (status === STATUS_RESPONSE.OK) {
+        yield put(blockAction.deleteElement({ elementId }));
+    } else {
+        toastMsgError('Error - ' + status + ' - ' + message);
+        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
+            window.localStorage.removeItem('token');
+            history.push('/sign-in');
+        }
+    }
+}
+
+export function* updateContentBlock({ payload }) {
+    const { botId, groupId, blockId, elements, name } = payload;
+    const resp = yield call(blockApis.updateContentBlock, {
+        botId,
+        groupId,
+        blockId,
+        elements,
+        name,
+    });
+    const { status, message } = resp.data;
+    if (status === STATUS_RESPONSE.OK) {
+        yield put(blockAction.updateContentSuccess());
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {

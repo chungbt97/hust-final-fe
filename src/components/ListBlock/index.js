@@ -65,8 +65,6 @@ class ListBlock extends Component {
         return xhtml;
     };
     renderButtonAddBlock = (id, defaultGroup) => {
-        // TO DO
-        // Gắn link group cho block
         let { classes } = this.props;
         let xhtml = null;
         xhtml = defaultGroup ? null : (

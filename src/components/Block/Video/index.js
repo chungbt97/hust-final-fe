@@ -33,7 +33,7 @@ class Video extends Component {
         let { value } = event.target;
         onChange({id, title: value});
         this.setState({
-            message: value,
+            url: value,
         });
         onChange(value);
     };
@@ -86,9 +86,10 @@ class Video extends Component {
                             label="URL"
                             helperText="Example: https://dl.dropbox.com/s/sample.mp4"
                             fullWidth
-                            value={this.state.url}
+                            defaultValue={this.state.url}
                             variant="outlined"
                             onChange={this.handleChange}
+                            className={classes.urlInput}
                         />
                     </CardActions>
                 </Card>

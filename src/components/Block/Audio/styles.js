@@ -1,24 +1,27 @@
-
-
 const useStyles = theme => ({
-    card:{
+    card: {
         fontFamily: 'Montserrat',
     },
     cardHeader: {
         fontSize: '2em',
-        '& > .MuiCardHeader-avatar':{
+        '& > .MuiCardHeader-avatar': {
             marginTop: '5px',
             fontFamily: 'Montserrat',
         },
         '& > .MuiCardHeader-content > span': {
             fontSize: '1em',
             fontFamily: 'Montserrat',
-        }
-
+        },
     },
-    infoCard:{
+    infoCard: {
         color: '#767676',
         fontFamily: 'Montserrat',
-    }
+    },
+    urlInput: {
+        '& input': {
+            fontFamily: 'Montserrat',
+            fontSize: '12px',
+        },
+    },
 });
 export default useStyles;

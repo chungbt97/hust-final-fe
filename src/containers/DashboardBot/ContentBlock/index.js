@@ -32,6 +32,7 @@ import AudioBlock from '../../../components/Block/Audio';
 import VideoBlock from '../../../components/Block/Video';
 import ImageBlock from '../../../components/Block/Image';
 import ListOptions from '../../../components/Block/ListOptions';
+import AttributeBlock from '../../../components/Block/Attribute';
 
 class ContentBlock extends Component {
     constructor(props) {
@@ -45,14 +46,19 @@ class ContentBlock extends Component {
         };
     }
 
-    hanldeClickAddElement = element_type => {
+    hanldeClickAddElement = (element_type, ...params) => {
         const { match, blockActionCreators } = this.props;
         const { blockId } = match.params;
         const { callApiAddEmptyElemnet } = blockActionCreators;
-        callApiAddEmptyElemnet({ blockId, element_type });
+        if (params.length === 0) {
+            callApiAddEmptyElemnet({ blockId, element_type });
+        } else {
+            let preId = params[0];
+            callApiAddEmptyElemnet({ blockId, element_type, preId });
+        }
     };
 
-    fillDataToElement = element => {
+    fillDataToElement = (element, ...params) => {
         const { element_type, text_msg, _id } = element;
         switch (element_type) {
             case elementTypes.TEXT_ELEMENT: {
@@ -84,7 +90,7 @@ class ContentBlock extends Component {
             }
             case elementTypes.IMAGE_ELEMENT: {
                 const { attachment_msg } = element;
-                if (attachment_msg !== undefined) {
+                if (attachment_msg !== undefined && attachment_msg !== null) {
                     const { url } = attachment_msg.payload.elements[0];
                     return (
                         <ImageBlock
@@ -107,7 +113,7 @@ class ContentBlock extends Component {
             }
             case elementTypes.OPTION_ELEMENT: {
                 const { attachment_msg } = element;
-                if (attachment_msg !== undefined) {
+                if (attachment_msg !== undefined && attachment_msg !== null) {
                     const elements = attachment_msg.payload.elements;
                     return (
                         <ListOptions
@@ -127,6 +133,41 @@ class ContentBlock extends Component {
                     />
                 );
             }
+            case elementTypes.ATTR_ELEMENT: {
+                const { text_msg, attribute, _id } = element;
+                const nextElementType =
+                    params[0] !== undefined
+                        ? params[0].element_type
+                        : elementTypes.ATTR_ELEMENT;
+                if (
+                    text_msg !== undefined &&
+                    attribute !== undefined &&
+                    text_msg !== null &&
+                    attribute !== null
+                ) {
+                    return (
+                        <AttributeBlock
+                            id={_id}
+                            textMsg={text_msg}
+                            attribute={attribute}
+                            onChange={this.changeTextMsg}
+                            addQuestion={this.hanldeClickAddElement}
+                            nextType={nextElementType}
+                        />
+                    );
+                } else {
+                    return (
+                        <AttributeBlock
+                            id={_id}
+                            onChange={this.changeTextMsg}
+                            textMsg={text_msg}
+                            attribute={attribute}
+                            addQuestion={this.hanldeClickAddElement}
+                            nextType={nextElementType}
+                        />
+                    );
+                }
+            }
             default:
                 break;
         }
@@ -136,20 +177,29 @@ class ContentBlock extends Component {
         const { blockActionCreators } = this.props;
         const { callApiUploadCard } = blockActionCreators;
         callApiUploadCard(data);
-    }
+    };
 
     handleChangeOptions = data => {
         const { blockActionCreators } = this.props;
         const { changeOptions } = blockActionCreators;
         changeOptions(data);
-    }
+    };
+
+    handleDeleteElement = elementId => {
+        const { match, blockActionCreators } = this.props;
+        const { callApiDeleteElement } = blockActionCreators;
+        const { botId, groupId, blockId } = match.params;
+        callApiDeleteElement({ botId, groupId, blockId, elementId });
+    };
 
     renderAllElement = () => {
-        // TO DO lúc này phải lấy từ list this prop
         const { classes, elements } = this.props;
         let xhtml = null;
         xhtml = elements.map((rawElement, index) => {
-            let element = this.fillDataToElement(rawElement);
+            let element = this.fillDataToElement(
+                rawElement,
+                elements[index + 1],
+            );
             return (
                 <Grid container key={index} className={classes.spaceLine}>
                     {element}
@@ -162,7 +212,12 @@ class ContentBlock extends Component {
                             style={{ height: '100%' }}
                         >
                             <Grid item>
-                                <IconButton aria-label="delete">
+                                <IconButton
+                                    aria-label="delete"
+                                    onClick={() =>
+                                        this.handleDeleteElement(rawElement._id)
+                                    }
+                                >
                                     <DeleteIcon />
                                 </IconButton>
                             </Grid>
@@ -195,20 +250,40 @@ class ContentBlock extends Component {
         });
     }
 
-    handleChange = event => {
+    handleChange = async event => {
         let { value } = event.target;
-        this.setState({
-            name: value,
-            edit: true,
+        const { blockActionCreators } = this.props;
+        const { updateNameBlock } = blockActionCreators;
+        await this.setState({
+            blockName: value,
         });
+        updateNameBlock({ name: this.state.blockName });
     };
 
     handleDelete = () => {
         this.setState({ open: true });
     };
 
+    updateContentBlock = () => {
+        const {
+            blockActionCreators,
+            match,
+            elements,
+            currentBlock,
+        } = this.props;
+        const { botId, groupId, blockId } = match.params;
+        const { callApiUpdateElement } = blockActionCreators;
+        callApiUpdateElement({
+            botId,
+            groupId,
+            blockId,
+            elements,
+            name: currentBlock.name,
+        });
+    };
+
     render() {
-        const { classes } = this.props;
+        const { classes, editContent } = this.props;
         return (
             <div>
                 <form
@@ -237,11 +312,14 @@ class ContentBlock extends Component {
                                     style={{ height: '100%' }}
                                 >
                                     <Grid item>
-                                        {this.state.edit ? (
+                                        {editContent ? (
                                             <Button
                                                 variant="outlined"
                                                 color="primary"
-                                                type="submit"
+                                                type="button"
+                                                onClick={
+                                                    this.updateContentBlock
+                                                }
                                             >
                                                 Save
                                             </Button>
@@ -425,8 +503,16 @@ ContentBlock.propTypes = {
     handleSubmit: PropTypes.func,
     match: PropTypes.object,
     blockActionCreators: PropTypes.shape({
+        callApiDeleteBlock: PropTypes.func,
         callApiFetcheElements: PropTypes.func,
+
+        updateNameBlock: PropTypes.func,
+        callApiAddEmptyElemnet: PropTypes.func,
         callApiUploadImage: PropTypes.func,
+        callApiUploadCard: PropTypes.func,
+        changeOptions: PropTypes.func,
+        changeValueElement: PropTypes.func,
+        callApiDeleteElement: PropTypes.func,
     }),
     currentBlock: PropTypes.object,
 };
@@ -434,6 +520,7 @@ const mapStateToProps = state => {
     return {
         elements: state.block.elements,
         currentBlock: state.block.currentBlock,
+        editContent: state.block.editContent,
     };
 };
 const mapDispatchToProps = dispatch => {

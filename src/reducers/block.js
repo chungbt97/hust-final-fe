@@ -6,6 +6,7 @@ const initialState = {
     newBlock: null,
     elements: [],
     currentBlock: null,
+    editContent: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -81,23 +82,7 @@ const reducer = (state = initialState, action) => {
             };
         }
 
-        case types.UPDATE_NAME_BLOCK: {
-            const { name, groupId, blockId } = action.payload;
-            let groups = state.listGroup;
-            groups.forEach(g => {
-                if (g._id === groupId && !g.defaultGroup) {
-                    g.blocks.forEach(b => {
-                        if (b._id === blockId) {
-                            b.name = name;
-                        }
-                    });
-                }
-            });
-            return {
-                ...state,
-                listGroup: groups,
-            };
-        }
+        // chỉnh sửa ở Content block
 
         case types.FETCH_ELEMENT: {
             const { data } = action.payload;
@@ -105,19 +90,40 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 elements: data.elements,
                 currentBlock: data,
+                editContent: false,
             };
         }
-        case types.UPDATE_ELEMENT: {
-            return state;
+
+        case types.UPDATE_NAME_BLOCK: {
+            const { name } = action.payload;
+            let { currentBlock } = state;
+            currentBlock.name = name;
+            return {
+                ...state,
+                currentBlock,
+                editContent: true,
+            };
         }
 
         case types.ADD_ELEMENT: {
-            const data = action.payload;
-            const { block } = data;
+            const { block, newElement, preId } = action.payload;
+            let newArray = [];
+            let { elements } = state;
+            if (preId === undefined || preId === null) {
+                newArray = [...elements, newElement];
+            } else {
+                elements.forEach(element => {
+                    newArray.push(element);
+                    if (element._id === preId) {
+                        newArray.push(newElement);
+                    }
+                });
+            }
+
             return {
                 ...state,
-                elements: block.elements,
-                newBlock: block,
+                elements: newArray,
+                currentBlock: block,
             };
         }
 
@@ -128,7 +134,10 @@ const reducer = (state = initialState, action) => {
                 // lấy vị trí cảu thằng element
                 if (e._id === id) {
                     e.text_msg = title;
-                    if (e.attachment_msg !== undefined) {
+                    if (
+                        e.attachment_msg !== undefined &&
+                        e.attachment_msg !== null
+                    ) {
                         e.attachment_msg.payload.elements[0].url = filePath;
                     } else {
                         e.attachment_msg = {
@@ -149,6 +158,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 elements: elements,
+                editContent: true,
             };
         }
 
@@ -182,6 +192,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 elements: elements,
+                editContent: true,
             };
         }
 
@@ -215,24 +226,48 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 elements: elements,
+                editContent: true,
             };
         }
 
         case types.CHANGE_VALUE_ELEMENT: {
             const data = action.payload;
-            const { id, title } = data;
+            const { id, title, attribute } = data;
             let { elements } = state;
             elements.forEach(e => {
                 // lấy vị trí cảu thằng element
                 if (e._id === id) {
                     e.text_msg = title;
+                    if (attribute !== undefined && attribute.length > 0) {
+                        e.attribute = attribute;
+                    }
                 }
             });
             return {
                 ...state,
                 elements: elements,
+                editContent: true,
             };
         }
+
+        case types.DELETE_ELEMENT: {
+            const { elementId } = action.payload;
+            let newElements = state.elements.filter(element => {
+                return element._id !== elementId;
+            });
+            return {
+                ...state,
+                elements: newElements,
+            };
+        }
+
+        case types.UPDATE_ELEMENT: {
+            return {
+                ...state,
+                editContent: false,
+            };
+        }
+
         default:
             return state;
     }

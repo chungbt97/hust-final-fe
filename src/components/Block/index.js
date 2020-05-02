@@ -17,10 +17,10 @@ class Block extends Component {
             if (!defaultBlock) {
                 titleEdit =
                     title.length > MAX_LENGTH_BLOCK_NAME
-                        ? actionCommon.splitName(title, MAX_LENGTH_BLOCK_NAME)
+                        ? actionCommon.splitName(title, 18)
                         : title;
                 styleOneLine =
-                    title.length < 12 ? { lineHeight: ' 2.5rem' } : {};
+                    title.length < 10 ? { lineHeight: ' 2.5rem' } : {};
             } else {
                 let arr = title.split(' ');
                 titleEdit = arr[0] + ' ' + arr[1];
