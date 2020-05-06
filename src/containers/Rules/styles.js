@@ -5,7 +5,8 @@ const useStyles = theme => ({
         padding: '10px',
         position: 'absolute',
         overflowY: 'scroll',
-        backgroundColor: '#f3f3f3'
+        backgroundColor: '#f3f3f3',
+        width: '100%',
     },
     paper: {
         fontFamily: 'Montserrat',
@@ -71,6 +72,19 @@ const useStyles = theme => ({
         '& > *': {
             margin: theme.spacing(0.5),
         },
+    },
+    autocompleteBlock: {
+        width: '100%',
+        margin: '15px 0px',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        flexWrap: 'wrap',
+    },
+    textareaTitle: {
+        resize: 'none',
+        width: '100%',
+        padding: '12px 6px',
+        fontSize: '16px',
     },
 });
 export default useStyles;

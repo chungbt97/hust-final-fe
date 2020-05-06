@@ -126,7 +126,7 @@ class LineRule extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, idRule } = this.props;
         const { keyWordShow, showMore } = this.state;
         return (
             <Grid item sm={4}>
@@ -135,11 +135,11 @@ class LineRule extends Component {
                         <Box
                             fontWeight="fontWeightMedium"
                             fontFamily="Montserrat"
-                            fontSize={14}
+                            fontSize={12}
                             mb={1}
                             display="flex"
                         >
-                            <Box width="100%">Rule</Box>
+                            <Box width="100%" fontSize={12}>{idRule}</Box>
                             <Box flexShrink={0} className={classes.buttonMore}>
                                 <IconButton
                                     aria-label="display more actions"

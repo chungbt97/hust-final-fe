@@ -17,7 +17,7 @@ class Text extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: '123456789',
+            message: '',
             emojiPickerState: false,
             cursorPos: 0,
             emojiIcon: false,
@@ -63,9 +63,11 @@ class Text extends Component {
 
     componentDidMount() {
         const { text } = this.props;
-        this.setState({
-            message: text,
-        });
+        if (text !== null && text !== undefined) {
+            this.setState({
+                message: text,
+            });
+        }
     }
 
     render() {

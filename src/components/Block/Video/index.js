@@ -20,7 +20,7 @@ class Video extends Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const { src } = this.props;
         this.setState({
             url: src,
@@ -65,7 +65,6 @@ class Video extends Component {
                             className={classes.infoCard}
                             paragraph
                             variant="body1"
-                            m={1}
                         >
                             Send a video file in the chat.
                         </Typography>

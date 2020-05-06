@@ -143,6 +143,7 @@ export const deleteElement = data => {
 
 export const updateContentBlock = data => {
     const { botId, groupId, blockId, elements, name } = data;
+    console.log(data);
     let token = localStorage.getItem('token');
     const options = {
         method: 'PUT',

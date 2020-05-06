@@ -193,39 +193,43 @@ class ContentBlock extends Component {
     };
 
     renderAllElement = () => {
-        const { classes, elements } = this.props;
+        const { classes, currentBlock } = this.props;
         let xhtml = null;
-        xhtml = elements.map((rawElement, index) => {
-            let element = this.fillDataToElement(
-                rawElement,
-                elements[index + 1],
-            );
-            return (
-                <Grid container key={index} className={classes.spaceLine}>
-                    {element}
-                    <Grid item sm={4}>
-                        <Grid
-                            container
-                            direction="row"
-                            justify="center"
-                            alignItems="center"
-                            style={{ height: '100%' }}
-                        >
-                            <Grid item>
-                                <IconButton
-                                    aria-label="delete"
-                                    onClick={() =>
-                                        this.handleDeleteElement(rawElement._id)
-                                    }
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
+        if (currentBlock !== null && currentBlock.elements !== undefined) {
+            xhtml = currentBlock.elements.map((rawElement, index) => {
+                let element = this.fillDataToElement(
+                    rawElement,
+                    currentBlock.elements[index + 1],
+                );
+                return (
+                    <Grid container key={index} className={classes.spaceLine}>
+                        {element}
+                        <Grid item sm={4}>
+                            <Grid
+                                container
+                                direction="row"
+                                justify="center"
+                                alignItems="center"
+                                style={{ height: '100%' }}
+                            >
+                                <Grid item>
+                                    <IconButton
+                                        aria-label="delete"
+                                        onClick={() =>
+                                            this.handleDeleteElement(
+                                                rawElement._id,
+                                            )
+                                        }
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            );
-        });
+                );
+            });
+        }
         return xhtml;
     };
 
@@ -265,19 +269,14 @@ class ContentBlock extends Component {
     };
 
     updateContentBlock = () => {
-        const {
-            blockActionCreators,
-            match,
-            elements,
-            currentBlock,
-        } = this.props;
+        const { blockActionCreators, match, currentBlock } = this.props;
         const { botId, groupId, blockId } = match.params;
         const { callApiUpdateElement } = blockActionCreators;
         callApiUpdateElement({
             botId,
             groupId,
             blockId,
-            elements,
+            elements: currentBlock.elements,
             name: currentBlock.name,
         });
     };

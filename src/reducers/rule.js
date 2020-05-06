@@ -33,18 +33,18 @@ const reducer = (state = initialState, action) => {
 
         case types.UPDATE_RULE_SECCESS: {
             const rule = action.payload;
+            const { listRule } = state;
             let newListRule = [];
-            state.listRule.forEach(r => {
+            listRule.forEach(r => {
                 if (r._id === rule._id) {
                     r.keyword = rule.keyword;
                     r.blocks = rule.blocks;
                 }
-                newListRule.push(r);
             });
             return {
                 ...state,
-                listRule: newListRule,
-                listRuleFilter: newListRule,
+                listRule: [...listRule],
+                listRuleFilter: [...listRule],
             };
         }
 

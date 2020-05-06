@@ -51,3 +51,4 @@ export const deleteRule = data => {
         payload: data,
     };
 };
+

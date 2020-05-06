@@ -36,7 +36,7 @@ class Rules extends Component {
         xhtml = listRuleFilter.map(rule => {
             return (
                 <LineRule
-                    key={rule._id}
+                    key={rule.keyword}
                     idRule={rule._id}
                     blocks={rule.blocks}
                     keyword={rule.keyword}
@@ -75,7 +75,7 @@ class Rules extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <Grid container direction="row"  justify="flex-start">
+                <Grid container direction="row" justify="flex-start">
                     <Grid item xs={12} sm={8}>
                         <Box component="div" p={2} pr={3}>
                             <Box
@@ -146,22 +146,30 @@ class Rules extends Component {
         });
     };
 
-    handleChange = event => {
-        this.setState({
-            keyword: event.target.value,
-        });
-    };
+    // handleChange = event => {
+    //     const { ruleActionCreators } = this.props;
+    //     const { changTitleRule } = ruleActionCreators;
+    //     changTitleRule({ title: event.target.value });
+    // };
 
-    handleSubmit = () => {
-        const { id, keyword, blocks } = this.state;
+    handleSubmit = e => {
+        e.preventDefault();
+        const { _title } = this.refs;
+        const { id, blocks } = this.state;
         const { ruleActionCreators, match } = this.props;
         const { botId } = match.params;
         const { callApiAddRule, callApiupdateRule } = ruleActionCreators;
         if (id === null) {
-            callApiAddRule({ botId, keyword, blocks });
+            callApiAddRule({ botId, keyword: _title.value, blocks });
         } else {
-            callApiupdateRule({ botId, keyword, blocks, ruleId: id });
+            callApiupdateRule({
+                botId,
+                keyword: _title.value,
+                blocks,
+                ruleId: id,
+            });
         }
+        this.setState({ keyword: _title.value });
         this.handleClose();
     };
 
@@ -238,51 +246,62 @@ class Rules extends Component {
                 aria-labelledby="form-dialog-title"
                 className={classes.dialog}
             >
-                <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-                <DialogContent style={{ width: '600px' }}>
-                    <DialogContentText>
-                        Keyword sẽ được thêm để làm dữ liệu cho bot trả lời.
-                    </DialogContentText>
-                    <TextField
-                        name={`Rule`}
-                        variant="outlined"
-                        className={classes.inputRule}
-                        defaultValue={keyword}
-                        placeholder="User say..."
-                        fullWidth
-                        multiline
-                        onChange={this.handleChange}
-                    />
-                    <div className={classes.lineBlock}>
-                        {blocks.map(block => (
-                            <Chip
-                                key={block._id}
-                                variant="outlined"
-                                color="primary"
-                                label={block.name}
-                                size="small"
-                                onDelete={() =>
-                                    this.handleDeleteBlock(block._id)
-                                }
-                            />
-                        ))}
-                    </div>
-                    <div className={classes.lineBlock}>
-                        {this.renderBlocks()}
-                    </div>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={this.handleSubmit}
-                        color="primary"
-                        type="submit"
-                    >
-                        Submit
-                    </Button>
-                    <Button onClick={this.handleClose} color="primary">
-                        Cancel
-                    </Button>
-                </DialogActions>
+                <form>
+                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogContent style={{ width: '600px' }}>
+                        <DialogContentText>
+                            Keyword sẽ được thêm để làm dữ liệu cho bot trả lời.
+                        </DialogContentText>
+                        <textarea
+                            rows="4"
+                            placeholder="User say..."
+                            ref="_title"
+                            type="text"
+                            name={`Rule`}
+                            className={classes.textareaTitle}
+                            defaultValue={keyword}
+                        ></textarea>
+                        {/* <TextField
+                            name={`Rule`}
+                            variant="outlined"
+                            className={classes.inputRule}
+                            defaultValue={keyword}
+                            placeholder="User say..."
+                            fullWidth
+                            multiline
+                            onChange={this.handleChange}
+                        /> */}
+                        <div className={classes.lineBlock}>
+                            {blocks.map(block => (
+                                <Chip
+                                    key={block._id}
+                                    variant="outlined"
+                                    color="primary"
+                                    label={block.name}
+                                    size="small"
+                                    onDelete={() =>
+                                        this.handleDeleteBlock(block._id)
+                                    }
+                                />
+                            ))}
+                        </div>
+                        <div className={classes.autocompleteBlock}>
+                            {this.renderBlocks()}
+                        </div>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            onClick={this.handleSubmit}
+                            color="primary"
+                            type="submit"
+                        >
+                            Submit
+                        </Button>
+                        <Button onClick={this.handleClose} color="primary">
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </form>
             </Dialog>
         );
         return xhtml;
@@ -294,6 +313,7 @@ const mapStateToProps = state => {
         listRule: state.rule.listRule,
         listRuleFilter: state.rule.listRuleFilter,
         allBlocks: state.rule.allBlocks,
+        bot: state.rule.bot,
     };
 };
 const mapDispatchToProps = dispatch => {

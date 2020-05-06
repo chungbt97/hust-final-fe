@@ -9,6 +9,7 @@ const useStyles = () => ({
     },
     wrapperContent: {
         width: '100%',
+        position: 'relative',
     },
 });
 export default useStyles;

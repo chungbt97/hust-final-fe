@@ -198,10 +198,10 @@ export function* deleteElement({ payload }) {
         elementId,
     });
 
-    const { status, message } = resp.data;
+    const { status, message, data } = resp.data;
 
     if (status === STATUS_RESPONSE.OK) {
-        yield put(blockAction.deleteElement({ elementId }));
+        yield put(blockAction.deleteElement({ elementId, block: data }));
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {

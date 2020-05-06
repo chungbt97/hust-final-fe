@@ -7,7 +7,7 @@ import Topbar from './Topbar';
 
 class Dashboard extends Component {
     render() {
-        const { children, classes, ...remainProps} = this.props;
+        const { children, classes, ...remainProps } = this.props;
         return (
             <div>
                 <Topbar handleToggleSidebar={this.handleToggleSidebar} />
@@ -17,7 +17,11 @@ class Dashboard extends Component {
                         handleToggleSidebar={this.handleToggleSidebar}
                         {...remainProps}
                     />
-                    <div className={classes.wrapperContent}>{children}</div>
+                    <div
+                        className={classes.wrapperContent}
+                    >
+                        {children}
+                    </div>
                 </div>
             </div>
         );
@@ -29,6 +33,5 @@ Dashboard.propTypes = {
     children: PropTypes.object,
     classes: PropTypes.object,
 };
-
 
 export default withStyles(styles)(Dashboard);

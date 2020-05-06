@@ -82,13 +82,21 @@ const reducer = (state = initialState, action) => {
             };
         }
 
+        case types.API_FETCH_ELEMENT: {
+            return {
+                ...state,
+                elements: [],
+                editContent: false,
+                currentBlock: null,
+            };
+        }
         // chỉnh sửa ở Content block
 
         case types.FETCH_ELEMENT: {
             const { data } = action.payload;
             return {
                 ...state,
-                elements: data.elements,
+                elements: [...data.elements],
                 currentBlock: data,
                 editContent: false,
             };
@@ -106,23 +114,16 @@ const reducer = (state = initialState, action) => {
         }
 
         case types.ADD_ELEMENT: {
-            const { block, newElement, preId } = action.payload;
-            let newArray = [];
-            let { elements } = state;
-            if (preId === undefined || preId === null) {
-                newArray = [...elements, newElement];
-            } else {
-                elements.forEach(element => {
-                    newArray.push(element);
-                    if (element._id === preId) {
-                        newArray.push(newElement);
-                    }
-                });
+            const { block, newElement } = action.payload;
+            const { currentBlock } = state;
+            for (let i = 0; i < block.elements.length; i++) {
+                if (block.elements[i]._id !== newElement._id) {
+                    block.elements[i] = currentBlock.elements[i];
+                }
             }
-
             return {
                 ...state,
-                elements: newArray,
+                elements: block.elements,
                 currentBlock: block,
             };
         }
@@ -251,20 +252,30 @@ const reducer = (state = initialState, action) => {
         }
 
         case types.DELETE_ELEMENT: {
-            const { elementId } = action.payload;
-            let newElements = state.elements.filter(element => {
-                return element._id !== elementId;
-            });
+            const { block } = action.payload;
+
             return {
                 ...state,
-                elements: newElements,
+                elements: block.elements,
+                currentBlock: block,
             };
         }
 
         case types.UPDATE_ELEMENT: {
+            const { currentBlock, listGroup } = state;
+            listGroup.forEach(g => {
+                if (g._id === currentBlock.group_id) {
+                    g.blocks.forEach(b => {
+                        if (b._id === currentBlock._id) {
+                            b.name = currentBlock.name;
+                        }
+                    });
+                }
+            });
             return {
                 ...state,
                 editContent: false,
+                listGroup: [...listGroup],
             };
         }
 
