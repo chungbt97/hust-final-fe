@@ -104,14 +104,6 @@ class DashBoardBot extends Component {
                         />
                         <Typography component="div">
                             <Box
-                                fontWeight="fontWeightMedium"
-                                fontFamily="Montserrat"
-                                fontSize={14}
-                                mt={1}
-                            >
-                                BLOCKS OF YOURS BOT
-                            </Box>
-                            <Box
                                 fontWeight="fontWeightLight"
                                 fontFamily="Montserrat"
                                 fontSize={12}

@@ -26,15 +26,14 @@ const reducer = (state = initialState, action) => {
             const rule = action.payload;
             return {
                 ...state,
-                listRule: [...state.listRule, rule],
-                listRuleFilter: [...state.listRuleFilter, rule],
+                listRule: [rule, ...state.listRule],
+                listRuleFilter: [rule, ...state.listRuleFilter, ],
             };
         }
 
         case types.UPDATE_RULE_SECCESS: {
             const rule = action.payload;
             const { listRule } = state;
-            let newListRule = [];
             listRule.forEach(r => {
                 if (r._id === rule._id) {
                     r.keyword = rule.keyword;
