@@ -91,17 +91,27 @@ class Rules extends Component {
                                 fontFamily="Montserrat"
                                 fontWeight={500}
                             >
-                                Set up how bot replies to text messages
+                                Thiết lập các rule - luật
                             </Box>
 
                             <Box
                                 component="p"
                                 fontFamily="Montserrat"
                                 fontSize={12}
+                                mt={1}
                             >
-                                Your bot will understand user phrases similar to
-                                those you write on the left and reply with some
-                                text or a block. labore.
+                                Luật bao gồm các cụm từ cách nhau bới dấu ","
+                            </Box>
+                            <Box
+                                component="p"
+                                fontFamily="Montserrat"
+                                fontSize={12}
+                                mt={1}
+                                mr={2}
+                            >
+                                Chatbot của bạn sẽ dựa vào các luật để tìm các
+                                cụm từ có trong tin nhắn của người dùng khi họ
+                                nhắn tin đến chatbot của bạn.
                             </Box>
                         </Box>
                     </Grid>
@@ -120,7 +130,7 @@ class Rules extends Component {
                                     name={`search`}
                                     variant="outlined"
                                     className={classes.inputSearch}
-                                    placeholder="Keyword"
+                                    placeholder="Từ khóa"
                                     fullWidth
                                     multiline
                                     onChange={this.handleSearch}
@@ -142,7 +152,7 @@ class Rules extends Component {
                             onClick={this.handleAddRule}
                         >
                             <Box className={classes.buttonText}>
-                                Add new rule...
+                                Thiết lập luật mới...
                             </Box>
                             <Box className={classes.buttonIcon}>
                                 <Icon className={classes.iconAddButton}>
@@ -326,10 +336,10 @@ class Rules extends Component {
                             color="primary"
                             type="submit"
                         >
-                            Submit
+                            Xác nhận
                         </Button>
                         <Button onClick={this.handleClose} color="primary">
-                            Cancel
+                            Hủy bỏ
                         </Button>
                     </DialogActions>
                 </form>

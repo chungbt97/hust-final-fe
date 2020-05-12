@@ -12,7 +12,7 @@ export function* fetchGroup({ payload }) {
     if (status === STATUS_RESPONSE.OK) {
         yield put(blockAction.fetchGroupAndBlock(data));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -28,7 +28,7 @@ export function* updateNameGroup({ payload }) {
     if (status === STATUS_RESPONSE.OK) {
         yield put(blockAction.updateGroupName(data));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -44,7 +44,7 @@ export function* deleteGroup({ payload }) {
     if (status === STATUS_RESPONSE.OK) {
         yield put(blockAction.deleteGroup(groupId));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -57,10 +57,10 @@ export function* addGroup({ payload }) {
     const resp = yield call(blockApis.addNewGroup, { botId, name });
     const { status, message, data } = resp.data;
     if (status === STATUS_RESPONSE.CREATED) {
-        toastSuccess('Create: ' + data.name + ' done');
+        toastSuccess('Tạo: ' + data.name + ' thành công');
         yield put(blockAction.addGroup(data));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -77,11 +77,11 @@ export function* addBlock({ payload }) {
     });
     const { status, message, data } = resp.data;
     if (status === STATUS_RESPONSE.CREATED) {
-        toastSuccess('Create new block done');
+        toastSuccess('Tạo hành động thành công!');
         let { newBlock } = data;
         yield put(blockAction.addBlock({ groupId, block: newBlock }));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -97,7 +97,7 @@ export function* deleteBlock({ payload }) {
         yield put(blockAction.deleteBlock({ groupId, blockId, botId }));
         history.push(`/admin/dashboard/chatbot/${botId}`);
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -120,7 +120,7 @@ export function* fetchElement({ payload }) {
             history.push(`/admin/dashboard/chatbot/${botId}`);
         }
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -140,7 +140,7 @@ export function* addElemnet({ payload }) {
         const { block, newElement } = data;
         yield put(blockAction.addEmptyElemnet({ block, newElement, preId }));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -160,7 +160,7 @@ export function* uploadImageToServer({ payload }) {
 
         yield put(blockAction.uploadImageSuccess({ filePath, id, title }));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -181,7 +181,7 @@ export function* uploadImageCover({ payload }) {
             blockAction.uploadCardSuccess({ filePath, id, title, subtitle }),
         );
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -203,7 +203,7 @@ export function* deleteElement({ payload }) {
     if (status === STATUS_RESPONSE.OK) {
         yield put(blockAction.deleteElement({ elementId, block: data }));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -224,7 +224,7 @@ export function* updateContentBlock({ payload }) {
     if (status === STATUS_RESPONSE.OK) {
         yield put(blockAction.updateContentSuccess());
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -240,7 +240,7 @@ export function* searchBlock({ payload }) {
     if (status === STATUS_RESPONSE.OK) {
         yield put(blockAction.fetchGroupAndBlock(data));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');

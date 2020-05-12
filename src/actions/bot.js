@@ -101,7 +101,7 @@ export const confirmDeleteBot = bot => {
  * @param {id of bot} id
  */
 export const deleteBotSuccess = (id, name) => {
-    toastNotify.toastSuccess('Deleted ' + name + ' done');
+    toastNotify.toastSuccess('Xóa ' + name + ' thành công!');
     return {
         type: types.DELETE_BOT_SUCCESS,
         payload: {

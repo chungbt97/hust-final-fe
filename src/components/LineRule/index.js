@@ -9,6 +9,13 @@ import {
     withStyles,
     Chip,
     Avatar,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    TextField,
+    Button,
 } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import PropTypes from 'prop-types';
@@ -16,6 +23,7 @@ import React, { Component } from 'react';
 import { splitName } from '../../commons/Method';
 import { MAX_LENGTH_RULE } from '../../constants';
 import styles from './styles';
+import { toastMsgError } from '../../commons/Toastify';
 class LineRule extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +31,8 @@ class LineRule extends Component {
             open: false,
             anchorEl: null,
             showMore: false,
+            openModal: false,
+            textConfirm: '',
         };
     }
 
@@ -41,14 +51,7 @@ class LineRule extends Component {
 
     renderMenuCard = () => {
         const { anchorEl } = this.state;
-        const {
-            classes,
-            idRule,
-            onEdit,
-            onDelete,
-            blocks,
-            keyword,
-        } = this.props;
+        const { classes, idRule, onEdit, blocks, keyword } = this.props;
         const open = Boolean(anchorEl);
         // const { id } = data;
         let xhtml = (
@@ -69,16 +72,15 @@ class LineRule extends Component {
                         this.handleMenuClose();
                     }}
                 >
-                    Edit
+                    Sửa
                 </MenuItem>
                 <MenuItem
                     className={classes.menuItem}
                     onClick={() => {
-                        onDelete(idRule);
-                        this.handleMenuClose();
+                        this.setState({ openModal: true });
                     }}
                 >
-                    Delete
+                    Xóa
                 </MenuItem>
             </Menu>
         );
@@ -139,7 +141,12 @@ class LineRule extends Component {
                             mb={1}
                             display="flex"
                         >
-                            <Box width="100%" fontSize={12}>{idRule}</Box>
+                            <Box
+                                width="100%"
+                                fontSize={12}
+                                fontWeight="600"
+                                color={'#208ef0'}
+                            >{`id: ${idRule}`}</Box>
                             <Box flexShrink={0} className={classes.buttonMore}>
                                 <IconButton
                                     aria-label="display more actions"
@@ -190,9 +197,88 @@ class LineRule extends Component {
                     </Typography>
                 </Paper>
                 {this.renderMenuCard()}
+                {this.renderModalGroup()}
             </Grid>
         );
     }
+
+    handleCloseModal = () => {
+        this.handleMenuClose();
+        this.setState({
+            openModal: false,
+            textConfirm: '',
+        });
+    };
+
+    handleChange = e => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    handleSubmitModal = event => {
+        event.preventDefault();
+        const { textConfirm } = this.state;
+        if (textConfirm === 'DELETE') {
+            const {
+                idRule,
+
+                onDelete,
+            } = this.props;
+            onDelete(idRule);
+            this.handleMenuClose();
+        } else {
+            toastMsgError('Bạn cần nhập đúng DELETE');
+        }
+    };
+
+    renderModalGroup = () => {
+        let xhtml = null;
+        const { openModal } = this.state;
+        const { classes } = this.props;
+        xhtml = (
+            <Dialog
+                open={openModal}
+                onClose={this.handleCloseModal}
+                aria-labelledby="form-dialog-title"
+            >
+                <form
+                    className={classes.form}
+                    onSubmit={this.handleSubmitModal}
+                >
+                    <DialogTitle id="form-dialog-title">
+                        Xác nhận xóa
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Hành động này không thể được hoàn tác. Nhập DELETE
+                            dưới đây để xác nhận rằng bạn muốn xóa vĩnh viễn
+                            LUẬT với tất cả người dùng.
+                        </DialogContentText>
+                        <TextField
+                            id="rule-confirm"
+                            style={{ margin: 8 }}
+                            placeholder="Lorem"
+                            helperText="Nhập từ khóa DELETE"
+                            fullWidth
+                            name="textConfirm"
+                            variant="outlined"
+                            required={true}
+                            autoFocus
+                            onChange={this.handleChange}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button color="secondary" type="submit">
+                            Xóa
+                        </Button>
+                        <Button onClick={this.handleCloseModal}>Hủy bỏ</Button>
+                    </DialogActions>
+                </form>
+            </Dialog>
+        );
+        return xhtml;
+    };
 }
 
 LineRule.propTypes = {

@@ -24,6 +24,7 @@ import { URL_BLOCK, URL_GROUP } from '../../constants';
 import Block from '../Block';
 import styles from './styles';
 import { removeLastSlashUrl } from '../../commons/Method';
+import { toastMsgError } from '../../commons/Toastify';
 
 const menuId = 'button-more-group';
 class ListBlock extends Component {
@@ -174,6 +175,7 @@ class ListBlock extends Component {
             handleRenameGroup({ _id, name: nameGroup });
         } else if (actionType === 'delete') {
             if (nameGroup === 'DELETE') handleDeleteGroup(_id);
+            else toastMsgError('Bạn cần nhập đúng DELETE')
         } else {
             addBlock({ name: nameGroup, groupId: group._id });
         }
@@ -227,7 +229,7 @@ class ListBlock extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button color="secondary" type="submit">
-                            Đổi tên
+                            Xác nhận
                         </Button>
                         <Button onClick={this.handleCloseModal}>Hủy bỏ</Button>
                     </DialogActions>

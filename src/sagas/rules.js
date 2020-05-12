@@ -14,7 +14,7 @@ export function* fetchRule({ payload }) {
     if (status === STATUS_RESPONSE.OK) {
         yield put(ruleActions.fetchRules(data));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -31,10 +31,10 @@ export function* addRule({ payload }) {
     });
     const { status, message, data } = resp.data;
     if (status === STATUS_RESPONSE.CREATED) {
-        toastSuccess('Created new rule successfully');
+        toastSuccess('Tạo luật mới thành công!');
         yield put(ruleActions.addRule(data));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -52,10 +52,10 @@ export function* updateRule({ payload }) {
     });
     const { status, message, data } = resp.data;
     if (status === STATUS_RESPONSE.OK) {
-        toastSuccess('Update rule successfully');
+        toastSuccess('Đã cập nhật luật thành công!');
         yield put(ruleActions.updateRule(data));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -72,10 +72,10 @@ export function* deleteRule({ payload }) {
     const { status, message, data } = resp.data;
     console.log(resp);
     if (status === STATUS_RESPONSE.OK) {
-        toastSuccess('Delete rule successfully');
+        toastSuccess('Xóa thành công!');
         yield put(ruleActions.deleteRule(data));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
@@ -94,7 +94,7 @@ export function* searchRule({ payload }) {
     if (status === STATUS_RESPONSE.OK) {
         yield put(ruleActions.fetchRules(data));
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');

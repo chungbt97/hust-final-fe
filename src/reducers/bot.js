@@ -86,7 +86,7 @@ const reducer = (state = initialState, action) => {
         }
         case types.UPDATE_BOT_SUCCESS: {
             const { bot } = action.payload;
-            toastSuccess('Update bot: ' + bot.name + ' done');
+            toastSuccess('Cập nhật bot: ' + bot.name + ' thành công');
             let newList = state.listBot.filter(b => {
                 return b._id !== bot._id;
             });

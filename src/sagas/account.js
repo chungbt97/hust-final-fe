@@ -8,10 +8,10 @@ export function* signUpAccount({ payload }) {
     const resp = yield call(accountApis.signUpAccount, payload.data);
     const { status, message } = resp.data;
     if (STATUS_RESPONSE.CREATED === status) {
-        toastSuccess('Account is' + message);
+        toastSuccess('Tạo tài khoản thành công ');
         history.push('/sign-in');
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
     }
 }
 
@@ -26,6 +26,6 @@ export function* signInAccount({ payload }) {
         window.localStorage.setItem('userMail', userEmail);
         history.push('/');
     } else {
-        toastMsgError('Error - ' + status + ' - ' + message);
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
     }
 }
