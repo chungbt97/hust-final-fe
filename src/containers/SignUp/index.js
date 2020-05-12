@@ -53,7 +53,7 @@ class SignUp extends Component {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign up
+                       Đăng ký
                     </Typography>
                     <form
                         className={classes.form}
@@ -69,7 +69,7 @@ class SignUp extends Component {
                                     required
                                     fullWidth
                                     id="firstName"
-                                    label="First Name"
+                                    label="Họ"
                                     autoFocus
                                     onChange={this.handleChangeInput}
                                 />
@@ -80,7 +80,7 @@ class SignUp extends Component {
                                     required
                                     fullWidth
                                     id="lastName"
-                                    label="Last Name"
+                                    label="Tên"
                                     name="lastName"
                                     autoComplete="lname"
                                     onChange={this.handleChangeInput}
@@ -92,7 +92,7 @@ class SignUp extends Component {
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Email Address"
+                                    label="Địa chỉ Email"
                                     name="userEmail"
                                     autoComplete="email"
                                     onChange={this.handleChangeInput}
@@ -104,7 +104,7 @@ class SignUp extends Component {
                                     required
                                     fullWidth
                                     name="password"
-                                    label="Password"
+                                    label="Mật khẩu"
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
@@ -120,12 +120,12 @@ class SignUp extends Component {
                             className={classes.submit}
                             onSubmit={this.handleSubmit}
                         >
-                            Sign Up
+                            Tạo tài khoản
                         </Button>
                         <Grid container justify="flex-end">
                             <Grid item>
                                 <Link href="/sign-in" variant="body2">
-                                    Already have an account? Sign in
+                                    Bạn đã có tài khoản?
                                 </Link>
                             </Grid>
                         </Grid>

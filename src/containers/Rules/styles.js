@@ -86,5 +86,13 @@ const useStyles = theme => ({
         padding: '12px 6px',
         fontSize: '16px',
     },
+    inputSearch: {
+        '& input': {
+            fontFamily: 'Montserrat',
+        },
+        '& textarea': {
+            fontFamily: 'Montserrat',
+        },
+    },
 });
 export default useStyles;

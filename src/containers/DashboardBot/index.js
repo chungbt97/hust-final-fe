@@ -44,8 +44,6 @@ class DashBoardBot extends Component {
         );
     };
 
-
-
     handleRenderListBlock = () => {
         const { classes, listGroup, newBlock, ...props } = this.props;
         let xhtml = null;
@@ -88,6 +86,14 @@ class DashBoardBot extends Component {
         callApiFetch(botId);
     }
 
+    handleSearch = event => {
+        let value = event.target.value;
+        const { blockActionCreators, match } = this.props;
+        const { botId } = match.params;
+        const { searchBlock } = blockActionCreators;
+        searchBlock({ botId, keySearch: value });
+    };
+
     render() {
         const { classes } = this.props;
         return (
@@ -96,11 +102,13 @@ class DashBoardBot extends Component {
                     <Grid item xs={4} className={classes.listBlock}>
                         <TextField
                             id="outlined-search"
-                            label="Search field"
+                            label="Tên block"
                             type="search"
                             variant="outlined"
                             size="small"
                             fullWidth
+                            onChange={this.handleSearch}
+                            className={classes.inputSearch}
                         />
                         <Typography component="div">
                             <Box
@@ -109,8 +117,8 @@ class DashBoardBot extends Component {
                                 fontSize={12}
                                 mt={1}
                             >
-                                Your bot consists of content ‘blocks’. Blocks
-                                are like individual pages on a website.
+                                Chatbot bao gồm các "khối" - block. Khối giống
+                                như 1 chuỗi tin nhắn mà chatbot sẽ trả lời.
                             </Box>
                         </Typography>
                         <hr className="MuiDivider-root"></hr>
@@ -127,7 +135,7 @@ class DashBoardBot extends Component {
                                     onClick={this.handleAddGroup}
                                 >
                                     <AddIcon />
-                                    Create new group
+                                    Tạo nhóm mới
                                 </Button>
                             </Box>
                         </Typography>
@@ -183,18 +191,19 @@ class DashBoardBot extends Component {
                     onSubmit={this.handleSubmitModal}
                 >
                     <DialogTitle id="form-dialog-title">
-                        Add new group
+                        Tạo nhóm mới
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            For easier navigation, you can also create groups of
-                            blocks. So enter name of new group.
+                        <DialogContentText style={{fontSize: '14px'}}>
+                            Để điều hướng dễ dàng hơn, bạn cũng có thể tạo các
+                            nhóm khối. Vì vậy, nhập
+                            tên của nhóm mới.
                         </DialogContentText>
                         <TextField
                             id="group-new"
                             style={{ margin: 8 }}
-                            placeholder="Lorem"
-                            helperText="Enter name of group"
+                            placeholder="ABC"
+                            helperText="Tên nhóm"
                             fullWidth
                             name="groupName"
                             variant="outlined"
@@ -205,9 +214,9 @@ class DashBoardBot extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button color="secondary" type="submit">
-                            Submit
+                            Tạo nhóm
                         </Button>
-                        <Button onClick={this.handleCloseModal}>Cancel</Button>
+                        <Button onClick={this.handleCloseModal}>Hủy tạo</Button>
                     </DialogActions>
                 </form>
             </Dialog>
@@ -236,6 +245,7 @@ DashBoardBot.propTypes = {
         callApiFetch: PropTypes.func,
         callApiAddGroup: PropTypes.func,
         callApiAddBlock: PropTypes.func,
+        searchBlock: PropTypes.func,
     }),
     listGroup: PropTypes.array,
 };

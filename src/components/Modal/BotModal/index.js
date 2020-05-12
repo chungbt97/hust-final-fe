@@ -30,10 +30,10 @@ class BotModal extends Component {
                     >
                         <Field
                             id="form-name"
-                            label="Name"
+                            label="Tên"
                             style={{ margin: 8 }}
                             placeholder="Lorem"
-                            helperText="you should give your bot a name"
+                            helperText="Tên của chatbot. VD: Lucian Bot"
                             fullWidth
                             name="name"
                             variant="outlined"
@@ -45,8 +45,8 @@ class BotModal extends Component {
                             id="form-name"
                             label="Token"
                             style={{ margin: 8 }}
-                            placeholder="Lorem"
-                            helperText="Access token"
+                            placeholder="Token"
+                            helperText="Access token từ zalo"
                             fullWidth
                             name="tokenApp"
                             variant="outlined"
@@ -54,24 +54,12 @@ class BotModal extends Component {
                             component={renderTextField}
                         />
                         <Field
-                            id="form-name"
-                            label="Access Token of your Shop"
-                            style={{ margin: 8 }}
-                            placeholder="Lorem"
-                            helperText="OA id "
-                            fullWidth
-                            name="app_id"
-                            variant="outlined"
-                            required
-                            component={renderTextField}
-                        />
-                        <Field
                             variant="outlined"
                             id="form-desc"
-                            label="Description"
+                            label="Mô tả"
                             style={{ margin: 8 }}
                             placeholder="Lorem"
-                            helperText="Description have less than 100 character"
+                            helperText="Mô tả về chatbot"
                             fullWidth
                             name="description"
                             multiline
@@ -87,7 +75,7 @@ class BotModal extends Component {
                                         color="primary"
                                         type="submit"
                                     >
-                                        {updateBot ? 'Update' : 'Create'}
+                                        {updateBot ? 'Cập nhật' : 'Tạo mới'}
                                     </Button>
                                 </Grid>
                                 <Grid item>
@@ -96,7 +84,7 @@ class BotModal extends Component {
                                         color="secondary"
                                         onClick={hideModal}
                                     >
-                                        Cancel
+                                        Hủy bỏ
                                     </Button>
                                 </Grid>
                             </Grid>

@@ -1,4 +1,4 @@
-import { call, put } from '@redux-saga/core/effects';
+import { call, put, delay } from '@redux-saga/core/effects';
 import * as blockAction from '../actions/block';
 import * as blockApis from '../apis/block';
 import { toastMsgError, toastSuccess } from '../commons/Toastify';
@@ -14,7 +14,7 @@ export function* fetchGroup({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -30,7 +30,7 @@ export function* updateNameGroup({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -46,7 +46,7 @@ export function* deleteGroup({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -62,7 +62,7 @@ export function* addGroup({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -83,7 +83,7 @@ export function* addBlock({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -99,7 +99,7 @@ export function* deleteBlock({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -122,7 +122,7 @@ export function* fetchElement({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -142,7 +142,7 @@ export function* addElemnet({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -162,7 +162,7 @@ export function* uploadImageToServer({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -183,7 +183,7 @@ export function* uploadImageCover({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -205,7 +205,7 @@ export function* deleteElement({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -226,7 +226,23 @@ export function* updateContentBlock({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
+            history.push('/sign-in');
+        }
+    }
+}
+
+export function* searchBlock({ payload }) {
+    yield delay(750);
+    const { botId, keySearch } = payload;
+    const resp = yield call(blockApis.getAllGroup, { botId, keySearch });
+    const { status, data, message } = resp.data;
+    if (status === STATUS_RESPONSE.OK) {
+        yield put(blockAction.fetchGroupAndBlock(data));
+    } else {
+        toastMsgError('Error - ' + status + ' - ' + message);
+        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }

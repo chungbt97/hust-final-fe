@@ -1,7 +1,5 @@
 import * as types from '../constants/account';
 
-
-
 /**
  * Đăng kí
  * @param {dữ liệu trả về} data :
@@ -27,3 +25,4 @@ export const signInAccount = data => {
         },
     };
 };
+

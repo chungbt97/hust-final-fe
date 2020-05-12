@@ -1,4 +1,4 @@
-import { Box, Grid, Icon, Button, Chip } from '@material-ui/core';
+import { Box, Grid, Icon, Button, Chip, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -71,12 +71,20 @@ class Rules extends Component {
         callApiFetchRule({ botId });
     }
 
+    handleSearch = event => {
+        const { value } = event.target;
+        const { ruleActionCreators, match } = this.props;
+        const { botId } = match.params;
+        const { searchRule } = ruleActionCreators;
+        searchRule({ botId, keyword: value });
+    };
+
     render() {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
                 <Grid container direction="row" justify="flex-start">
-                    <Grid item xs={12} sm={8}>
+                    <Grid item xs={12} sm={7}>
                         <Box component="div" p={2} pr={3}>
                             <Box
                                 variant="h6"
@@ -96,6 +104,29 @@ class Rules extends Component {
                                 text or a block. labore.
                             </Box>
                         </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                        <Typography component="div">
+                            <Box
+                                fontWeight="fontWeightLight"
+                                fontFamily="Montserrat"
+                                fontSize={12}
+                                mt={2}
+                                ml={1}
+                                mr={1}
+                            >
+                                <TextField
+                                    id={`search`}
+                                    name={`search`}
+                                    variant="outlined"
+                                    className={classes.inputSearch}
+                                    placeholder="Keyword"
+                                    fullWidth
+                                    multiline
+                                    onChange={this.handleSearch}
+                                />
+                            </Box>
+                        </Typography>
                     </Grid>
                 </Grid>
                 <Grid

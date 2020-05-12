@@ -1,13 +1,20 @@
-html, body {
+html,
+body {
     margin: 0;
-    font-family: 'Montserrat'!important;
+    font-family: 'Montserrat' !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #f3f2f2;
-    height: 100%;
     width: 100%;
 }
-
+.MuiTypography-body2,
+.MuiTypography-h5,
+.MuiButton-label, .MuiTypography-root {
+    font-family: 'Montserrat' !important;
+}
+.MuiTextField-root input {
+    font-family: 'Montserrat' !important;
+}
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;

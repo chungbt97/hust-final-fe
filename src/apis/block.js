@@ -4,14 +4,16 @@ import { API_ENDPOINT } from '../constants/index';
 // APi_ENDPOINT/bots/:botId/group
 // APi_ENDPOINT/bots/:botId/group/:groupId
 export const getAllGroup = data => {
-    const { botId } = data;
+    const { botId, keySearch } = data;
     let token = localStorage.getItem('token');
+    console.log(keySearch);
     const options = {
         method: 'GET',
-        url: `${API_ENDPOINT}/bots/${botId}/group`,
+        url: `${API_ENDPOINT}/bots/${botId}/group?key=${keySearch}`,
         headers: {
             Authorization: `Bearer ${token}`,
         },
+
     };
     return axios(options);
 };

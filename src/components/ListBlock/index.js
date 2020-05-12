@@ -119,13 +119,13 @@ class ListBlock extends Component {
                     className={classes.menuItem}
                     onClick={this.handleRenameGroup}
                 >
-                    Rename
+                    Đổi tên
                 </MenuItem>
                 <MenuItem
                     className={classes.menuItem}
                     onClick={this.handleDeleteGroup}
                 >
-                    Delete
+                    Xóa
                 </MenuItem>
             </Menu>
         );
@@ -187,17 +187,17 @@ class ListBlock extends Component {
         let title = '';
         let intro = '';
         if (actionType === 'rename') {
-            title = 'Rename';
+            title = 'Đổi tên';
             intro =
-                ' Enter the new NAME of the block below to confirm that you want to change.';
+                ' Nhập TÊN mới của nhóm bên dưới để xác nhận rằng bạn muốn thay đổi.';
         } else if (actionType === 'delete') {
-            title = 'Delete';
+            title = 'Xóa nhóm';
             intro =
-                'This action cannot be undone. Enter the DELETE below to confirm that you want to permanently delete it for all user.';
+                'Hành động này không thể được hoàn tác. Nhập DELETE dưới đây để xác nhận rằng bạn muốn xóa vĩnh viễn NHÓM với tất cả người dùng.';
         } else {
-            title = 'Add new Block';
+            title = 'Thêm mới 1 hành động';
             intro =
-                'Your bot’s content structure consists of ‘blocks’. Blocks are like individual pages on a website. They contain cards: text, pictures, as well as plugins for creating complex logic. Blocks are not visible to the users, but help you organize the structure.';
+                'Một hành động mới sẽ được tạo. Nhập tên cho hành động để tạo!';
         }
         xhtml = (
             <Dialog
@@ -216,7 +216,7 @@ class ListBlock extends Component {
                             id="group-name"
                             style={{ margin: 8 }}
                             placeholder="Lorem"
-                            helperText="Enter name of group"
+                            helperText="Tên mới"
                             fullWidth
                             name="groupName"
                             variant="outlined"
@@ -227,9 +227,9 @@ class ListBlock extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button color="secondary" type="submit">
-                            Submit
+                            Đổi tên
                         </Button>
-                        <Button onClick={this.handleCloseModal}>Cancel</Button>
+                        <Button onClick={this.handleCloseModal}>Hủy bỏ</Button>
                     </DialogActions>
                 </form>
             </Dialog>

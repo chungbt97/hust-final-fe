@@ -1,4 +1,3 @@
-
 const useStyles = theme => ({
     grow: {
         flexGrow: 1,
@@ -33,6 +32,7 @@ const useStyles = theme => ({
     },
     menuItem: {
         marginLeft: theme.spacing(2),
+        fontFamily: 'Montserrat',
     },
     bgWhite: {
         background: '#f9f8f8',

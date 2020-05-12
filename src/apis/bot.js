@@ -19,7 +19,6 @@ export const getListBot = () => {
 
 export const addNewBot = data => {
     let token = localStorage.getItem('token');
-    console.log(data);
     const options = {
         method: 'POST',
         url:  `${API_ENDPOINT}/${url}`,

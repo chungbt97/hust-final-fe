@@ -14,6 +14,7 @@ const useStyles = () => ({
             fontFamily: 'Montserrat',
             fontSize: '1.5rem',
             border: '1px solid rgb(249, 248, 248)',
+            color: 'black',
         },
         '& input:focus': {
             boxShadow: 'inset 0 1px 3px 0 rgba(0, 0, 0, 0.07)',
@@ -30,11 +31,13 @@ const useStyles = () => ({
         transform: 'translateY(-25px)',
     },
     btnControlPanel: {
-        padding: '1rem 0.5rem',
+        width: '95px',
+        padding: '16px 0.5rem',
         '& > span': {
             display: 'inline',
             textTransform: 'capitalize',
             fontDamily: 'Montserrat',
+            fontSize: '14px'
         },
         '&  > span > svg': {
             display: 'block',
@@ -47,10 +50,10 @@ const useStyles = () => ({
         margin: '1px 0',
         width: '1px',
         height: '72px',
-        background: '#f3f2f2',
+        background: '#c7c7c7',
     },
     controlPanel: {
         display: 'inline-flex',
-    }
+    },
 });
 export default useStyles;

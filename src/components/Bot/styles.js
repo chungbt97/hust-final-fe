@@ -19,6 +19,9 @@ const useStyles = theme => ({
     descriptionBot: {
         minHeight: '60px',
     },
+    menuItem: {
+        fontFamily: 'Montserrat',
+    },
     linkDashboard: {
         border: '1px solid #3498db',
         padding: '7.5px 20px',

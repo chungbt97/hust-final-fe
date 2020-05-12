@@ -180,9 +180,16 @@ export const callApiUpdateElement = data => {
         type: types.API_UPDATE_ELEMENT,
         payload: data,
     };
-}
+};
 export const updateContentSuccess = () => {
     return {
         type: types.UPDATE_ELEMENT,
     };
-}
+};
+
+export const searchBlock = data => {
+    return {
+        type: types.SEARCH_BLOCK,
+        payload: data,
+    };
+};

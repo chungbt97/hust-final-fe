@@ -91,7 +91,6 @@ class LobbyPage extends Component {
                 name,
                 description,
                 tokenApp,
-                appId: app_id,
                 createdAt: timestampNow,
             });
         } else {
@@ -129,7 +128,7 @@ class LobbyPage extends Component {
         const { modalActionCreators } = this.props;
         const { showModal, changeTitle } = modalActionCreators;
         showModal(TYPE_MODAL.BOT);
-        changeTitle('New Chatbot');
+        changeTitle('Thêm chatbot mới');
     };
 
     componentDidMount() {
@@ -147,8 +146,13 @@ class LobbyPage extends Component {
                         className={classes.btnAdd}
                         onClick={this.handleOpenBotModal}
                     >
-                        <AddIcon />
-                        Add new ChatBot
+                        <AddIcon
+                            style={{
+                                display: 'inline-block',
+                                marginRight: '8px',
+                            }}
+                        />
+                        Thêm chatbot mới
                     </Button>
                 </div>
 

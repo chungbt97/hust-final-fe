@@ -37,5 +37,11 @@ const useStyles = () => ({
             color: '#208ef0',
         },
     },
+    inputSearch: {
+        fontFamily: 'Montserrat',
+        '& input': {
+            fontFamily: 'Montserrat',
+        },
+    },
 });
 export default useStyles;

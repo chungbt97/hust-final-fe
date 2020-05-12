@@ -23,7 +23,7 @@ class DefaultRoute extends Component {
                     if (token !== null) {
                         return (
                             <Lobby auth={auth}>
-                                <ComponentRender {...remainProps} />
+                                <ComponentRender {...remainProps}  />
                             </Lobby>
                         );
                     } else {

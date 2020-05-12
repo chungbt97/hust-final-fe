@@ -52,3 +52,9 @@ export const deleteRule = data => {
     };
 };
 
+export const searchRule = data => {
+    return {
+        type: types.SEARCH_RULE,
+        payload: data,
+    };
+};

@@ -1,6 +1,6 @@
 import * as ruleApis from '../apis/rule';
 import * as ruleActions from '../actions/rule';
-import { call, put } from '@redux-saga/core/effects';
+import { call, put, delay } from '@redux-saga/core/effects';
 import { toastMsgError, toastSuccess } from '../commons/Toastify';
 import { STATUS_RESPONSE } from '../constants/index';
 import history from '../containers/App/history';
@@ -16,7 +16,7 @@ export function* fetchRule({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -36,7 +36,7 @@ export function* addRule({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -57,7 +57,7 @@ export function* updateRule({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -77,7 +77,26 @@ export function* deleteRule({ payload }) {
     } else {
         toastMsgError('Error - ' + status + ' - ' + message);
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
+            history.push('/sign-in');
+        }
+    }
+}
+
+export function* searchRule({ payload }) {
+    yield delay(1000);
+    const { botId, keyword } = payload;
+    const resp = yield call(ruleApis.fetchRule, {
+        botId,
+        keyword,
+    });
+    const { status, message, data } = resp.data;
+    if (status === STATUS_RESPONSE.OK) {
+        yield put(ruleActions.fetchRules(data));
+    } else {
+        toastMsgError('Error - ' + status + ' - ' + message);
+        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }

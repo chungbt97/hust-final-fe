@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import logo from '../../../assets/images/logo.png';
 import styles from './styles';
-
+import history from '../../../containers/App/history';
 const menuId = 'primary-search-account-menu';
 const mobileMenuId = 'primary-search-account-menu-mobile';
 
@@ -25,6 +25,10 @@ class Topbar extends Component {
         this.state = {
             anchorEl: null,
             mobileMoreAnchorEl: null,
+            name: '',
+            mail: '',
+            botName: '',
+            avatar: '',
         };
     }
     /**
@@ -43,6 +47,8 @@ class Topbar extends Component {
     };
 
     handleMenuClose = () => {
+        window.localStorage.clear();
+        history.push('/sign-in');
         this.setState({
             anchorEl: null,
         });
@@ -67,22 +73,38 @@ class Topbar extends Component {
                 keepMounted
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={isMenuOpen}
-                onClose={this.handleMenuClose}
+                onClose={() => {
+                    this.setState({ anchorEl: null });
+                }}
             >
-                <MenuItem onClick={this.handleMenuClose}>
-                    <SettingsIcon />
+                <MenuItem>
+                    <SettingsIcon
+                        style={{ display: 'inline-block', marginRight: '8px' }}
+                    />
                     <Typography className={classes.menuItem}>
-                        Setting
+                        Cài đặt
                     </Typography>
                 </MenuItem>
                 <MenuItem onClick={this.handleMenuClose}>
-                    <LogoutIcon />
-                    <Typography className={classes.menuItem}>Logout</Typography>
+                    <LogoutIcon style={{ display: 'inline-block', marginRight: '8px' }}/>
+                    <Typography className={classes.menuItem}>
+                        Đăng xuất
+                    </Typography>
                 </MenuItem>
             </Menu>
         );
         return xhtml;
     };
+
+    componentWillMount() {
+        const name = window.localStorage.getItem('name');
+        const mail = window.localStorage.getItem('userMail');
+        const botName = window.localStorage.getItem('botName');
+        const avatar = window.localStorage.getItem('avatar');
+        if (name !== null && mail !== null) {
+            this.setState({ name, mail, botName, avatar });
+        }
+    }
 
     renderMobileMenu = () => {
         const { mobileMoreAnchorEl } = this.state;
@@ -120,7 +142,7 @@ class Topbar extends Component {
                             src="https://i.pinimg.com/originals/a0/a2/62/a0a262062ff8d4ecf2ae305d25eea56d.jpg"
                         />
                     </IconButton>
-                    <p>Chung Biện</p>
+                    <p>{this.state.name}</p>
                 </MenuItem>
             </Menu>
         );
@@ -140,16 +162,13 @@ class Topbar extends Component {
                             className={classes.menuButton}
                             color="inherit"
                             aria-label="open drawer"
-                            href="/"  
+                            href="/"
                         >
                             <Avatar alt="logo" src={logo} />
                         </IconButton>
 
                         <div>
-                            <Avatar
-                                alt="Cindy Baker"
-                                src="https://i.pinimg.com/474x/ea/ba/8e/eaba8eb2c4abdaaa0076a132611f01b6.jpg"
-                            />
+                            <Avatar alt="Cindy Baker" src={this.state.avatar} />
                         </div>
                         <div>
                             <Typography component="div">
@@ -160,7 +179,7 @@ class Topbar extends Component {
                                     fontWeight="fontWeightLight"
                                     fontSize={16}
                                 >
-                                    Phoan Plus
+                                    {this.state.botName}
                                 </Box>
                             </Typography>
                             <Typography component="div">
@@ -171,7 +190,7 @@ class Topbar extends Component {
                                     ml={2}
                                     fontSize={12}
                                 >
-                                    chungch251997@gmail.com
+                                    {this.state.mail}
                                 </Box>
                             </Typography>
                         </div>
@@ -206,7 +225,7 @@ class Topbar extends Component {
                                         fontWeight="fontWeightLight"
                                         fontSize="fontSize"
                                     >
-                                        Chung Biện
+                                        {this.state.name}
                                     </Box>
                                 </Typography>
                             </Button>

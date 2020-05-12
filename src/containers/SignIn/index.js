@@ -66,7 +66,7 @@ class SignIn extends Component {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in
+                            Đăng nhập
                         </Typography>
                         <form
                             className={classes.form}
@@ -79,7 +79,7 @@ class SignIn extends Component {
                                 required
                                 fullWidth
                                 id="userEmail"
-                                label="Email Address"
+                                label="Địa chỉ email"
                                 name="userEmail"
                                 autoComplete="email"
                                 autoFocus
@@ -91,7 +91,7 @@ class SignIn extends Component {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label="Mật khẩu"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
@@ -104,17 +104,17 @@ class SignIn extends Component {
                                 color="primary"
                                 className={classes.submit}
                             >
-                                Sign In
+                                Đăng nhập
                             </Button>
                             <Grid container>
                                 <Grid item xs>
                                     <Link href="/" variant="body2">
-                                        Forgot password?
+                                        Quên mật khẩu?
                                     </Link>
                                 </Grid>
                                 <Grid item>
                                     <Link href="sign-up" variant="body2">
-                                        {"Don't have an account? Sign Up"}
+                                        {"Đăng ký"}
                                     </Link>
                                 </Grid>
                             </Grid>

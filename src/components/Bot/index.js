@@ -13,8 +13,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import avatarDefault from '../../assets/images/avatar_bot_default.jpg';
 import * as actionsCommon from '../../commons/Method';
-import { MAX_LENGTH_BOT_NAME, URL_BOT } from '../../constants';
+import {
+    MAX_LENGTH_BOT_NAME,
+    URL_BOT,
+    MAX_LENGTH_DESCRIPTION,
+} from '../../constants';
 import styles from './styles';
+import history from '../../containers/App/history';
 
 const menuId = 'primary-search-account-menu';
 class Bot extends Component {
@@ -65,15 +70,25 @@ class Bot extends Component {
                 onClose={this.handleMenuClose}
             >
                 <MenuItem onClick={this.handleUpdateBot}>
-                    <Typography className={classes.menuItem}>Edit</Typography>
+                    <Typography className={classes.menuItem}>Sửa</Typography>
                 </MenuItem>
                 <MenuItem onClick={this.handleDeleteBot}>
-                    <Typography className={classes.menuItem}>Delete</Typography>
+                    <Typography className={classes.menuItem}>Xóa</Typography>
                 </MenuItem>
             </Menu>
         );
         return xhtml;
     };
+
+    redirectDashboard = event => {
+        event.preventDefault();
+        const { data } = this.props;
+        const { _id, name, avatar } = data;
+        window.localStorage.setItem('botName', name);
+        window.localStorage.setItem('avatar', avatar);
+        history.push(`/admin/${URL_BOT}/${_id}`);
+    };
+
     render() {
         const { classes, data } = this.props;
         const { _id, name, description, avatar, createdAt } = data;
@@ -84,9 +99,13 @@ class Bot extends Component {
             name.length > MAX_LENGTH_BOT_NAME
                 ? actionsCommon.splitName(name, MAX_LENGTH_BOT_NAME)
                 : name;
+        let miniDescription =
+            description.length > MAX_LENGTH_DESCRIPTION
+                ? actionsCommon.splitName(description, MAX_LENGTH_DESCRIPTION)
+                : description;
         return (
             <div>
-                <Card className={classes.root}>
+                <Card className={classes.root} id={_id}>
                     <CardHeader
                         avatar={
                             <Avatar
@@ -120,7 +139,7 @@ class Bot extends Component {
                             component="p"
                             className={classes.descriptionBot}
                         >
-                            {description}
+                            {miniDescription}
                         </Typography>
                     </CardContent>
                     <CardActions>
@@ -138,10 +157,11 @@ class Bot extends Component {
                                 Connect
                             </NavLink> */}
                             <Link
-                                href={`/admin/${URL_BOT}/${_id}`}
+                                style={{cursor: 'pointer'}}
+                                onClick={this.redirectDashboard}
                                 className={classes.linkDashboard}
                             >
-                                Connect
+                                Xem thêm
                             </Link>
                         </Grid>
                     </CardActions>

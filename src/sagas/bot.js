@@ -13,7 +13,7 @@ export function* fetchBot() {
     } else {
         yield put(botActions.fetchListBotFaild());
         if(status === STATUS_RESPONSE.UNAUTHORIZED){
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -29,7 +29,7 @@ export function* addNewBot({ payload }) {
     } else {
         yield put(botActions.addNewBotFaild());
         if(status === STATUS_RESPONSE.UNAUTHORIZED){
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -45,7 +45,7 @@ export function* deleteBot({ payload }) {
     } else {
         yield put(botActions.deleteBotFaild());
         if(status === STATUS_RESPONSE.UNAUTHORIZED){
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }
@@ -62,7 +62,7 @@ export function* updateBot({ payload }) {
     } else {
         yield put(botActions.updateBotFaild(data));
         if(status === STATUS_RESPONSE.UNAUTHORIZED){
-            window.localStorage.removeItem('token');
+            window.localStorage.clear();
             history.push('/sign-in');
         }
     }

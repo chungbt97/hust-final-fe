@@ -2,10 +2,10 @@ import axios from 'axios';
 import { API_ENDPOINT } from '../constants/index';
 
 export const fetchRule = data => {
-    const { botId } = data;
+    const { botId, keyword } = data;
     let token = localStorage.getItem('token');
     const options = {
-        url: `${API_ENDPOINT}/bots/${botId}/rule`,
+        url: `${API_ENDPOINT}/bots/${botId}/rule?keySearch=${keyword}`,
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,

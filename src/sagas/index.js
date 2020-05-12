@@ -59,29 +59,19 @@ function* rootSaga() {
         blockSaga.updateContentBlock,
     );
 
+    yield takeLatest(blockActionTypes.SEARCH_BLOCK, blockSaga.searchBlock);
 
-// Rule
+    // Rule
 
-    yield takeLatest(
-        ruleActionTypes.API_FETCH_RULE,
-        ruleSaga.fetchRule
-    );
+    yield takeLatest(ruleActionTypes.API_FETCH_RULE, ruleSaga.fetchRule);
 
-    yield takeEvery(
-        ruleActionTypes.API_ADD_RULE,
-        ruleSaga.addRule
-    );
+    yield takeEvery(ruleActionTypes.API_ADD_RULE, ruleSaga.addRule);
 
-    yield takeEvery(
-        ruleActionTypes.API_UPDATE_RULE,
-        ruleSaga.updateRule
-    );
+    yield takeEvery(ruleActionTypes.API_UPDATE_RULE, ruleSaga.updateRule);
 
-    yield takeEvery(
-        ruleActionTypes.API_DELETE_RULE,
-        ruleSaga.deleteRule
-    );
+    yield takeEvery(ruleActionTypes.API_DELETE_RULE, ruleSaga.deleteRule);
 
+    yield takeLatest(ruleActionTypes.SEARCH_RULE, ruleSaga.searchRule);
 }
 
 export default rootSaga;

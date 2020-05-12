@@ -4,7 +4,7 @@ import DashboardBot from '../containers/DashboardBot';
 import HomePage from '../containers/HomePage';
 import LobbyPage from '../containers/LobbyPage';
 import Rules from '../containers/Rules';
-export const API_ENDPOINT = 'http://localhost:8080';
+export const API_ENDPOINT = 'https://api-chungbt.vbee.vn';
 
 export const STATUS_RESPONSE = {
     OK: 200,
@@ -17,28 +17,28 @@ export const STATUS_RESPONSE = {
 export const DASHBOARD_ROUTES = [
     {
         path: '/admin',
-        name: 'Home page',
+        name: 'Trang chủ',
         exact: true,
         component: ({ match }) => <HomePage match={match} />,
         icon: 'home_icon',
     },
     {
         path: '/admin/dashboard',
-        name: 'Chat bot dashboard',
+        name: 'Quản lý hành động',
         exact: false,
         component: ({ match }) => <DashboardBot match={match} />,
         icon: 'dashboard_icon',
     },
     {
         path: '/admin/rules',
-        name: 'Set up Rules',
+        name: 'Quản lý luật',
         exact: false,
         component: ({ match }) => <Rules match={match} />,
         icon: 'build_icon',
     },
     {
         path: '/admin/analyze',
-        name: 'Statistics and analysis',
+        name: 'Phân tích & thống kê',
         exact: false,
         component: ({ match }) => <Analyze match={match} />,
         icon: 'assessment_icon',
@@ -185,6 +185,7 @@ export const EM_DASH_CHARACTER = '-';
 export const MAX_LENGTH_BLOCK_NAME = 20;
 export const MAX_LENGTH_BOT_NAME = 20;
 export const MAX_LENGTH_RULE = 160;
+export const MAX_LENGTH_DESCRIPTION = 100;
 export const BLOCK_DEFAUT_ID = 131325;
 
 // url constant

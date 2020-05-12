@@ -1,4 +1,11 @@
-import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle, withStyles } from '@material-ui/core';
+import {
+    Button,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    withStyles,
+} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -25,19 +32,18 @@ class ConfirmModal extends Component {
                     className={classes.form}
                     onSubmit={handleSubmit(handleDelete)}
                 >
-                    <DialogTitle id="form-dialog-title">Confirm</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Xác nhận</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            This action cannot be undone. Enter the NAME of the
-                            bot below to confirm that you want to permanently
-                            delete it for all user.
+                            Bạn cần nhập đúng TÊN của chat chatbot để xác nhận
+                            bạn thực sự muốn xóa chatbot đó!
                         </DialogContentText>
                         <Field
                             id="form-name"
                             label="Name of bot"
                             style={{ margin: 8 }}
                             placeholder="Lorem"
-                            helperText="Enter correctly name of bot"
+                            helperText="Nhập chính xác tên của chatbot"
                             fullWidth
                             name="confirmName"
                             variant="outlined"
@@ -48,9 +54,9 @@ class ConfirmModal extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button color="secondary" type="submit">
-                            Delete
+                            Xác nhận xóa
                         </Button>
-                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={handleClose}>Hủy bỏ</Button>
                     </DialogActions>
                 </form>
             </Dialog>

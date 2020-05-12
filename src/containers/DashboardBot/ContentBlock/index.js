@@ -43,6 +43,7 @@ class ContentBlock extends Component {
             edit: false,
             open: false,
             confirm: '',
+            defaultBlock: false,
         };
     }
 
@@ -234,15 +235,19 @@ class ContentBlock extends Component {
     };
 
     componentDidMount() {
-        const { match, blockActionCreators } = this.props;
+        const { match, blockActionCreators, currentBlock, group } = this.props;
         const { botId, groupId, blockId } = match.params;
         const { callApiFetcheElements } = blockActionCreators;
         callApiFetcheElements({ botId, groupId, blockId });
+        if (currentBlock !== null && currentBlock.group_id === group[0]._id) {
+            this.setState({ defaultBlock: true });
+        }
     }
 
     componentWillMount() {
         const { group, match } = this.props;
         const { groupId, blockId } = match.params;
+
         group.forEach(g => {
             if (g._id === groupId) {
                 g.blocks.forEach(b => {
@@ -283,6 +288,7 @@ class ContentBlock extends Component {
 
     render() {
         const { classes, editContent } = this.props;
+        const { defaultBlock } = this.state;
         return (
             <div>
                 <form
@@ -299,6 +305,7 @@ class ContentBlock extends Component {
                                     className={classes.blockTitle}
                                     defaultValue={this.state.blockName}
                                     fullWidth
+                                    disabled={!this.state.defaultBlock}
                                     onChange={this.handleChange}
                                 />
                             </Grid>
@@ -320,15 +327,17 @@ class ContentBlock extends Component {
                                                     this.updateContentBlock
                                                 }
                                             >
-                                                Save
+                                                Lưu
                                             </Button>
                                         ) : (
-                                            <IconButton
-                                                aria-label="delete"
-                                                onClick={this.handleDelete}
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
+                                            defaultBlock && (
+                                                <IconButton
+                                                    aria-label="delete"
+                                                    onClick={this.handleDelete}
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            )
                                         )}
                                     </Grid>
                                 </Grid>
@@ -336,7 +345,7 @@ class ContentBlock extends Component {
                         </Grid>
                         {this.renderAllElement()}
                         <Grid container className={classes.spaceLine}>
-                            <Grid item sm={9}>
+                            <Grid item sm={12}>
                                 <Paper
                                     elevation={3}
                                     className={classes.controlPanel}
@@ -350,7 +359,7 @@ class ContentBlock extends Component {
                                         }
                                     >
                                         <FaFont />
-                                        Text
+                                        Văn bản
                                     </Button>
                                     <span
                                         className={classes.borderRight}
@@ -364,7 +373,7 @@ class ContentBlock extends Component {
                                         }
                                     >
                                         <FaRegImage />
-                                        Image
+                                        Hình ảnh
                                     </Button>
                                     <span
                                         className={classes.borderRight}
@@ -378,7 +387,7 @@ class ContentBlock extends Component {
                                         }
                                     >
                                         <FaCompactDisc />
-                                        Audio
+                                        Âm thanh
                                     </Button>
                                     <span
                                         className={classes.borderRight}
@@ -392,7 +401,7 @@ class ContentBlock extends Component {
                                         }
                                     >
                                         <FaFileVideo />
-                                        Video
+                                        Video Clip
                                     </Button>
                                     <span
                                         className={classes.borderRight}
@@ -406,7 +415,7 @@ class ContentBlock extends Component {
                                         }
                                     >
                                         <FaListOl />
-                                        Options
+                                        Thẻ chọn
                                     </Button>
                                     <span
                                         className={classes.borderRight}
@@ -420,7 +429,7 @@ class ContentBlock extends Component {
                                         }
                                     >
                                         <FaDatabase />
-                                        Attribute
+                                        Câu hỏi
                                     </Button>
                                 </Paper>
                             </Grid>
@@ -520,6 +529,7 @@ const mapStateToProps = state => {
         elements: state.block.elements,
         currentBlock: state.block.currentBlock,
         editContent: state.block.editContent,
+        listGroup: state.block.listGroup,
     };
 };
 const mapDispatchToProps = dispatch => {
