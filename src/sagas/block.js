@@ -4,6 +4,7 @@ import * as blockApis from '../apis/block';
 import { toastMsgError, toastSuccess } from '../commons/Toastify';
 import { STATUS_RESPONSE } from '../constants/index';
 import history from '../containers/App/history';
+import { API_ENDPOINT } from '../constants';
 
 export function* fetchGroup({ payload }) {
     const { botId } = payload;
@@ -24,7 +25,6 @@ export function* updateNameGroup({ payload }) {
     const { botId, name, groupId } = payload;
     const resp = yield call(blockApis.updateName, { botId, name, groupId });
     const { status, data, message } = resp.data;
-    console.log(resp.data);
     if (status === STATUS_RESPONSE.OK) {
         yield put(blockAction.updateGroupName(data));
     } else {
@@ -156,7 +156,7 @@ export function* uploadImageToServer({ payload }) {
     const { status, message, fileNameInServer } = resp.data;
     if (status === STATUS_RESPONSE.OK) {
         let fileName = fileNameInServer.split('\\')[1];
-        let filePath = 'http://localhost:8080/bots/image/' + fileName;
+        let filePath = `${API_ENDPOINT}/bots/image/` + fileName;
 
         yield put(blockAction.uploadImageSuccess({ filePath, id, title }));
     } else {
@@ -176,7 +176,7 @@ export function* uploadImageCover({ payload }) {
     const { status, message, fileNameInServer } = resp.data;
     if (status === STATUS_RESPONSE.OK) {
         let fileName = fileNameInServer.split('\\')[1];
-        let filePath = 'http://localhost:8080/bots/image/' + fileName;
+        let filePath = `${API_ENDPOINT}/bots/image/` + fileName;
         yield put(
             blockAction.uploadCardSuccess({ filePath, id, title, subtitle }),
         );

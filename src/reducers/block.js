@@ -214,8 +214,6 @@ const reducer = (state = initialState, action) => {
             options.forEach(op => {
                 optionConvert.push(covertOptionToElement(op));
             });
-            console.log(optionConvert);
-
             elements.forEach(e => {
                 if (e._id === id) {
                     if (e.attachment_msg !== undefined) {

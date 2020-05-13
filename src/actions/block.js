@@ -58,7 +58,6 @@ export const addGroup = group => {
 };
 
 export const callApiAddBlock = data => {
-    console.log(data);
     return {
         type: types.API_ADD_BLOCK,
         payload: data,

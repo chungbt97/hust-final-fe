@@ -6,7 +6,6 @@ import { API_ENDPOINT } from '../constants/index';
 export const getAllGroup = data => {
     const { botId, keySearch } = data;
     let token = localStorage.getItem('token');
-    console.log(keySearch);
     const options = {
         method: 'GET',
         url: `${API_ENDPOINT}/bots/${botId}/group?key=${keySearch}`,
@@ -145,7 +144,6 @@ export const deleteElement = data => {
 
 export const updateContentBlock = data => {
     const { botId, groupId, blockId, elements, name } = data;
-    console.log(data);
     let token = localStorage.getItem('token');
     const options = {
         method: 'PUT',

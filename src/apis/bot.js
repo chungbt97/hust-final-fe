@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { API_ENDPOINT } from '../constants/index';
 
-//  http://localhost:3000/bots
 const url = 'bots';
 
 export const getListBot = () => {

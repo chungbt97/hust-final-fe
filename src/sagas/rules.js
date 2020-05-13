@@ -70,7 +70,6 @@ export function* deleteRule({ payload }) {
         ruleId,
     });
     const { status, message, data } = resp.data;
-    console.log(resp);
     if (status === STATUS_RESPONSE.OK) {
         toastSuccess('Xóa thành công!');
         yield put(ruleActions.deleteRule(data));
