@@ -20,7 +20,7 @@ class Audio extends Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const { src } = this.props;
         this.setState({
             url: src,
