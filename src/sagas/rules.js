@@ -84,7 +84,7 @@ export function* deleteRule({ payload }) {
 }
 
 export function* searchRule({ payload }) {
-    yield delay(1000);
+    yield delay(600);
     const { botId, keyword } = payload;
     const resp = yield call(ruleApis.fetchRule, {
         botId,
