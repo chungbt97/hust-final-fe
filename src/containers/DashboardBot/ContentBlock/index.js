@@ -235,19 +235,15 @@ class ContentBlock extends Component {
     };
 
     componentDidMount() {
-        const { match, blockActionCreators, currentBlock, group } = this.props;
+        const { match, blockActionCreators } = this.props;
         const { botId, groupId, blockId } = match.params;
         const { callApiFetcheElements } = blockActionCreators;
         callApiFetcheElements({ botId, groupId, blockId });
-        if (currentBlock !== null && currentBlock.group_id === group[0]._id) {
-            this.setState({ defaultBlock: true });
-        }
     }
 
     componentWillMount() {
         const { group, match } = this.props;
         const { groupId, blockId } = match.params;
-
         group.forEach(g => {
             if (g._id === groupId) {
                 g.blocks.forEach(b => {
@@ -287,8 +283,7 @@ class ContentBlock extends Component {
     };
 
     render() {
-        const { classes, editContent } = this.props;
-        const { defaultBlock } = this.state;
+        const { classes, editContent, defaultBlock } = this.props;
         return (
             <div>
                 <form
@@ -305,7 +300,7 @@ class ContentBlock extends Component {
                                     className={classes.blockTitle}
                                     defaultValue={this.state.blockName}
                                     fullWidth
-                                    disabled={!this.state.defaultBlock}
+                                    disabled={defaultBlock}
                                     onChange={this.handleChange}
                                 />
                             </Grid>
@@ -330,7 +325,7 @@ class ContentBlock extends Component {
                                                 Lưu
                                             </Button>
                                         ) : (
-                                            defaultBlock && (
+                                            !defaultBlock && (
                                                 <IconButton
                                                     aria-label="delete"
                                                     onClick={this.handleDelete}
@@ -530,6 +525,7 @@ const mapStateToProps = state => {
         currentBlock: state.block.currentBlock,
         editContent: state.block.editContent,
         listGroup: state.block.listGroup,
+        defaultBlock: state.block.defaultBlock,
     };
 };
 const mapDispatchToProps = dispatch => {

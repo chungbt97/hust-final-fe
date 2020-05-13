@@ -7,6 +7,7 @@ const initialState = {
     elements: [],
     currentBlock: null,
     editContent: false,
+    defaultBlock: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -88,17 +89,26 @@ const reducer = (state = initialState, action) => {
                 elements: [],
                 editContent: false,
                 currentBlock: null,
+                defaultBlock: false,
             };
         }
         // chỉnh sửa ở Content block
 
         case types.FETCH_ELEMENT: {
             const { data } = action.payload;
+            let { defaultBlock } = state;
+            if (
+                state.listGroup[0] !== null &&
+                state.listGroup[0] !== undefined
+            ) {
+                defaultBlock = data.group_id === state.listGroup[0]._id;
+            }
             return {
                 ...state,
                 elements: [...data.elements],
                 currentBlock: data,
                 editContent: false,
+                defaultBlock,
             };
         }
 
