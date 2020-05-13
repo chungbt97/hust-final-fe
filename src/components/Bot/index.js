@@ -96,10 +96,14 @@ class Bot extends Component {
         let bgColor = actionsCommon.getColorWithAlphaber(charAvatar);
         let timeCreated = actionsCommon.convertTimestampToDate(createdAt);
         let miniTitle =
+            name !== undefined &&
+            name !== null &&
             name.length > MAX_LENGTH_BOT_NAME
                 ? actionsCommon.splitName(name, MAX_LENGTH_BOT_NAME)
                 : name;
         let miniDescription =
+            description !== undefined &&
+            description !== null &&
             description.length > MAX_LENGTH_DESCRIPTION
                 ? actionsCommon.splitName(description, MAX_LENGTH_DESCRIPTION)
                 : description;
@@ -157,7 +161,7 @@ class Bot extends Component {
                                 Connect
                             </NavLink> */}
                             <Link
-                                style={{cursor: 'pointer'}}
+                                style={{ cursor: 'pointer' }}
                                 onClick={this.redirectDashboard}
                                 className={classes.linkDashboard}
                             >
