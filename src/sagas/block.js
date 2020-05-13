@@ -155,7 +155,7 @@ export function* uploadImageToServer({ payload }) {
     });
     const { status, message, fileNameInServer } = resp.data;
     if (status === STATUS_RESPONSE.OK) {
-        let fileName = fileNameInServer.split('\\')[1];
+        let fileName = fileNameInServer.split('/')[1];
         let filePath = `${API_ENDPOINT}/bots/image/` + fileName;
 
         yield put(blockAction.uploadImageSuccess({ filePath, id, title }));
