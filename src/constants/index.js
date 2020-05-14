@@ -51,6 +51,13 @@ export const DASHBOARD_ROUTES = [
 
 export const LOBBY_ROUTES = [
     {
+        path: '/home/:newBotId',
+        name: 'Add new chatbot',
+        exact: false,
+        component: LobbyPage,
+        icon: '',
+    },
+    {
         path: '/',
         name: 'All chatbot',
         exact: true,
@@ -58,6 +65,7 @@ export const LOBBY_ROUTES = [
         icon: '',
     },
 ];
+export const ZALO_URL_GET_TOKEN = 'https://oauth.zaloapp.com/v3/oa/permission?app_id=3519025660125585701&redirect_uri=https://api-chungbt.vbee.vn/webhook/'
 export const ALPHABER_COLOR = [
     {
         key: 'a',

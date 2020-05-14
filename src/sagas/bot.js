@@ -5,14 +5,15 @@ import * as botApis from '../apis/bot';
 import { STATUS_RESPONSE } from '../constants/index';
 import history from '../containers/App/history';
 
-export function* fetchBot() {
-    const resp = yield call(botApis.getListBot);
+export function* fetchBot({ payload }) {
+    const { newBotId } = payload;
+    const resp = yield call(botApis.getListBot, { newBotId });
     const { status, data } = resp.data;
     if (STATUS_RESPONSE.OK === status) {
         yield put(botActions.fetchListBotSuccess(data));
     } else {
         yield put(botActions.fetchListBotFaild());
-        if(status === STATUS_RESPONSE.UNAUTHORIZED){
+        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
         }
@@ -28,7 +29,7 @@ export function* addNewBot({ payload }) {
         yield put(modalActions.hideModal());
     } else {
         yield put(botActions.addNewBotFaild());
-        if(status === STATUS_RESPONSE.UNAUTHORIZED){
+        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
         }
@@ -44,7 +45,7 @@ export function* deleteBot({ payload }) {
         yield put(modalActions.hideModal());
     } else {
         yield put(botActions.deleteBotFaild());
-        if(status === STATUS_RESPONSE.UNAUTHORIZED){
+        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
         }
@@ -61,7 +62,7 @@ export function* updateBot({ payload }) {
         yield put(modalActions.hideModal());
     } else {
         yield put(botActions.updateBotFaild(data));
-        if(status === STATUS_RESPONSE.UNAUTHORIZED){
+        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');
         }

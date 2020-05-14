@@ -47,18 +47,24 @@ class DashBoardBot extends Component {
     handleRenderListBlock = () => {
         const { classes, listGroup, newBlock, ...props } = this.props;
         let xhtml = null;
-        xhtml = listGroup.map((group, index) => {
-            return (
-                <ListBlock
-                    key={index}
-                    group={group}
-                    {...props}
-                    handleRenameGroup={this.renameGroup}
-                    handleDeleteGroup={this.deleteGroup}
-                    addBlock={this.addNewBlockDefault}
-                />
-            );
-        });
+        if (
+            listGroup !== null &&
+            listGroup !== undefined &&
+            listGroup.length > 0
+        ) {
+            xhtml = listGroup.map((group, index) => {
+                return (
+                    <ListBlock
+                        key={index}
+                        group={group}
+                        {...props}
+                        handleRenameGroup={this.renameGroup}
+                        handleDeleteGroup={this.deleteGroup}
+                        addBlock={this.addNewBlockDefault}
+                    />
+                );
+            });
+        }
         return xhtml;
     };
 
@@ -194,10 +200,9 @@ class DashBoardBot extends Component {
                         Tạo nhóm mới
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText style={{fontSize: '14px'}}>
+                        <DialogContentText style={{ fontSize: '14px' }}>
                             Để điều hướng dễ dàng hơn, bạn cũng có thể tạo các
-                            nhóm khối. Vì vậy, nhập
-                            tên của nhóm mới.
+                            nhóm khối. Vì vậy, nhập tên của nhóm mới.
                         </DialogContentText>
                         <TextField
                             id="group-new"

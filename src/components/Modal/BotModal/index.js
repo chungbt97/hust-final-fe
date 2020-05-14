@@ -51,6 +51,7 @@ class BotModal extends Component {
                             name="tokenApp"
                             variant="outlined"
                             required
+                            disabled
                             component={renderTextField}
                         />
                         <Field

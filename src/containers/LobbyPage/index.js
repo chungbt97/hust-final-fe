@@ -13,23 +13,27 @@ import BotModal from '../../components/Modal/BotModal';
 import ConfirmModal from '../../components/Modal/ConfirmModal';
 import * as messageConstans from '../../constants/Messages';
 import { TYPE_MODAL } from '../../constants/modal';
+import { ZALO_URL_GET_TOKEN } from '../../constants';
 import BotForm from './BotForm';
 import styles from './styles';
+
 class LobbyPage extends Component {
     renderAllChatBot = () => {
         const { listBot } = this.props;
         let xhtml = null;
-        xhtml = listBot.map((bot, index) => {
-            return (
-                <Grid item xs={12} md={6} lg={3} key={index}>
-                    <Bot
-                        data={bot}
-                        handleDelete={this.handleConfirmDeleteBot}
-                        handleUpdate={this.handleUpdateBot}
-                    />
-                </Grid>
-            );
-        });
+        if (listBot !== null && listBot !== undefined && listBot.length > 0) {
+            xhtml = listBot.map((bot, index) => {
+                return (
+                    <Grid item xs={12} md={6} lg={3} key={index}>
+                        <Bot
+                            data={bot}
+                            handleDelete={this.handleConfirmDeleteBot}
+                            handleUpdate={this.handleUpdateBot}
+                        />
+                    </Grid>
+                );
+            });
+        }
         return xhtml;
     };
 
@@ -124,18 +128,19 @@ class LobbyPage extends Component {
         confirmDeleteBot(bot);
     };
 
-    handleOpenBotModal = () => {
-        const { modalActionCreators } = this.props;
-        const { showModal, changeTitle } = modalActionCreators;
-        showModal(TYPE_MODAL.BOT);
-        changeTitle('Thêm chatbot mới');
-    };
-
     componentDidMount() {
-        const { botActionCreators } = this.props;
+        const { botActionCreators, match } = this.props;
         const { fetchAllBots } = botActionCreators;
-        fetchAllBots();
+        let { newBotId } = match.params;
+        if (newBotId === undefined) {
+            fetchAllBots({ newBotId: -1 });
+        } else {
+            fetchAllBots({ newBotId });
+        }
     }
+    handleOpenPageGetToken = () => {
+        window.location.href = ZALO_URL_GET_TOKEN;
+    };
 
     render() {
         const { classes } = this.props;
@@ -144,7 +149,7 @@ class LobbyPage extends Component {
                 <div>
                     <Button
                         className={classes.btnAdd}
-                        onClick={this.handleOpenBotModal}
+                        onClick={this.handleOpenPageGetToken}
                     >
                         <AddIcon
                             style={{

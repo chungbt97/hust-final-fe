@@ -196,7 +196,11 @@ class ContentBlock extends Component {
     renderAllElement = () => {
         const { classes, currentBlock } = this.props;
         let xhtml = null;
-        if (currentBlock !== null && currentBlock.elements !== undefined) {
+        if (
+            currentBlock !== null &&
+            currentBlock.elements !== undefined &&
+            currentBlock.elements.length > 0
+        ) {
             xhtml = currentBlock.elements.map((rawElement, index) => {
                 let element = this.fillDataToElement(
                     rawElement,

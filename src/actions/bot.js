@@ -2,9 +2,10 @@ import * as types from '../constants/bot';
 import * as toastNotify from '../commons/Toastify';
 import * as messageConstants from '../constants/Messages';
 
-export const fetchAllBots = () => {
+export const fetchAllBots = data => {
     return {
         type: types.FETCH_BOT,
+        payload: data,
     };
 };
 
@@ -109,7 +110,6 @@ export const deleteBotSuccess = (id, name) => {
         },
     };
 };
-
 
 /**
  * Something wrong on server

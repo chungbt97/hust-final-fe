@@ -45,24 +45,29 @@ class ListBlock extends Component {
         let newUrl = removeLastSlashUrl(url);
         let xhtml = null;
         const { defaultGroup, blocks, _id } = group;
-        xhtml = blocks.map((block, index) => {
-            return (
-                <Grid
-                    item
-                    xs={defaultGroup ? 12 : 4}
-                    className={classes.Block}
-                    key={index}
-                >
-                    <NavLink
-                        to={`${newUrl}/${URL_GROUP}/${_id}/${URL_BLOCK}/${block._id}`}
-                        className={classes.blockLink}
-                        activeClassName={classes.activedBlockLink}
+        if (blocks !== null && blocks !== undefined && blocks.length > 0) {
+            xhtml = blocks.map((block, index) => {
+                return (
+                    <Grid
+                        item
+                        xs={defaultGroup ? 12 : 4}
+                        className={classes.Block}
+                        key={index}
                     >
-                        <Block title={block.name} defaultBlock={defaultGroup} />
-                    </NavLink>
-                </Grid>
-            );
-        });
+                        <NavLink
+                            to={`${newUrl}/${URL_GROUP}/${_id}/${URL_BLOCK}/${block._id}`}
+                            className={classes.blockLink}
+                            activeClassName={classes.activedBlockLink}
+                        >
+                            <Block
+                                title={block.name}
+                                defaultBlock={defaultGroup}
+                            />
+                        </NavLink>
+                    </Grid>
+                );
+            });
+        }
         return xhtml;
     };
     renderButtonAddBlock = (id, defaultGroup) => {
@@ -175,7 +180,7 @@ class ListBlock extends Component {
             handleRenameGroup({ _id, name: nameGroup });
         } else if (actionType === 'delete') {
             if (nameGroup === 'DELETE') handleDeleteGroup(_id);
-            else toastMsgError('Bạn cần nhập đúng DELETE')
+            else toastMsgError('Bạn cần nhập đúng DELETE');
         } else {
             addBlock({ name: nameGroup, groupId: group._id });
         }

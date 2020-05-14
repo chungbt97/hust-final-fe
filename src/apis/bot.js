@@ -3,14 +3,15 @@ import { API_ENDPOINT } from '../constants/index';
 
 const url = 'bots';
 
-export const getListBot = () => {
+export const getListBot = data => {
     let token = localStorage.getItem('token');
-    const options = {
+    let options = {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/x-www-form-urlencoded',
         },
+        params: data,
         url: `${API_ENDPOINT}/${url}`,
     };
     return axios(options);
@@ -20,7 +21,7 @@ export const addNewBot = data => {
     let token = localStorage.getItem('token');
     const options = {
         method: 'POST',
-        url:  `${API_ENDPOINT}/${url}`,
+        url: `${API_ENDPOINT}/${url}`,
         data,
         headers: {
             Authorization: `Bearer ${token}`,
@@ -33,7 +34,7 @@ export const updateBot = (id, data) => {
     let token = localStorage.getItem('token');
     const options = {
         method: 'PUT',
-        url:  `${API_ENDPOINT}/${url}/${id}`,
+        url: `${API_ENDPOINT}/${url}/${id}`,
         data,
         headers: {
             Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ export const deleteBot = id => {
     let token = localStorage.getItem('token');
     const options = {
         method: 'DELETE',
-        url:  `${API_ENDPOINT}/${url}/${id}`,
+        url: `${API_ENDPOINT}/${url}/${id}`,
         headers: {
             Authorization: `Bearer ${token}`,
         },

@@ -90,19 +90,21 @@ class LineRule extends Component {
     renderAllBlocks = () => {
         const { blocks } = this.props;
         let xhtml = null;
-        xhtml = blocks.map(block => {
-            return (
-                <Chip
-                    key={block._id}
-                    id={`block-${block._id}`}
-                    variant="outlined"
-                    color="primary"
-                    avatar={<Avatar>{block.name.charAt(0)}</Avatar>}
-                    label={block.name}
-                    size="small"
-                />
-            );
-        });
+        if (blocks !== null && blocks !== undefined && blocks.length > 0) {
+            xhtml = blocks.map(block => {
+                return (
+                    <Chip
+                        key={block._id}
+                        id={`block-${block._id}`}
+                        variant="outlined"
+                        color="primary"
+                        avatar={<Avatar>{block.name.charAt(0)}</Avatar>}
+                        label={block.name}
+                        size="small"
+                    />
+                );
+            });
+        }
         return xhtml;
     };
 

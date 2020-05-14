@@ -33,18 +33,24 @@ class Rules extends Component {
     renderAllRule = () => {
         let xhtml = null;
         const { listRuleFilter } = this.props;
-        xhtml = listRuleFilter.map(rule => {
-            return (
-                <LineRule
-                    key={rule.keyword}
-                    idRule={rule._id}
-                    blocks={rule.blocks}
-                    keyword={rule.keyword}
-                    onEdit={this.handleEditRule}
-                    onDelete={this.handleDeleteRule}
-                />
-            );
-        });
+        if (
+            listRuleFilter !== undefined &&
+            listRuleFilter !== null &&
+            listRuleFilter.length > 0
+        ) {
+            xhtml = listRuleFilter.map(rule => {
+                return (
+                    <LineRule
+                        key={rule.keyword}
+                        idRule={rule._id}
+                        blocks={rule.blocks}
+                        keyword={rule.keyword}
+                        onEdit={this.handleEditRule}
+                        onDelete={this.handleDeleteRule}
+                    />
+                );
+            });
+        }
         return xhtml;
     };
 

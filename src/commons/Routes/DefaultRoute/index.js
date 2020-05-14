@@ -11,6 +11,7 @@ class DefaultRoute extends Component {
         const {
             name,
             auth,
+            match,
             component: ComponentRender,
             ...remainProps
         } = this.props;
@@ -22,12 +23,12 @@ class DefaultRoute extends Component {
                 render={routeProps => {
                     if (token !== null) {
                         return (
-                            <Lobby auth={auth}>
-                                <ComponentRender {...remainProps}  />
+                            <Lobby auth={auth} {...routeProps} {...remainProps}>
+                                <ComponentRender {...remainProps} {...routeProps}/>
                             </Lobby>
                         );
                     } else {
-                        return <LoginPage {...remainProps} />
+                        return <LoginPage {...remainProps} />;
                     }
                 }}
             />
