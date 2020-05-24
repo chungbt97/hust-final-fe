@@ -19,7 +19,12 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { toastMsgError } from '../../../commons/Toastify';
-import { DEFAULT_IMAGE, DEFAULT_SUBTITLE, DEFAULT_TITLE, OPTION_LINK } from '../../../constants/element';
+import {
+    DEFAULT_IMAGE,
+    DEFAULT_SUBTITLE,
+    DEFAULT_TITLE,
+    OPTION_LINK,
+} from '../../../constants/element';
 import styles from './styles';
 
 class ListOption extends Component {
@@ -207,19 +212,42 @@ class ListOption extends Component {
             });
         } else {
             let { options, nameOption, urlOrPhone, type } = this.state;
-            options.push({
-                nameOption,
-                urlOrPhone,
-                type,
-            });
-            this.setState({
-                nameOption: '',
-                urlOrPhone: '',
-                type: null,
-                options: options,
-                openModalAdd: false,
-            });
-            onChangeOptions({ id, options });
+            if (nameOption === '' || urlOrPhone === '') {
+                toastMsgError('Bạn cần điền đẩy đủ thông tin cho button');
+            } else {
+                if (type === null) {
+                    toastMsgError('Bạn cần chọn 1 trong 3 loại button');
+                } else {
+                    if (type === 'oa.open.sms' || type === 'oa.open.phone') {
+                        // eslint-disable-next-line
+                        let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+
+                        if (!vnf_regex.test(urlOrPhone))
+                            toastMsgError(
+                                'Số điện thoại nhập vào không hợp lệ',
+                            );
+                    } else if (type === 'oa.open.url') {
+                        // eslint-disable-next-line
+                        let vnf_regex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+                        if (!vnf_regex.test(urlOrPhone))
+                            toastMsgError('Url nhập vào không hợp lệ');
+                    } else {
+                        options.push({
+                            nameOption,
+                            urlOrPhone,
+                            type,
+                        });
+                        this.setState({
+                            nameOption: '',
+                            urlOrPhone: '',
+                            type: null,
+                            options: options,
+                            openModalAdd: false,
+                        });
+                        onChangeOptions({ id, options });
+                    }
+                }
+            }
         }
     };
 
@@ -262,7 +290,7 @@ class ListOption extends Component {
     };
 
     renderModalAddOption = () => {
-        const {  classes } = this.props;
+        const { classes } = this.props;
         const {
             openModalAdd,
             nameOption,
@@ -382,25 +410,25 @@ class ListOption extends Component {
                             onClick={() => this.handleCloseModalAdd(false)}
                             color="primary"
                         >
-                            Cancel
+                            Hủy
                         </Button>
                         <Button
                             onClick={() => this.handleCloseModalAdd(true)}
                             color="primary"
                         >
-                            Submit
+                            Thêm
                         </Button>
                     </DialogActions>
                 ) : (
                     <DialogActions>
                         <Button onClick={this.handleDelete} color="primary">
-                            Delete
+                            Xóa
                         </Button>
                         <Button
                             onClick={this.handleUpdateOption}
                             color="primary"
                         >
-                            Submit
+                            Sửa
                         </Button>
                     </DialogActions>
                 )}

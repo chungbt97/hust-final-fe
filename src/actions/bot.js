@@ -1,6 +1,19 @@
-import * as types from '../constants/bot';
 import * as toastNotify from '../commons/Toastify';
-import * as messageConstants from '../constants/Messages';
+import * as types from '../constants/bot';
+
+export const callApiGetDataBot = data => {
+    return {
+        type: types.API_GET_DATA_BOT,
+        payload: data,
+    };
+};
+
+export const getDataBot = data => {
+    return {
+        type: types.GET_DATA_BOT,
+        payload: data,
+    };
+};
 
 export const fetchAllBots = data => {
     return {
@@ -34,44 +47,7 @@ export const fetchListBotFaild = error => {
         },
     };
 };
-/**
- * Add new bot to list bot
- * @param {new bot} bot
- */
-export const addNewBot = bot => {
-    return {
-        type: types.ADD_BOT,
-        payload: {
-            bot,
-        },
-    };
-};
-/**
- * Created
- * @param {bot} data
- */
-export const addNewBotSuccess = data => {
-    toastNotify.toastSuccess(messageConstants.CREATE_BOT_DONE);
-    return {
-        type: types.ADD_BOT_SUCCESS,
-        payload: {
-            data,
-        },
-    };
-};
-/**
- * Something wrong on server
- * @param {error from serrver} error
- */
-export const addNewBotFaild = error => {
-    toastNotify.toastError(error);
-    return {
-        type: types.ADD_BOT_FAILD,
-        payload: {
-            error,
-        },
-    };
-};
+
 /**
  * Delete bot
  * @param { bot} bot
@@ -119,42 +95,6 @@ export const deleteBotFaild = error => {
     toastNotify.toastError(error);
     return {
         type: types.DELETE_BOT_FAILD,
-        payload: {
-            error,
-        },
-    };
-};
-/**
- * Editbot
- * @param {bot} bot
- */
-export const updateBot = bot => {
-    return {
-        type: types.UPDATE_BOT,
-        payload: {
-            bot,
-        },
-    };
-};
-/**
- * Update done
- * @param {bot} bot
- */
-export const updateBotSuccess = bot => {
-    return {
-        type: types.UPDATE_BOT_SUCCESS,
-        payload: {
-            bot,
-        },
-    };
-};
-/**
- * Somethong wrong
- * @param {error} error
- */
-export const updateBotFaild = error => {
-    return {
-        type: types.UPDATE_BOT_FAILD,
         payload: {
             error,
         },

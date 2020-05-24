@@ -33,6 +33,7 @@ import VideoBlock from '../../../components/Block/Video';
 import ImageBlock from '../../../components/Block/Image';
 import ListOptions from '../../../components/Block/ListOptions';
 import AttributeBlock from '../../../components/Block/Attribute';
+import { toastMsgError } from '../../../commons/Toastify';
 
 class ContentBlock extends Component {
     constructor(props) {
@@ -277,13 +278,21 @@ class ContentBlock extends Component {
         const { blockActionCreators, match, currentBlock } = this.props;
         const { botId, groupId, blockId } = match.params;
         const { callApiUpdateElement } = blockActionCreators;
-        callApiUpdateElement({
-            botId,
-            groupId,
-            blockId,
-            elements: currentBlock.elements,
-            name: currentBlock.name,
-        });
+        if (
+            currentBlock.name !== null &&
+            currentBlock.name !== undefined &&
+            currentBlock.name !== ''
+        ) {
+            callApiUpdateElement({
+                botId,
+                groupId,
+                blockId,
+                elements: currentBlock.elements,
+                name: currentBlock.name,
+            });
+        } else {
+            toastMsgError('Tên của Hành động không thể để trống!');
+        }
     };
 
     render() {

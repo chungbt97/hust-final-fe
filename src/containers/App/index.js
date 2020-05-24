@@ -14,6 +14,7 @@ import NotFound from '../NotFound';
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 import history from './history';
+import 'antd/dist/antd.css';
 
 const store = configStore();
 

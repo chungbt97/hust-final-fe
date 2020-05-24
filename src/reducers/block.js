@@ -260,12 +260,15 @@ const reducer = (state = initialState, action) => {
         }
 
         case types.DELETE_ELEMENT: {
-            const { block } = action.payload;
-
+            const { elementId } = action.payload;
+            let { currentBlock } = state;
+            currentBlock.elements = currentBlock.elements.filter(element => {
+                return element._id !== elementId;
+            });
             return {
                 ...state,
-                elements: block.elements,
-                currentBlock: block,
+                elements: [...currentBlock.elements],
+                currentBlock: currentBlock,
             };
         }
 

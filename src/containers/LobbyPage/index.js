@@ -9,11 +9,10 @@ import * as botActions from '../../actions/bot';
 import * as modalActions from '../../actions/modal';
 import { toastMsgError } from '../../commons/Toastify';
 import Bot from '../../components/Bot';
-import BotModal from '../../components/Modal/BotModal';
 import ConfirmModal from '../../components/Modal/ConfirmModal';
+import { ZALO_URL_GET_TOKEN } from '../../constants';
 import * as messageConstans from '../../constants/Messages';
 import { TYPE_MODAL } from '../../constants/modal';
-import { ZALO_URL_GET_TOKEN } from '../../constants';
 import BotForm from './BotForm';
 import styles from './styles';
 
@@ -28,7 +27,6 @@ class LobbyPage extends Component {
                         <Bot
                             data={bot}
                             handleDelete={this.handleConfirmDeleteBot}
-                            handleUpdate={this.handleUpdateBot}
                         />
                     </Grid>
                 );
@@ -39,29 +37,13 @@ class LobbyPage extends Component {
 
     renderBotForm = () => {
         const {
-            botEdit,
             open,
-            title,
             modalActionCreators,
             typeModal,
         } = this.props;
         const { hideModal } = modalActionCreators;
-        let updateBot = Boolean(botEdit);
         let xhtml = null;
-        if (typeModal === TYPE_MODAL.BOT) {
-            xhtml = (
-                <BotForm>
-                    <BotModal
-                        formName={TYPE_MODAL.BOT}
-                        open={open}
-                        title={title}
-                        hideModal={hideModal}
-                        handleSubmitBot={this.handleSubmitForm}
-                        updateBot={updateBot}
-                    />
-                </BotForm>
-            );
-        } else if (typeModal === TYPE_MODAL.CONFIRM) {
+        if (typeModal === TYPE_MODAL.CONFIRM) {
             xhtml = (
                 <BotForm>
                     <ConfirmModal
@@ -75,37 +57,6 @@ class LobbyPage extends Component {
             );
         }
         return xhtml;
-    };
-
-    handleUpdateBot = bot => {
-        const { modalActionCreators } = this.props;
-        const { showModal, changeTitle, changeBotEdit } = modalActionCreators;
-        changeBotEdit(bot);
-        showModal(TYPE_MODAL.BOT);
-        changeTitle(bot.name);
-    };
-
-    handleSubmitForm = data => {
-        const { botActionCreators, botEdit } = this.props;
-        const { addNewBot, updateBot } = botActionCreators;
-        let { _id, name, description, tokenApp, app_id } = data;
-        let timestampNow = new Date();
-        if (botEdit === null) {
-            addNewBot({
-                name,
-                description,
-                tokenApp,
-                createdAt: timestampNow,
-            });
-        } else {
-            updateBot({
-                _id,
-                name,
-                description,
-                tokenApp,
-                appId: app_id,
-            });
-        }
     };
 
     handleDeleteBot = data => {

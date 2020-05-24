@@ -4,6 +4,22 @@ import * as modalActions from '../actions/modal';
 import * as botApis from '../apis/bot';
 import { STATUS_RESPONSE } from '../constants/index';
 import history from '../containers/App/history';
+import { toastMsgError } from '../commons/Toastify';
+
+export function* getDataBot({ payload }) {
+    const { botId } = payload;
+    const resp = yield call(botApis.getDataBot, { botId });
+    const { status, data, message } = resp.data;
+    if (STATUS_RESPONSE.OK === status) {
+        yield put(botActions.getDataBot(data));
+    } else {
+        toastMsgError('Lỗi:  ' + status + ' - ' + message);
+        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
+            window.localStorage.clear();
+            history.push('/sign-in');
+        }
+    }
+}
 
 export function* fetchBot({ payload }) {
     const { newBotId } = payload;
@@ -20,22 +36,6 @@ export function* fetchBot({ payload }) {
     }
 }
 
-export function* addNewBot({ payload }) {
-    let { bot } = payload;
-    let resp = yield call(botApis.addNewBot, bot);
-    let { status, data } = resp.data;
-    if (STATUS_RESPONSE.CREATED === status) {
-        yield put(botActions.addNewBotSuccess(data));
-        yield put(modalActions.hideModal());
-    } else {
-        yield put(botActions.addNewBotFaild());
-        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.clear();
-            history.push('/sign-in');
-        }
-    }
-}
-
 export function* deleteBot({ payload }) {
     let { id, name } = payload;
     let resp = yield call(botApis.deleteBot, id);
@@ -45,23 +45,6 @@ export function* deleteBot({ payload }) {
         yield put(modalActions.hideModal());
     } else {
         yield put(botActions.deleteBotFaild());
-        if (status === STATUS_RESPONSE.UNAUTHORIZED) {
-            window.localStorage.clear();
-            history.push('/sign-in');
-        }
-    }
-}
-
-export function* updateBot({ payload }) {
-    const { bot } = payload;
-    const { _id } = bot;
-    const resp = yield call(botApis.updateBot, _id, bot);
-    let { status, data } = resp.data;
-    if (STATUS_RESPONSE.OK === status) {
-        yield put(botActions.updateBotSuccess(data));
-        yield put(modalActions.hideModal());
-    } else {
-        yield put(botActions.updateBotFaild(data));
         if (status === STATUS_RESPONSE.UNAUTHORIZED) {
             window.localStorage.clear();
             history.push('/sign-in');

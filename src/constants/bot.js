@@ -1,17 +1,13 @@
+export const API_GET_DATA_BOT = 'API_GET_DATA_BOT';
+export const GET_DATA_BOT = 'GET_DATA_BOT';
+
+
 export const FETCH_BOT = 'FETCH_BOT';
 export const FETCH_BOT_SUCCESS = 'FETCH_BOT_SUCCESS';
 export const FETCH_BOT_FAILED = 'FETCH_BOT_FAILED';
-
-export const ADD_BOT = 'ADD_BOT';
-export const ADD_BOT_SUCCESS = 'ADD_BOT_SUCCESS';
-export const ADD_BOT_FAILD = 'ADD_BOT_FAILED';
 
 export const DELETE_BOT = 'DELETE_BOT';
 export const DELETE_BOT_SUCCESS = 'DELETE_BOT_SUCCESS';
 export const DELETE_BOT_FAILD = 'DELETE_BOT_FAILED';
 export const DELETE_CONFIRM = 'DELETE_CONFIRM';
 
-export const UPDATE_BOT = 'UPDATE_BOT';
-export const UPDATE_BOT_SUCCESS = 'UPDATE_BOT_SUCCESS';
-export const UPDATE_BOT_FAILD = 'UPDATE_BOT_FAILED';
-export const CHANGE_BOT_EDIT = 'CHANGE_BOT_EDIT';

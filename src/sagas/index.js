@@ -3,16 +3,17 @@ import * as accountActionTypes from '../constants/account';
 import * as botActionTypes from '../constants/bot';
 import * as ruleActionTypes from '../constants/rule';
 import * as blockActionTypes from '../constants/block';
+import * as userActionTypes from '../constants/user';
 import * as accountSaga from './account';
 import * as botSaga from './bot';
 import * as blockSaga from './block';
 import * as ruleSaga from './rules';
+import * as userSaga from './user';
 
 function* rootSaga() {
+    yield takeLatest(botActionTypes.API_GET_DATA_BOT, botSaga.getDataBot);
     yield takeLatest(botActionTypes.FETCH_BOT, botSaga.fetchBot);
     yield takeEvery(botActionTypes.DELETE_BOT, botSaga.deleteBot);
-    yield takeEvery(botActionTypes.ADD_BOT, botSaga.addNewBot);
-    yield takeEvery(botActionTypes.UPDATE_BOT, botSaga.updateBot);
     yield takeEvery(
         accountActionTypes.SIGN_UP_ACCOUNT,
         accountSaga.signUpAccount,
@@ -72,6 +73,12 @@ function* rootSaga() {
     yield takeEvery(ruleActionTypes.API_DELETE_RULE, ruleSaga.deleteRule);
 
     yield takeLatest(ruleActionTypes.SEARCH_RULE, ruleSaga.searchRule);
+
+    // user
+
+    yield takeLatest(userActionTypes.API_FETCH_USER, userSaga.fetchUser);
+
+    yield takeLatest(userActionTypes.API_SEND_MESSAGE, userSaga.sendMessage);
 }
 
 export default rootSaga;

@@ -17,7 +17,7 @@ export const convertTimestampToDate = timestamp => {
     let dateTime = null;
     if (timestamp !== null && timestamp !== undefined) {
         let ts = new Date(timestamp);
-        dateTime = ts.toDateString();
+        dateTime = `${ts.getDate()}/${ts.getMonth() + 1}/${ts.getFullYear()}`;
     }
     return dateTime;
 };
@@ -60,7 +60,7 @@ export const covertOptionToElement = option => {
                 url: option.urlOrPhone,
             },
         };
-    } else if (option.type === OPTION_SMS){
+    } else if (option.type === OPTION_SMS) {
         return {
             title: option.nameOption,
             default_action: {
@@ -71,7 +71,7 @@ export const covertOptionToElement = option => {
                 },
             },
         };
-    } else if (option.type === OPTION_PHONE){
+    } else if (option.type === OPTION_PHONE) {
         return {
             title: option.nameOption,
             default_action: {

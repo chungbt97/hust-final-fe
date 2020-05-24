@@ -70,6 +70,13 @@ class Text extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { text } = nextProps;
+        this.setState({
+            message: text,
+        });
+    }
+
     render() {
         const { classes, fullWidth, id } = this.props;
         const { emojiPickerState, anchorEl } = this.state;

@@ -6,6 +6,7 @@ import modalReducer from './modal';
 import botReducer from './bot';
 import accountReducer from './account';
 import ruleReducer from './rule';
+import userReducer from './user';
 
 const rootReducer = combineReducers({
     form: formReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     bot: botReducer,
     account: accountReducer,
     rule: ruleReducer,
+    user: userReducer,
 });
 
 export default rootReducer;

@@ -1,10 +1,15 @@
-import { toastError, toastSuccess } from '../commons/Toastify';
+import { toastError } from '../commons/Toastify';
 import * as types from '../constants/bot';
 
 const initialState = {
     listBot: [],
     botDelete: null,
     botEdit: 'null',
+    botSelected: null,
+    totalFollowers: -1,
+    totalRules: -1,
+    totalBlocks: -1,
+    totalSession: -1,
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,48 +65,22 @@ const reducer = (state = initialState, action) => {
                 botDelete: null,
             };
         }
-        case types.ADD_BOT: {
+        case types.GET_DATA_BOT: {
+            const {
+                bot,
+                totalFollowers,
+                totalRules,
+                totalBlocks,
+                totalSession,
+            } = action.payload;
+
             return {
                 ...state,
-            };
-        }
-        case types.ADD_BOT_SUCCESS: {
-            const { data } = action.payload;
-            return {
-                ...state,
-                listBot: [...state.listBot, data],
-            };
-        }
-        case types.ADD_BOT_FAILD: {
-            const { error } = action.payload;
-            toastError(error);
-            return {
-                ...state,
-            };
-        }
-        case types.UPDATE_BOT: {
-            return {
-                ...state,
-            };
-        }
-        case types.UPDATE_BOT_SUCCESS: {
-            const { bot } = action.payload;
-            toastSuccess('Cập nhật bot: ' + bot.name + ' thành công');
-            let newList = state.listBot.filter(b => {
-                return b._id !== bot._id;
-            });
-            return {
-                ...state,
-                listBot: [...newList, bot],
-                botEdit: null,
-            };
-        }
-        case types.UPDATE_BOT_FAILD: {
-            const { error } = action.payload;
-            toastError(error);
-            return {
-                ...state,
-                botEdit: null,
+                botSelected: bot,
+                totalFollowers,
+                totalRules,
+                totalBlocks,
+                totalSession,
             };
         }
         default:
