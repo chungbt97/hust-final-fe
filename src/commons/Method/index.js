@@ -65,9 +65,10 @@ export const covertOptionToElement = option => {
     } else if (option.type === OPTION_SMS) {
         return {
             title: option.nameOption,
+            image_url: `${API_ENDPOINT}/bots/image/hand.png`,
             default_action: {
                 type: option.type,
-                image_url: `${API_ENDPOINT}/bots/image/hand.png`,
+
                 payload: {
                     content: 'alo',
                     phone_code: option.urlOrPhone,
@@ -77,9 +78,10 @@ export const covertOptionToElement = option => {
     } else if (option.type === OPTION_PHONE) {
         return {
             title: option.nameOption,
+            image_url: `${API_ENDPOINT}/bots/image/hand.png`,
             default_action: {
                 type: option.type,
-                image_url: `${API_ENDPOINT}/bots/image/hand.png`,
+
                 payload: {
                     phone_code: option.urlOrPhone,
                 },

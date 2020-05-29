@@ -4,8 +4,8 @@ import DashboardBot from '../containers/DashboardBot';
 import HomePage from '../containers/HomePage';
 import LobbyPage from '../containers/LobbyPage';
 import Rules from '../containers/Rules';
-//export const API_ENDPOINT = 'https://api-chungbt.vbee.vn';
-export const API_ENDPOINT = 'http://localhost:8080';
+export const API_ENDPOINT = 'https://api-chungbt.vbee.vn';
+//export const API_ENDPOINT = 'http://localhost:8080';
 
 export const STATUS_RESPONSE = {
     OK: 200,
