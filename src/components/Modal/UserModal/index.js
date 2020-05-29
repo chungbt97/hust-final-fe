@@ -128,7 +128,7 @@ class UserModal extends Component {
                                     </p>
                                     <a
                                         href={
-                                            user.phone.length === 10
+                                            user.phone.length === 11
                                                 ? `https://chat.zalo.me/?phone=${user.phone}`
                                                 : 'https://oa.zalo.me/chatv2'
                                         }
