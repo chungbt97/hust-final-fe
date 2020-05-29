@@ -1,5 +1,6 @@
 import { ALPHABER_COLOR, SPACE_CHARACTER, THREE_DOTS } from '../../constants';
 import { OPTION_LINK, OPTION_SMS, OPTION_PHONE } from '../../constants/element';
+import { API_ENDPOINT } from '../../constants';
 
 export const getColorWithAlphaber = key => {
     let bgColor = null;
@@ -55,6 +56,7 @@ export const covertOptionToElement = option => {
     if (option.type === OPTION_LINK) {
         return {
             title: option.nameOption,
+            image_url: `${API_ENDPOINT}/bots/image/hand.png`,
             default_action: {
                 type: option.type,
                 url: option.urlOrPhone,
@@ -65,6 +67,7 @@ export const covertOptionToElement = option => {
             title: option.nameOption,
             default_action: {
                 type: option.type,
+                image_url: `${API_ENDPOINT}/bots/image/hand.png`,
                 payload: {
                     content: 'alo',
                     phone_code: option.urlOrPhone,
@@ -76,6 +79,7 @@ export const covertOptionToElement = option => {
             title: option.nameOption,
             default_action: {
                 type: option.type,
+                image_url: `${API_ENDPOINT}/bots/image/hand.png`,
                 payload: {
                     phone_code: option.urlOrPhone,
                 },
