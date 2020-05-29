@@ -215,23 +215,30 @@ class ListOption extends Component {
             if (nameOption === '' || urlOrPhone === '') {
                 toastMsgError('Bạn cần điền đẩy đủ thông tin cho button');
             } else {
+                console.log(type);
                 if (type === null) {
                     toastMsgError('Bạn cần chọn 1 trong 3 loại button');
                 } else {
+                    let isAdd = true;
                     if (type === 'oa.open.sms' || type === 'oa.open.phone') {
                         // eslint-disable-next-line
                         let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
 
-                        if (!vnf_regex.test(urlOrPhone))
+                        if (!vnf_regex.test(urlOrPhone)) {
+                            isAdd = false;
                             toastMsgError(
                                 'Số điện thoại nhập vào không hợp lệ',
                             );
+                        }
                     } else if (type === 'oa.open.url') {
                         // eslint-disable-next-line
                         let vnf_regex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i;
-                        if (!vnf_regex.test(urlOrPhone))
+                        if (!vnf_regex.test(urlOrPhone)) {
+                            isAdd = false;
                             toastMsgError('Url nhập vào không hợp lệ');
-                    } else {
+                        }
+                    }
+                    if (isAdd) {
                         options.push({
                             nameOption,
                             urlOrPhone,
