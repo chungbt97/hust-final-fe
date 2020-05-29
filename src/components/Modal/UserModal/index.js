@@ -122,7 +122,7 @@ class UserModal extends Component {
                                     <Meta title={user.name} />
                                     <p>
                                         SĐT:
-                                        {user.phone.length === 10
+                                        {user.phone.length === 11
                                             ? user.phone
                                             : ''}
                                     </p>
