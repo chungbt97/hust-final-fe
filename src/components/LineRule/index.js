@@ -51,7 +51,7 @@ class LineRule extends Component {
 
     renderMenuCard = () => {
         const { anchorEl } = this.state;
-        const { classes, idRule, onEdit, blocks, keyword } = this.props;
+        const { classes, idRule, onEdit, blocks, keyword, nameRule } = this.props;
         const open = Boolean(anchorEl);
         // const { id } = data;
         let xhtml = (
@@ -68,7 +68,7 @@ class LineRule extends Component {
                 <MenuItem
                     className={classes.menuItem}
                     onClick={() => {
-                        onEdit(idRule, blocks, keyword);
+                        onEdit(idRule, blocks, keyword, nameRule);
                         this.handleMenuClose();
                     }}
                 >
@@ -130,14 +130,14 @@ class LineRule extends Component {
     };
 
     render() {
-        const { classes, idRule } = this.props;
+        const { classes, nameRule } = this.props;
         const { keyWordShow, showMore } = this.state;
         return (
             <Grid item sm={4}>
                 <Paper elevation={3} className={classes.paper}>
                     <Typography component="div">
                         <Box
-                            fontWeight="fontWeightMedium"
+                            fontWeight={400}
                             fontFamily="Montserrat"
                             fontSize={12}
                             mb={1}
@@ -148,7 +148,7 @@ class LineRule extends Component {
                                 fontSize={12}
                                 fontWeight="600"
                                 color={'#208ef0'}
-                            >{`id: ${idRule}`}</Box>
+                            >{nameRule}</Box>
                             <Box flexShrink={0} className={classes.buttonMore}>
                                 <IconButton
                                     aria-label="display more actions"

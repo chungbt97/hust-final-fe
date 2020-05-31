@@ -215,7 +215,6 @@ class ListOption extends Component {
             if (nameOption === '' || urlOrPhone === '') {
                 toastMsgError('Bạn cần điền đẩy đủ thông tin cho button');
             } else {
-                console.log(type);
                 if (type === null) {
                     toastMsgError('Bạn cần chọn 1 trong 3 loại button');
                 } else {

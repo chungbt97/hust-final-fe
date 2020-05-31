@@ -24,9 +24,7 @@ class HomePage extends Component {
             totalBlocks,
             totalSession,
         } = this.props;
-        if (botSelected !== null) {
-            console.log(botSelected);
-        }
+
         let cover = botSelected !== null ? botSelected.cover : '';
         let name = botSelected !== null ? botSelected.name : '';
         let avatar = botSelected !== null ? botSelected.avatar : '';

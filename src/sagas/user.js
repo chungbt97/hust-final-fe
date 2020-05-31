@@ -17,7 +17,7 @@ export function* fetchUser({ payload }) {
 
 export function* sendMessage({ payload }) {
     const { botId, blockId, recipientId, sendText, text } = payload;
-    console.log(payload);
+
     let resp = yield call(userApis.sendMessage, {
         botId,
         blockId,

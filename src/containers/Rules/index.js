@@ -21,8 +21,14 @@ class Rules extends Component {
         this.state = {
             open: false,
             keyword: '',
+            name: '',
             blocks: [],
             id: null,
+            notifyName: 'Tên của luật. VD: Lorem ipsum',
+            notifyKeyword:
+                'Các từ khóa phân tách nhau bởi dấu , : VD: chó, mèo, gà, ...',
+            validName: true,
+            validKey: true,
         };
     }
 
@@ -43,6 +49,7 @@ class Rules extends Component {
                     <LineRule
                         key={rule.keyword}
                         idRule={rule._id}
+                        nameRule={rule.name}
                         blocks={rule.blocks}
                         keyword={rule.keyword}
                         onEdit={this.handleEditRule}
@@ -54,11 +61,12 @@ class Rules extends Component {
         return xhtml;
     };
 
-    handleEditRule = (id, blocks, keyword) => {
+    handleEditRule = (id, blocks, keyword, name) => {
         this.setState({
             id,
             blocks,
             keyword,
+            name,
             open: true,
         });
     };
@@ -193,31 +201,78 @@ class Rules extends Component {
         });
     };
 
-    // handleChange = event => {
-    //     const { ruleActionCreators } = this.props;
-    //     const { changTitleRule } = ruleActionCreators;
-    //     changTitleRule({ title: event.target.value });
-    // };
-
     handleSubmit = e => {
         e.preventDefault();
-        const { _title } = this.refs;
-        const { id, blocks } = this.state;
-        const { ruleActionCreators, match } = this.props;
-        const { botId } = match.params;
-        const { callApiAddRule, callApiupdateRule } = ruleActionCreators;
-        if (id === null) {
-            callApiAddRule({ botId, keyword: _title.value, blocks });
-        } else {
-            callApiupdateRule({
-                botId,
-                keyword: _title.value,
-                blocks,
-                ruleId: id,
-            });
+        const { _title, _name } = this.refs;
+        let validName = true;
+        let validKey = true;
+        let notifyName = this.state.notifyName;
+        let notifyKeyword = this.state.notifyKeyword;
+        let regexKeyWord = /^(((\s)*(\w)+(\s)*)+,?)+$/g;
+        let name = _name.value;
+        let title = _title.value;
+        title = title.replace(
+            /ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự/g,
+            'u',
+        );
+        title = title.replace(
+            /á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ/g,
+            'a',
+        );
+        title = title.replace(/đ|Đ/g, 'd');
+        title = title.replace(
+            /é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ/g,
+            'e',
+        );
+        title = title.replace(/í|ì|ỉ|ĩ|ị|Í|Ì|Ỉ|Ĩ|Ị/g, 'i');
+        title = title.replace(
+            /ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ/g,
+            'o',
+        );
+        title = title.replace(/ý|ỳ|ỷ|ỹ|ỵ|Ý|Ỳ|Ỷ|Ỹ|Ỵ/g, 'y');
+        if (name.length === 0) {
+            notifyName = 'Bạn cần nhập tên cho luật';
+            validName = false;
         }
-        this.setState({ keyword: _title.value });
-        this.handleClose();
+        if (title.length === 0) {
+            notifyKeyword = 'Bạn cần nhập từ khóa cho luật';
+            validKey = false;
+        }
+        if (!regexKeyWord.test(title)) {
+            notifyKeyword =
+                'Bạn cần nhập từ khóa đúng định dạng: từ khóa, từ khóa, từ khóa...';
+            validKey = false;
+        }
+        if (validName && validKey) {
+            const { id, blocks } = this.state;
+            const { ruleActionCreators, match } = this.props;
+            const { botId } = match.params;
+            const { callApiAddRule, callApiupdateRule } = ruleActionCreators;
+            let keyword = _title.value;
+            if (keyword.charAt(keyword.length - 1) === ',') {
+                // eslint-disable-next-line
+                keyword = keyword.substring(0, title.length - 1);
+            }
+            if (id === null) {
+                callApiAddRule({ botId, keyword, blocks, name });
+            } else {
+                callApiupdateRule({
+                    botId,
+                    name,
+                    keyword: keyword,
+                    blocks,
+                    ruleId: id,
+                });
+            }
+            this.setState({ keyword });
+            this.handleClose();
+        } else if (!validName && validKey) {
+            this.setState({ notifyName, validName });
+        } else if (!validKey && validName) {
+            this.setState({ notifyKeyword, validKey });
+        } else {
+            this.setState({ notifyName, notifyKeyword, validName, validKey });
+        }
     };
 
     handleAddBlockToRule = (event, value) => {
@@ -283,7 +338,16 @@ class Rules extends Component {
     };
 
     renderModal = () => {
-        const { open, keyword, blocks } = this.state;
+        const {
+            open,
+            keyword,
+            blocks,
+            name,
+            notifyName,
+            notifyKeyword,
+            validName,
+            validKey,
+        } = this.state;
         const { classes } = this.props;
         let xhtml = null;
         xhtml = (
@@ -294,30 +358,50 @@ class Rules extends Component {
                 className={classes.dialog}
             >
                 <form>
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogTitle id="form-dialog-title">
+                        Thiết lập luật mới
+                    </DialogTitle>
                     <DialogContent style={{ width: '600px' }}>
                         <DialogContentText>
                             Keyword sẽ được thêm để làm dữ liệu cho bot trả lời.
                         </DialogContentText>
+                        <Box
+                            fontWeight="fontWeightLight"
+                            fontFamily="Montserrat"
+                            fontSize={12}
+                            mb={1}
+                        >
+                            <input
+                                type="text"
+                                id="name-rule"
+                                ref="_name"
+                                name="name-rule"
+                                className={classes.blockTitle}
+                                defaultValue={name}
+                                placeholder="Tên của luật"
+                            />
+                        </Box>
+                        <div
+                            style={validName ? null : { color: 'red' }}
+                            className={classes.invalid}
+                        >
+                            {notifyName}
+                        </div>
                         <textarea
                             rows="4"
-                            placeholder="User say..."
+                            placeholder="chuỗi từ khóa..."
                             ref="_title"
                             type="text"
                             name={`Rule`}
                             className={classes.textareaTitle}
                             defaultValue={keyword}
                         ></textarea>
-                        {/* <TextField
-                            name={`Rule`}
-                            variant="outlined"
-                            className={classes.inputRule}
-                            defaultValue={keyword}
-                            placeholder="User say..."
-                            fullWidth
-                            multiline
-                            onChange={this.handleChange}
-                        /> */}
+                        <div
+                            style={validKey ? null : { color: 'red' }}
+                            className={classes.invalid}
+                        >
+                            {notifyKeyword}
+                        </div>
                         <div className={classes.lineBlock}>
                             {blocks.map(block => (
                                 <Chip
@@ -340,13 +424,11 @@ class Rules extends Component {
                         <Button
                             onClick={this.handleSubmit}
                             color="primary"
-                            type="submit"
+                            type="button"
                         >
                             Xác nhận
                         </Button>
-                        <Button onClick={this.handleClose} color="primary">
-                            Hủy bỏ
-                        </Button>
+                        <Button onClick={this.handleClose}>Hủy bỏ</Button>
                     </DialogActions>
                 </form>
             </Dialog>

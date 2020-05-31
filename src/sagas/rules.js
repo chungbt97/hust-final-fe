@@ -23,11 +23,12 @@ export function* fetchRule({ payload }) {
 }
 
 export function* addRule({ payload }) {
-    const { botId, keyword, blocks } = payload;
+    const { botId, keyword, blocks, name } = payload;
     const resp = yield call(ruleApis.addRule, {
         botId,
         keyword,
         blocks,
+        name
     });
     const { status, message, data } = resp.data;
     if (status === STATUS_RESPONSE.CREATED) {
@@ -43,12 +44,13 @@ export function* addRule({ payload }) {
 }
 
 export function* updateRule({ payload }) {
-    const { botId, keyword, blocks, ruleId } = payload;
+    const { botId, keyword, blocks, ruleId, name } = payload;
     const resp = yield call(ruleApis.updateRule, {
         botId,
         keyword,
         blocks,
         ruleId,
+        name
     });
     const { status, message, data } = resp.data;
     if (status === STATUS_RESPONSE.OK) {

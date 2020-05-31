@@ -85,6 +85,7 @@ const useStyles = theme => ({
         width: '100%',
         padding: '12px 6px',
         fontSize: '16px',
+        borderRadius: '5px',
     },
     inputSearch: {
         '& input': {
@@ -93,6 +94,13 @@ const useStyles = theme => ({
         '& textarea': {
             fontFamily: 'Montserrat',
         },
+    },
+    blockTitle: {
+        width: '100%',
+        padding: '12px 6px',
+        fontSize: '16px',
+        border: '1px solid #636363',
+        borderRadius: '5px',
     },
 });
 export default useStyles;

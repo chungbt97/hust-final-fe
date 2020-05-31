@@ -15,7 +15,7 @@ export const fetchRule = data => {
 };
 
 export const addRule = data => {
-    const { botId, keyword, blocks } = data;
+    const { botId, keyword, blocks, name } = data;
     let token = localStorage.getItem('token');
     const options = {
         url: `${API_ENDPOINT}/bots/${botId}/rule`,
@@ -23,13 +23,13 @@ export const addRule = data => {
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        data: { keyword, blocks },
+        data: { keyword, blocks, name },
     };
     return axios(options);
 };
 
 export const updateRule = data => {
-    const { botId, keyword, blocks, ruleId } = data;
+    const { botId, keyword, blocks, ruleId, name } = data;
     let token = localStorage.getItem('token');
     const options = {
         url: `${API_ENDPOINT}/bots/${botId}/rule/${ruleId}`,
@@ -37,7 +37,7 @@ export const updateRule = data => {
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        data: { keyword, blocks },
+        data: { keyword, blocks, name },
     };
     return axios(options);
 };

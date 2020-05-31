@@ -214,7 +214,6 @@ class Analyze extends Component {
     };
 
     onSelectChange = selectedRowKeys => {
-        console.log(selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
 
@@ -282,54 +281,91 @@ class Analyze extends Component {
                         <Typography component="div">
                             <Box fontSize="fontSize" m={1}>
                                 <Grid container>
-                                    <Select
-                                        labelInValue
+                                    <Grid
+                                        item
+                                        md={3}
+                                        sm={5}
+                                        xs={12}
                                         style={{
-                                            width: 240,
-                                            marginRight: '10px',
+                                            paddingRight: '10px',
                                         }}
-                                        defaultValue={{ value: attrSelected }}
-                                        onChange={this.handleChangeAttribute}
                                     >
-                                        {this.renderAllAttribute()}
-                                    </Select>
-
-                                    <Select
-                                        labelInValue
+                                        <Select
+                                            labelInValue
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            defaultValue={{
+                                                value: attrSelected,
+                                            }}
+                                            onChange={
+                                                this.handleChangeAttribute
+                                            }
+                                        >
+                                            {this.renderAllAttribute()}
+                                        </Select>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        md={2}
+                                        sm={4}
+                                        xs={12}
                                         style={{
-                                            width: 150,
-                                            marginRight: '10px',
+                                            paddingRight: '10px',
                                         }}
-                                        defaultValue={{ value: querySelected }}
-                                        onChange={this.handleChangeQuery}
                                     >
-                                        <Option value="not">không phải </Option>
-                                        <Option value="is">là </Option>
-                                    </Select>
-
-                                    <Select
-                                        labelInValue
+                                        <Select
+                                            labelInValue
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            defaultValue={{
+                                                value: querySelected,
+                                            }}
+                                            onChange={this.handleChangeQuery}
+                                        >
+                                            <Option value="not">
+                                                không phải{' '}
+                                            </Option>
+                                            <Option value="is">là </Option>
+                                        </Select>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        md={3}
+                                        xs={12}
+                                        sm={5}
                                         style={{
-                                            width: 240,
-                                            marginRight: '10px',
+                                            paddingRight: '10px',
                                         }}
-                                        defaultValue={{ value: valueSelected }}
-                                        onChange={this.handleChangeValue}
                                     >
-                                        {this.renderValue()}
-                                    </Select>
-                                    <Button
-                                        type="primary"
-                                        style={{ marginRight: '5px' }}
-                                        icon={<SearchOutlined />}
-                                        onClick={this.handleSearch}
-                                    />
-                                    <Button
-                                        type="primary"
-                                        danger
-                                        icon={<DeleteOutlined />}
-                                        onClick={this.handleResetFilter}
-                                    />
+                                        <Select
+                                            labelInValue
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            defaultValue={{
+                                                value: valueSelected,
+                                            }}
+                                            onChange={this.handleChangeValue}
+                                        >
+                                            {this.renderValue()}
+                                        </Select>
+                                    </Grid>
+                                    <Grid item md={3} sm={12} xs={12}>
+                                        <Button
+                                            type="primary"
+                                            style={{ marginRight: '5px' }}
+                                            icon={<SearchOutlined />}
+                                            onClick={this.handleSearch}
+                                        />
+                                        <Button
+                                            type="primary"
+                                            danger
+                                            icon={<DeleteOutlined />}
+                                            onClick={this.handleResetFilter}
+                                        />
+                                    </Grid>
                                 </Grid>
                             </Box>
                         </Typography>
@@ -384,6 +420,7 @@ class Analyze extends Component {
                             size="middle"
                             scroll={{ y: 285 }}
                             yScroll={true}
+                            style={{ tableLayout: 'auto' }}
                         />
                     </Grid>
 

@@ -39,10 +39,10 @@ export const DASHBOARD_ROUTES = [
     },
     {
         path: '/admin/analyze',
-        name: 'Phân tích & thống kê',
+        name: 'Người dùng',
         exact: false,
         component: ({ match }) => <Analyze match={match} />,
-        icon: 'assessment_icon',
+        icon: 'account_box_icon',
     },
     /**
      * Kịch bản

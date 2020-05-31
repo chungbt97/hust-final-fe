@@ -10,7 +10,7 @@ export function* getDataBot({ payload }) {
     const { botId } = payload;
     const resp = yield call(botApis.getDataBot, { botId });
     const { status, data, message } = resp.data;
-    console.log(resp.data);
+
     if (STATUS_RESPONSE.OK === status) {
         yield put(botActions.getDataBot(data));
     } else {

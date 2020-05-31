@@ -24,18 +24,6 @@ const useStyles = theme => ({
         background: '#ffffff',
         padding: '5px'
     },
-    // lineButtonAdd: {
-    //     position: 'absolute',
-    //     bottom: '-20px',
-    //     left: '-24px',
-    //     '& button': {
-    //         opacity: 0,
-    //     },
-    //     '& button:hover': {
-    //         color: '#208ef0',
-    //         opacity: 1,
-    //     },
-    // },
     blockTitle: {
         '& input': {
             fontFamily: 'Montserrat',

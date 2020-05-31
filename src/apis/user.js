@@ -31,7 +31,6 @@ export const fetchUser = data => {
 
 export const sendMessage = data => {
     const { botId, blockId, recipientId, sendText, text } = data;
-    console.log(data);
     let token = localStorage.getItem('token');
     const options = {
         url: `${API_ENDPOINT}/bots/${botId}/user`,
