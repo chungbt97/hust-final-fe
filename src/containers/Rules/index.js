@@ -319,7 +319,7 @@ class Rules extends Component {
                     <TextField
                         {...params}
                         variant="outlined"
-                        label="Block"
+                        label="Chuỗi hành động"
                         fullWidth
                         multiline
                     />

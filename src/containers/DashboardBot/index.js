@@ -108,7 +108,7 @@ class DashBoardBot extends Component {
                     <Grid item xs={4} className={classes.listBlock}>
                         <TextField
                             id="outlined-search"
-                            label="Tên block"
+                            label="Tên chuỗi hành động"
                             type="search"
                             variant="outlined"
                             size="small"
@@ -123,7 +123,7 @@ class DashBoardBot extends Component {
                                 fontSize={12}
                                 mt={1}
                             >
-                                Chatbot bao gồm các "khối" - block. Khối giống
+                                Chatbot bao gồm các <span style={{fontWeight: 'bold'}}>"hành động" - block </span>. Khối giống
                                 như 1 chuỗi tin nhắn mà chatbot sẽ trả lời.
                             </Box>
                         </Typography>

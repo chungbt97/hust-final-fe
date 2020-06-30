@@ -138,6 +138,7 @@ export function* addElemnet({ payload }) {
     const { status, message, data } = resp.data;
     if (status === STATUS_RESPONSE.CREATED) {
         const { block, newElement } = data;
+        toastSuccess('Tạo hành động con thành công');
         yield put(blockAction.addEmptyElemnet({ block, newElement, preId }));
     } else {
         toastMsgError('Lỗi:  ' + status + ' - ' + message);
@@ -201,6 +202,7 @@ export function* deleteElement({ payload }) {
     const { status, message, data } = resp.data;
 
     if (status === STATUS_RESPONSE.OK) {
+        toastSuccess('Xoá hành động con thành công');
         yield put(blockAction.deleteElement({ elementId, block: data }));
     } else {
         toastMsgError('Lỗi:  ' + status + ' - ' + message);
@@ -211,9 +213,9 @@ export function* deleteElement({ payload }) {
     }
 }
 
-export function* updateContentBlock({ payload }) {
+export function* updateElements({ payload }) {
     const { botId, groupId, blockId, elements, name } = payload;
-    const resp = yield call(blockApis.updateContentBlock, {
+    const resp = yield call(blockApis.updateElements, {
         botId,
         groupId,
         blockId,
@@ -222,6 +224,7 @@ export function* updateContentBlock({ payload }) {
     });
     const { status, message } = resp.data;
     if (status === STATUS_RESPONSE.OK) {
+        toastSuccess('Cập nhật chuỗi hành động thành công');
         yield put(blockAction.updateContentSuccess());
     } else {
         toastMsgError('Lỗi:  ' + status + ' - ' + message);

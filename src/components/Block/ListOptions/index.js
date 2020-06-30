@@ -278,12 +278,13 @@ class ListOption extends Component {
         onChangeOptions({ id, options });
     };
 
-    handleDelete = () => {
-        const { id, onChangeOptions } = this.props;
-        const { options, indexEdit } = this.state;
+    handleDelete = id => {
+        const { onChangeOptions } = this.props;
+        const { options } = this.state;
         let newOptions = options.filter((op, index) => {
-            return index !== indexEdit;
+            return index !== id;
         });
+        console.log(id);
         this.setState({
             openModalAdd: false,
             nameOption: '',
@@ -413,28 +414,31 @@ class ListOption extends Component {
                 {indexEdit === null ? (
                     <DialogActions>
                         <Button
-                            onClick={() => this.handleCloseModalAdd(false)}
-                            color="primary"
-                        >
-                            Hủy
-                        </Button>
-                        <Button
                             onClick={() => this.handleCloseModalAdd(true)}
                             color="primary"
                         >
                             Thêm
                         </Button>
+                        <Button
+                            onClick={() => this.handleCloseModalAdd(false)}
+                            style={{ color: '#DC3545' }}
+                        >
+                            Hủy
+                        </Button>
                     </DialogActions>
                 ) : (
                     <DialogActions>
-                        <Button onClick={this.handleDelete} color="primary">
-                            Xóa
-                        </Button>
                         <Button
                             onClick={this.handleUpdateOption}
                             color="primary"
                         >
                             Sửa
+                        </Button>
+                        <Button
+                            onClick={() => this.handleCloseModalAdd(false)}
+                            style={{ color: '#DC3545' }}
+                        >
+                            Hủy
                         </Button>
                     </DialogActions>
                 )}
@@ -505,10 +509,15 @@ class ListOption extends Component {
                     <CardActions style={{ display: 'block' }}>
                         {options.map((option, index) => {
                             return (
-                                <div style={{ margin: '8px' }} key={index}>
+                                <div
+                                    style={{ margin: '8px', display: 'flex' }}
+                                    key={index}
+                                >
                                     <Button
-                                        style={{ textTransform: 'capitalize' }}
-                                        fullWidth
+                                        style={{
+                                            textTransform: 'capitalize',
+                                            width: '90%',
+                                        }}
                                         variant="outlined"
                                         size="small"
                                         color="primary"
@@ -525,11 +534,25 @@ class ListOption extends Component {
                                     >
                                         {option.nameOption}
                                     </Button>
+                                    <Button
+                                        style={{
+                                            textTransform: 'capitalize',
+                                            color: '#DC3545',
+                                            border: '1px solid #DC3545',
+                                            marginLeft: '5px',
+                                        }}
+                                        variant="outlined"
+                                        size="small"
+                                        onClick={() => this.handleDelete(index)}
+                                    >
+                                        x
+                                    </Button>
                                 </div>
                             );
                         })}
                         <div>
                             <Button
+                                style={{ margin: '8px', with: '100%' }}
                                 size="small"
                                 color="primary"
                                 onClick={() => {

@@ -57,7 +57,7 @@ function* rootSaga() {
     );
     yield takeEvery(
         blockActionTypes.API_UPDATE_ELEMENT,
-        blockSaga.updateContentBlock,
+        blockSaga.updateElements,
     );
 
     yield takeLatest(blockActionTypes.SEARCH_BLOCK, blockSaga.searchBlock);

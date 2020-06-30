@@ -79,6 +79,7 @@ class LineRule extends Component {
                     onClick={() => {
                         this.setState({ openModal: true });
                     }}
+
                 >
                     Xóa
                 </MenuItem>
@@ -249,7 +250,7 @@ class LineRule extends Component {
                     onSubmit={this.handleSubmitModal}
                 >
                     <DialogTitle id="form-dialog-title">
-                        Xác nhận xóa
+                        <span style={{color: '#DC3545'}}>Xác nhận xóa</span>
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -271,7 +272,7 @@ class LineRule extends Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button color="secondary" type="submit">
+                        <Button style={{color: '#DC3545'}} type="submit">
                             Xóa
                         </Button>
                         <Button onClick={this.handleCloseModal}>Hủy bỏ</Button>

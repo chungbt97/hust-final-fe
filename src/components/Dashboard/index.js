@@ -17,11 +17,7 @@ class Dashboard extends Component {
                         handleToggleSidebar={this.handleToggleSidebar}
                         {...remainProps}
                     />
-                    <div
-                        className={classes.wrapperContent}
-                    >
-                        {children}
-                    </div>
+                    <div className={classes.wrapperContent}>{children}</div>
                 </div>
             </div>
         );

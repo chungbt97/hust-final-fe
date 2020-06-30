@@ -34,6 +34,7 @@ import ImageBlock from '../../../components/Block/Image';
 import ListOptions from '../../../components/Block/ListOptions';
 import AttributeBlock from '../../../components/Block/Attribute';
 import { toastMsgError } from '../../../commons/Toastify';
+import BlockLoading from '../../../components/Loading/BlockLoading';
 
 class ContentBlock extends Component {
     constructor(props) {
@@ -45,6 +46,8 @@ class ContentBlock extends Component {
             open: false,
             confirm: '',
             defaultBlock: false,
+            requestDelete: false,
+            requestDeleteId: null,
         };
     }
 
@@ -192,6 +195,10 @@ class ContentBlock extends Component {
         const { callApiDeleteElement } = blockActionCreators;
         const { botId, groupId, blockId } = match.params;
         callApiDeleteElement({ botId, groupId, blockId, elementId });
+        this.setState({
+            requestDelete: false,
+            requestDeleteId: null,
+        });
     };
 
     renderAllElement = () => {
@@ -222,7 +229,7 @@ class ContentBlock extends Component {
                                     <IconButton
                                         aria-label="delete"
                                         onClick={() =>
-                                            this.handleDeleteElement(
+                                            this.handleOpenConfirmDelete(
                                                 rawElement._id,
                                             )
                                         }
@@ -239,11 +246,67 @@ class ContentBlock extends Component {
         return xhtml;
     };
 
+    handleOpenConfirmDelete = id => {
+        this.setState({
+            requestDelete: true,
+            requestDeleteId: id,
+        });
+    };
+
+    confirmDelete = () => {
+        const { requestDeleteId, requestDelete } = this.state;
+        return (
+            <Dialog
+                open={requestDelete}
+                onClose={() =>
+                    this.setState({
+                        requestDelete: false,
+                        requestDeleteId: null,
+                    })
+                }
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    Xác nhận xóa hành động
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Hành động không thể hoàn tác! Bạn có chắc chắn muốn xóa
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={() =>
+                            this.handleDeleteElement(requestDeleteId)
+                        }
+                        style={{ color: '#DC3545' }}
+                    >
+                        Xác nhận xóa
+                    </Button>
+                    <Button
+                        onClick={() =>
+                            this.setState({
+                                requestDelete: false,
+                                requestDeleteId: null,
+                            })
+                        }
+                        color="primary"
+                        autoFocus
+                    >
+                        Hủy
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        );
+    };
+
     componentDidMount() {
         const { match, blockActionCreators } = this.props;
         const { botId, groupId, blockId } = match.params;
         const { callApiFetcheElements } = blockActionCreators;
         callApiFetcheElements({ botId, groupId, blockId });
+
     }
 
     componentWillMount() {
@@ -296,61 +359,78 @@ class ContentBlock extends Component {
     };
 
     render() {
-        const { classes, editContent, defaultBlock } = this.props;
+        const { classes, editContent, defaultBlock, currentBlock } = this.props;
         return (
-            <div>
+            <div id="content-block" >
                 <form
                     className={classes.formContentBlock}
                     onSubmit={this.handleSubmit}
+                    id="content-block-form"
+
                 >
                     <div className={classes.root}>
-                        <Grid container className={classes.spaceLine}>
-                            <Grid item sm={8}>
-                                <TextField
-                                    id="block-title"
-                                    name="blockName"
-                                    variant="outlined"
-                                    className={classes.blockTitle}
-                                    defaultValue={this.state.blockName}
-                                    fullWidth
-                                    disabled={defaultBlock}
-                                    onChange={this.handleChange}
-                                />
-                            </Grid>
-                            <Grid item sm={4}>
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justify="center"
-                                    alignItems="center"
-                                    style={{ height: '100%' }}
-                                >
-                                    <Grid item>
-                                        {editContent ? (
-                                            <Button
-                                                variant="outlined"
-                                                color="primary"
-                                                type="button"
-                                                onClick={
-                                                    this.updateContentBlock
-                                                }
-                                            >
-                                                Lưu
-                                            </Button>
-                                        ) : (
-                                            !defaultBlock && (
-                                                <IconButton
-                                                    aria-label="delete"
-                                                    onClick={this.handleDelete}
+                        <div style={{
+                            position: 'sticky',
+                            zIndex:'1000',
+                            top: ' 14.5px',
+                            right: ' 0',
+                            backgroundColor: '#F9F8F8',
+                        }}>
+                            <Grid container className={classes.spaceLine}>
+                                <Grid item sm={8}>
+                                    <TextField
+                                        id="block-title"
+                                        name="blockName"
+                                        variant="outlined"
+                                        className={classes.blockTitle}
+                                        defaultValue={
+                                            currentBlock !== null
+                                                ? currentBlock.name
+                                                : this.state.blockName
+                                        }
+                                        fullWidth
+                                        disabled={defaultBlock}
+                                        onChange={this.handleChange}
+                                    />
+                                </Grid>
+                                <Grid item sm={4}>
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center"
+                                        style={{ height: '100%' }}
+                                    >
+                                        <Grid item>
+                                            {editContent ? (
+                                                <Button
+                                                    variant="outlined"
+                                                    color="primary"
+                                                    type="button"
+                                                    onClick={
+                                                        this.updateContentBlock
+                                                    }
                                                 >
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            )
-                                        )}
+                                                    <BlockLoading/>
+                                                    Lưu
+                                                </Button>
+                                            ) : (
+                                                !defaultBlock && (
+                                                    <IconButton
+                                                        aria-label="delete"
+                                                        onClick={
+                                                            this.handleDelete
+                                                        }
+                                                    >
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                )
+                                            )}
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
+                        </div>
                         {this.renderAllElement()}
                         <Grid container className={classes.spaceLine}>
                             <Grid item sm={12}>
@@ -446,6 +526,7 @@ class ContentBlock extends Component {
                     </div>
                 </form>
                 {this.renderModal()}
+                {this.confirmDelete()}
             </div>
         );
     }

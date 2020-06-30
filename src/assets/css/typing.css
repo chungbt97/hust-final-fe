@@ -2,7 +2,7 @@ div#wave {
     position: relative;
     text-align: center;
     display: inline-block;
-    margin: 1rem 1rem 1rem 2rem;
+    margin: 0.5rem 0.5rem 0.5rem 0rem;
 }
 .dot {
     display: inline-block;

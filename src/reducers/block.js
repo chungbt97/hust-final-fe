@@ -83,15 +83,7 @@ const reducer = (state = initialState, action) => {
             };
         }
 
-        case types.API_FETCH_ELEMENT: {
-            return {
-                ...state,
-                elements: [],
-                editContent: false,
-                currentBlock: null,
-                defaultBlock: false,
-            };
-        }
+
         // chỉnh sửa ở Content block
 
         case types.FETCH_ELEMENT: {

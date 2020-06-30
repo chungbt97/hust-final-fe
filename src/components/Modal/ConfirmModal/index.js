@@ -53,7 +53,7 @@ class ConfirmModal extends Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button color="secondary" type="submit">
+                        <Button style={{color: '#DC3545'}} type="submit">
                             Xác nhận xóa
                         </Button>
                         <Button onClick={handleClose}>Hủy bỏ</Button>

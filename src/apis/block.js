@@ -142,7 +142,7 @@ export const deleteElement = data => {
     return axios(options);
 };
 
-export const updateContentBlock = data => {
+export const updateElements = data => {
     const { botId, groupId, blockId, elements, name } = data;
     let token = localStorage.getItem('token');
     const options = {

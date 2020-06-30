@@ -13,7 +13,6 @@ class ChatbotRoute extends Component {
             ...remainProps
         } = this.props;
         let token = localStorage.getItem('token');
-
         return (
             <Route
                 {...remainProps}

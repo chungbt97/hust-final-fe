@@ -6,5 +6,11 @@ const useStyles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
+    blockTitle: {
+        fontFamily: 'Montserrat',
+        '& textarea': {
+            fontFamily: 'Montserrat',
+        },
+    },
 });
 export default useStyles;
