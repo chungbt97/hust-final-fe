@@ -64,19 +64,9 @@ class Video extends Component {
                             component="p"
                             className={classes.infoCard}
                             paragraph
-                            variant="body1"
-                        >
-                            Send a video file in the chat.
-                        </Typography>
-                        <Typography
-                            component="p"
-                            className={classes.infoCard}
-                            paragraph
                             variant="body2"
                         >
-                            Upload a video to cloud storage, obtain the direct
-                            download link and paste it here. Maximum file size
-                            is 20 MB. Supported format is MP4.
+                           Đường dẫn bạn điền vào dưới đây sẽ là địa chỉ URL của bên thứ 3 dấn đến file video của bạn! Kiểm tra kĩ trước khi lưu!
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing>

@@ -116,7 +116,20 @@ const reducer = (state = initialState, action) => {
         }
 
         case types.ADD_ELEMENT: {
-            const { block } = action.payload;
+            const { block, newElement } = action.payload;
+            let indexNew = 0;
+            const { currentBlock } = state;
+            for (let i = 0; i < block.elements.length; i++) {
+                if (block.elements[i]._id === newElement._id) {
+                    indexNew = i;
+                }
+            }
+            let newElements = [];
+            let startElements = currentBlock.elements.slice(0, indexNew);
+            let endElements = currentBlock.elements.slice(indexNew, currentBlock.elements.length);
+            newElements = [...startElements, newElement];
+            newElements = [...newElements, ...endElements]
+            block.elements = newElements;
             return {
                 ...state,
                 elements: block.elements,

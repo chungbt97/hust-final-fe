@@ -30,7 +30,7 @@ class Audio extends Component {
     handleChange = event => {
         const { id, onChange } = this.props;
         let { value } = event.target;
-        onChange({id, title: value});
+        onChange({ id, title: value });
         this.setState({
             url: value,
         });
@@ -55,7 +55,7 @@ class Audio extends Component {
                                 </div>
                             </IconContext.Provider>
                         }
-                        title="Audio"
+                        title="Âm thanh"
                         className={classes.cardHeader}
                     />
                     <CardContent>
@@ -65,10 +65,7 @@ class Audio extends Component {
                             paragraph
                             variant="body2"
                         >
-                            Send an audio file in the chat. Supported formats:
-                            MP3, WAV, OGG. Maximum file size: ~20MB. If you use
-                            Dropbox, please replace "www" at the beginning of
-                            the audio file URL with "dl".
+                            Đường dẫn bạn điền vào dưới đây sẽ là địa chỉ URL của bên thứ 3 dấn đến file âm thanh của bạn! Kiểm tra kĩ trước khi lưu!
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing>

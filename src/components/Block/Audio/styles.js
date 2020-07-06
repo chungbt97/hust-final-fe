@@ -21,6 +21,7 @@ const useStyles = theme => ({
         '& input': {
             fontFamily: 'Montserrat',
             fontSize: '12px',
+            color: 'blue',
         },
     },
 });
