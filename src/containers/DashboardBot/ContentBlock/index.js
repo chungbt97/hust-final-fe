@@ -215,7 +215,7 @@ class ContentBlock extends Component {
                     currentBlock.elements[index + 1],
                 );
                 return (
-                    <Grid container key={index} className={classes.spaceLine}>
+                    <Grid container key={rawElement._id} className={classes.spaceLine}>
                         {element}
                         <Grid item sm={4}>
                             <Grid
@@ -556,23 +556,24 @@ class ContentBlock extends Component {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure you want to delete this block?
+                        Bạn có thực sự muốn xóa chuỗi hành động?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button
-                        autoFocus
-                        onClick={this.handleClose}
-                        color="secondary"
-                    >
-                        Disagree
-                    </Button>
+
                     <Button
                         onClick={this.handleDeleteBlock}
                         color="default"
                         autoFocus
                     >
-                        Agree
+                        Xác nhận xóa
+                    </Button>
+                    <Button
+                        autoFocus
+                        onClick={this.handleClose}
+                        color="secondary"
+                    >
+                       Hủy
                     </Button>
                 </DialogActions>
             </Dialog>
