@@ -9,7 +9,7 @@ class NotFound extends Component {
                 <div className="notfound">
                     <div className="notfound-404">
                         <h1>Oops!</h1>
-                        <h2>Welcome my calendar</h2>
+                        <h2>Something is wrong</h2>
                     </div>
                     <NavLink to="/">Go Homepage</NavLink>
                 </div>
