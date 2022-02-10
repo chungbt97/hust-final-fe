@@ -16,7 +16,7 @@
         "classnames": "^2.2.6",
         "combinestyles": "^1.0.1",
         "emoji-mart": "^3.0.0",
-        "node-sass": "^4.13.1",
+        "node-sass": "^7.0.0",
         "pm2": "^4.4.0",
         "query-string": "^6.9.0",
         "react": "^16.12.0",
